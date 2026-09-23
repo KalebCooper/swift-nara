@@ -1,0 +1,71 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Serialize publications without blocking main behind pull-request builds.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # No documentation products or catalogs exist yet.
+    if: ${{ false }}
+    name: Build DocC site
+    runs-on: macos-26
+    # Provisional until this package has green runs on main.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      # Compile dependencies normally, then document only this package's products.
+      # A recursive docbuild also documents dependency modules, whose external links
+      # are outside this site's catalog and dependency archives.
+      - name: Build modules
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -scheme SwiftNARACatalogBulk \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' \
+            -derivedDataPath .derivedData \
+            -skipPackagePluginValidation \
+            | xcbeautify --renderer github-actions
+
+      - name: Build and package documentation
+        run: bash Scripts/build-docs.sh .derivedData/Build/Products/Debug-iphonesimulator .docc-output
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .docc-output/site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    # Publishing remains disabled until real products and catalogs pass local DocC gates.
+    if: ${{ false }}
+    # Provisional until this package has green runs on main.
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

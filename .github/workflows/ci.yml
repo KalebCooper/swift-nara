@@ -1,0 +1,187 @@
+name: CI
+
+# Every build lane here is deliberate. The Linux container proves the package stays portable off Apple
+# platforms (the whole point of keeping URLSession out of SwiftNARACatalogBulkModels and behind
+# `#if canImport(Darwin)` in SwiftNARACatalogBulk) and is cheap. The Android emulator proves the same claim on
+# Android, under the same trait, and is cheap too. The macOS lane is the real target and costs money:
+# batch commits and push once, and verify locally before pushing rather than letting CI diagnose a
+# failure.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux:
+    # Disabled until real products, tests, dependency pins, and demo are implemented.
+    if: ${{ false }}
+    name: swift test (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.3-noble
+    # Every job in this repository is bounded, so a hang fails the job instead of sitting for the
+    # six-hour default. The ceiling is meant to be that job's slowest green run on `main` under its
+    # current definition, rounded up to the next five minutes and then tripled. `Scripts/verify.sh`
+    # holds the rule that every job has one.
+    # Provisional ceiling until this package has green runs on main.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      # The trait set is part of the key: a `.build` made with a different trait set is the same
+      # manifest and the same pins but not the same graph, and restoring one would hand this run a
+      # stale build.
+      - name: Cache SwiftPM build products
+        uses: actions/cache@v6
+        with:
+          path: .build
+          key: spm-${{ runner.os }}-traits-HTTPPortable-${{ hashFiles('Package.swift', 'Package.resolved') }}-${{ github.sha }}
+          restore-keys: |
+            spm-${{ runner.os }}-traits-HTTPPortable-${{ hashFiles('Package.swift', 'Package.resolved') }}-
+            spm-${{ runner.os }}-traits-HTTPPortable-
+      # The trait is enabled here and on the Android lane only: this is the run that forwards it to
+      # swifty-networking, builds the AsyncHTTPClient transport and the SwiftNIO stack beneath it, and
+      # runs the suite against that graph.
+      - name: Run tests
+        run: swift test --traits HTTPPortable
+      # The same suite again under the package's default trait set, which enables nothing, so what a
+      # consumer who asks for no trait actually gets is compiled and run on every push: swifty-networking
+      # resolved without its `HTTPPortable` trait and the SwiftNIO stack never fetched. It uses a
+      # scratch path of its own so the cached `.build` above stays the graph its key names, and it runs
+      # second so the cache restore serves the run that reuses it.
+      - name: Run tests with the default trait set
+        run: swift test --scratch-path .build-default
+
+  android:
+    # Disabled until real products, tests, dependency pins, and demo are implemented.
+    if: ${{ false }}
+    name: swift test (Android)
+    # `ubuntu-24.04` rather than `ubuntu-latest`: the action below derives the swift.org host toolchain
+    # URL from the runner's os-release id, and swift.org publishes no build for a newer Ubuntu, so a
+    # runner-image bump would fail the download before anything was compiled.
+    runs-on: ubuntu-24.04
+    # The action bounds only the emulator boot, so a hung adb run is otherwise unbounded here.
+    # Provisional ceiling until this package has green runs on main.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      # The trait set is part of the key for the same reason it is on the Linux lane, and the
+      # toolchain build is in the key because this file pins it: a bump below must not restore a
+      # `.build` the old compiler wrote. `runner.os` is `Linux` here as well, so the platform is
+      # spelled out or this lane would restore the Linux lane's graph. The cache restores before the
+      # build and saves when the job ends. Keep the token here in step with `swift-version` below.
+      - name: Cache SwiftPM build products
+        uses: actions/cache@v6
+        with:
+          path: .build
+          key: spm-Android-swift-6.3.3-traits-HTTPPortable-${{ hashFiles('Package.swift', 'Package.resolved') }}-${{ github.sha }}
+          restore-keys: |
+            spm-Android-swift-6.3.3-traits-HTTPPortable-${{ hashFiles('Package.swift', 'Package.resolved') }}-
+            spm-Android-swift-6.3.3-traits-HTTPPortable-
+      # One composite step does the whole lane: it installs the swift.org host toolchain and the Swift
+      # SDK for Android, pinned by exact build to the same 6.3.3 the Linux container runs, prints
+      # `swift --version` straight after the install, builds the package and its tests for the x86_64
+      # emulator triple, pushes the test runner to an emulator, and runs the whole suite there,
+      # unfiltered. Pinned by commit, the same commit swifty-networking pins; the `actions/cache` and
+      # `android-emulator-runner` it calls inside are the composite's own and cannot be pinned from
+      # here. The trait is on, matching the Linux lane's first run: this is the lane that proves the
+      # SDK dependencies compile with the AsyncHTTPClient transport on Android, and that the test resources
+      # bundled with the test support target load there. `Module+URLSession.swift` compiles out
+      # under `#if canImport(Darwin)`. Cold-boot the cached AVD because snapshots can retain
+      # `sys.boot_completed=1` while Android services are not ready after a runner-image update.
+      - name: Build and test on an Android emulator
+        uses: skiptools/swift-android-action@2044b79660f201ccef8cbce62877e4ec5409f9c8 # v2.9.5
+        with:
+          android-emulator-options: -no-snapshot -no-window -noaudio -no-boot-anim
+          swift-build-flags: --traits HTTPPortable
+          swift-version: '6.3.3'
+
+  apple:
+    # Disabled until real products, tests, dependency pins, and demo are implemented.
+    if: ${{ false }}
+    name: Build & Test (iOS ${{ matrix.os }} Simulator)
+    # Two runners, one job. `xcode-27` is GitHub's public preview image for Xcode 27 (arm64 only, macOS
+    # 27.0, Xcode 27.0 RC as the default install; there is no `macos-27` label) and tests the newest
+    # toolchain and runtime. `macos-26` is the GA image with the Xcode 26 line and iOS 26 runtimes; it
+    # keeps coverage at the package's iOS 26 platform floor and proves the package still builds with
+    # Xcode 26 and its Swift 6.2 compiler, which the manifest's tools version declares.
+    strategy:
+      # A failure on the preview image must not cancel the macOS 26 run, so each entry reports on its own.
+      fail-fast: false
+      matrix:
+        include:
+          - device: iPhone 18 Pro
+            os: '27.0'
+            runner: xcode-27
+          - device: iPhone 17 Pro
+            os: '26.2'
+            runner: macos-26
+    runs-on: ${{ matrix.runner }}
+    # Provisional ceiling applies separately to each matrix entry.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Show Xcode version
+        run: xcodebuild -version
+      # Surfaces the runner's real device names so a runner-image bump that renames a simulator is
+      # diagnosable from the log, not just a red X.
+      - name: List available simulators
+        run: xcrun simctl list devices available
+      # The OS is pinned instead of `latest` so a runner-image Xcode bump moves the tested platform only
+      # when someone edits the matrix, and each pin is the lowest runtime its image carries. `xcode-27`
+      # carries only iOS 27.0. 26.2 is the lowest `macos-26` offers; the package floor is 26.0, which
+      # that image carries no runtime for, and 26.2 matches swifty-networking's pin. The step above
+      # prints what the runner actually has; read it before editing a pin. This is also the only
+      # lane that compiles the URLSession path at all; the Linux and Android lanes compile it out
+      # under `#if canImport(Darwin)`.
+      - name: Build and test
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme swift-nara-Package \
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }},OS=${{ matrix.os }}' \
+            -skipPackagePluginValidation \
+            | xcbeautify --renderer github-actions
+
+      # The demo builds against a generic destination, so one run proves it; a second would double the
+      # cost for the same result.
+      - name: Build demo for release
+        if: matrix.runner == 'xcode-27'
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Examples/SwiftNARACatalogBulkDemo/SwiftNARACatalogBulkDemo.xcodeproj \
+            -scheme SwiftNARACatalogBulkDemo \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+  lint:
+    # Disabled until real products, tests, dependency pins, and demo are implemented.
+    if: ${{ false }}
+    name: swift-format lint
+    runs-on: ubuntu-latest
+    container: swift:6.3-noble
+    # Provisional ceiling until this package has green runs on main.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Show swift-format version
+        run: swift format --version
+      # Any finding fails the job.
+      - name: Lint
+        run: swift format lint --strict --recursive Sources Tests Examples/SwiftNARACatalogBulkDemo/SwiftNARACatalogBulkDemo
+
+  scaffold:
+    name: Validate package infrastructure
+    runs-on: ubuntu-latest
+    container: swift:6.3-noble
+    # Provisional until this package has green runs on main.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install validation runtime
+        run: apt-get update && apt-get install -y python3
+      - name: Validate scaffold
+        run: bash Scripts/verify.sh --scaffold
+      - name: Validate gate self-tests
+        run: bash Scripts/verify.sh --self-test
