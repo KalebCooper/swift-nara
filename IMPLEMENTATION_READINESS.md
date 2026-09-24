@@ -1,28 +1,36 @@
 # Implementation readiness
 
-This repository is an infrastructure scaffold, with no service source, products, dependencies, or release. A scaffold check is not a build or portability result.
+The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModels` and `SwiftNARACatalogBulk`. It has no published release. [Source verification](SOURCE_VERIFICATION.md) records official distribution, continuation, object-format, rights, and dependency evidence.
 
-## First implementation prerequisite
+## Implemented scope
 
-Complete and verify the shared swifty-networking transport receipt and portable decoding work before starting the government API slice. Select the published dependency version only after that work is available. Do not add provisional dependency pins, the HTTPPortable trait, or empty targets.
+- Pure portable S3 XML decoding and validated ListObjectsV2 queries, with exact opaque continuation and same-origin endpoints.
+- Everyday methods, reusable typed requests, independent endpoints, and consumer-defined response decoding.
+- Shared swifty-networking pagination with bounded page receipts, independent lazy page/object iterators, cancellation, token-cycle detection, and optional record-before-yield persistence.
+- Streamed JSONL downloads with byte bounds, HTTP receipts, new-file publication, and partial-file cleanup. Local JSONL reading is a separate bounded lazy operation.
+- Exact NAIDs, open source envelopes, hierarchy, digital-object and OCR metadata, restrictions, original line bytes, offsets, and retrieval provenance. Missing digital-object members remain distinct from null and explicit empty arrays.
+- Five unchanged official fixtures with attributed URLs, timestamps, status, headers, byte counts, and SHA-256; historical 1816/1817 and FDR examples; typed failures; two DocC catalogs; and an offline command-line demo.
 
-The intended product pair is `SwiftNARACatalogBulk` and `SwiftNARACatalogBulkModels`. These names are reserved by the package scope, not declared in the manifest. Verify the official bulk distribution contract and item restrictions before implementation. The separate Catalog HTTP API is excluded from persistent ingestion.
+The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
-The S3 manifest is paginated XML. Extend the existing swifty-networking paginator with bounded source decoding, preserving its JSON default and shared fetching/continuation machinery before adding the SDK. Verify portable XML decoding and response-byte/metadata receipts for single and paginated responses, including cancellation, early break, and recorder failure without prefetch or refetch.
+## Local qualification
 
-Stream selected JSONL shards with bounded memory; distinguish network downloads from local record iteration. Never decode the whole bulk corpus as an in-memory array. Preserve NAID, source hierarchy, object URL/key/version metadata, line identity, raw-record evidence, and retrieval provenance. Manifest ETags are version hints, not assumed SHA-256 content digests. Preserve digital-object links, OCR provenance, access/use restrictions, and rights statements; empty digital-object arrays mean metadata-only availability.
+Verified September 24, 2026 UTC (September 23 in America/Chicago). Local logs and documentation archives are retained in the ignored `plans/` directory.
 
-Recorded fixtures must cover historical 1816/1817 descriptions, FDR-era material, metadata-only records, unknown fields, nulls, malformed JSONL records, and XML continuation failures. Archival holdings can include campaign material and non-presidential service: preserve source data and leave application inclusion policy to consumers. Do not imply every archived speech is an official presidential action or that a snapshot is a current-administration feed.
+| Gate | Evidence and remaining limit |
+| --- | --- |
+| Source conventions | All 15 checks pass; 47 planted self-test cases pass. Recorded JSONL prose is excluded only inside the fixture directory, with negative coverage for authored JSONL elsewhere. |
+| Strict formatting | Sources, Tests, both package manifests, and demo source pass. |
+| Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, under Swift 6.3.3 in `swift:6.3-noble` (`plans/linux-final.log`). |
+| Apple via Xcode MCP | An earlier revision built successfully for iPhone 18 Pro / iOS 27, including build-for-testing. The test operation timed out without results; its log contained two incompatible macOS/iOS sysroot linker warnings. The bridge subsequently returned `Transport closed`, including after reopening this package. The final revision, test execution, and Apple Release demo remain unverified. No shared bridge reset or sibling workspace changes were made. |
+| Declared Apple floor | Xcode 26 / Swift 6.2 and the iOS 26 runtime were not qualified locally. |
+| Android | No installed Swift Android SDK, adb, or emulator was available. No Android compatibility result is claimed. |
+| DocC | Both catalogs convert with warnings treated as errors, models first, using final Linux symbols; merged archive and static site generation also pass (`plans/docc-final/`). Apple-only URLSession documentation remains part of the pending Apple qualification. |
+| Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses. |
+| Hosted CI and delivery | No hosted run, remote creation, push, tag, release, or Pages deployment was performed. Platform and documentation jobs remain disabled; the source validation job runs the locally passing gate and self-tests. |
 
-## Deferred implementation and verification
+## Remaining work
 
-- Actual models, endpoints, typed requests, client operations, fixtures, Swift Testing suites, and consumer compile examples.
-- HTTPPortable trait forwarding, transport dependencies, and the verified trait-on `Package.resolved` superset.
-- Apple build/tests with the generated `swift-nara-Package` scheme through Xcode MCP.
-- Linux default and HTTPPortable suites, Android emulator suite, and source formatting. Their retained CI jobs are explicitly disabled.
-- One DocC catalog per implemented product, models-first documentation metadata, `.spi.yml`, and zero-warning local DocC builds. Both documentation workflow jobs are disabled.
-- A working demo and its release build. Demo CI wiring is retained but disabled with the Apple job.
-- Full repository source verification and all platform gates before activating source CI.
-- Remote creation, push, hosted CI, tags, and release publication require a separate delivery decision.
+Restore a working Xcode MCP connection and rerun the final Apple build, complete tests, floor checks, Apple DocC, and Release demo. Qualify the Android emulator lane when its SDK and tools are available. Run hosted workflows only after a separate delivery decision, then measure actual job durations before replacing provisional timeouts.
 
-`Scripts/verify-source.sh` retains the adapted family gate and its planted-violation self-tests. Source, Linux, and documentation scripts reject absent modules before doing source-dependent work. `Scripts/verify.sh --scaffold` checks only infrastructure; the default command never treats this scaffold as a completed library.
+The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, repository publication, and release approval remain outside this slice.
