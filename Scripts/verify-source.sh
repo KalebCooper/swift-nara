@@ -136,29 +136,30 @@ check_coordinates() {
 }
 
 # Prohibition. No em dashes anywhere written here. A recorded response body is the provider's words
-# rather than this repository's, so the scan skips `.json`, the format every recording is saved in.
+# rather than this repository's, so the scan skips `.json` bodies and `.jsonl` files only
+# inside the recorded fixture directory. Authored JSONL elsewhere remains checked.
 # The exclusion is by extension rather than by the Fixtures directory because prose this repository
 # does write lives there too, such as a README naming what each recording holds, and excluding the
 # directory would drop it from the scan with nothing to say so. A recording saved in some other
-# format, and this service offers application/cap+xml, trips the check on the day it is added and
+# format trips the check on the day it is added and
 # joins the exclusion then, which is the loud failure rather than the silent one.
 check_em_dash() {
   local name="no em dash in Sources, Tests, Scripts, .github, Package.swift, .spi.yml, README, CHANGELOG, CONTRIBUTING, recordings aside"
   local hits dash
   dash=$(printf '\342\200\224')
-  hits=$(grep -rnH --exclude='*.json' -- "$dash" "$ROOT/Sources" "$ROOT/Tests" "$ROOT/Scripts" "$ROOT/.github" "$ROOT/Package.swift" "$ROOT/.spi.yml" "$ROOT/README.md" "$ROOT/CHANGELOG.md" "$ROOT/CONTRIBUTING.md" 2>/dev/null || true)
+  hits=$(grep -rnH --exclude='*.json' -- "$dash" "$ROOT/Sources" "$ROOT/Tests" "$ROOT/Scripts" "$ROOT/.github" "$ROOT/Package.swift" "$ROOT/.spi.yml" "$ROOT/README.md" "$ROOT/CHANGELOG.md" "$ROOT/CONTRIBUTING.md" 2>/dev/null | grep -vE "/Sources/SwiftNARACatalogBulkTestSupport/Fixtures/[^/]+[.]jsonl:[0-9]+:" || true)
   if [ -z "$hits" ]; then pass "$name"; else fail "$name"; printf '%s\n' "$hits"; fi
 }
 
 # Prohibition. Testing vocabulary: name the type, never "double", "the driver", or "the seam". The
 # em-dash check's scope minus Scripts, Package.swift, and .spi.yml, which carry no prose about tests,
-# and its `.json` exclusion for the reason stated there: the provider's own glossary defines seepage
+# and its recording exclusions for the reason stated there: the provider's own glossary defines seepage
 # through seams in a dam abutment and a hurricane's double-eye, and neither one is this repository
 # writing about its tests.
 check_test_jargon() {
   local name="no test double, driver, or seam jargon in Sources, Tests, .github, README, CHANGELOG, CONTRIBUTING, recordings aside"
   local hits
-  hits=$(grep -rnHwiE --exclude='*.json' "test doubles?|doubles|(the|a|second|no) double|the driver|the seam|a seam|seams" "$ROOT/Sources" "$ROOT/Tests" "$ROOT/.github" "$ROOT/README.md" "$ROOT/CHANGELOG.md" "$ROOT/CONTRIBUTING.md" 2>/dev/null || true)
+  hits=$(grep -rnHwiE --exclude='*.json' "test doubles?|doubles|(the|a|second|no) double|the driver|the seam|a seam|seams" "$ROOT/Sources" "$ROOT/Tests" "$ROOT/.github" "$ROOT/README.md" "$ROOT/CHANGELOG.md" "$ROOT/CONTRIBUTING.md" 2>/dev/null | grep -vE "/Sources/SwiftNARACatalogBulkTestSupport/Fixtures/[^/]+[.]jsonl:[0-9]+:" || true)
   if [ -z "$hits" ]; then pass "$name"; else fail "$name"; printf '%s\n' "$hits"; fi
 }
 
@@ -334,6 +335,7 @@ write_clean_tree() {
   # the clean arm fails if either scan stops skipping recordings. Written with an escape because the
   # em-dash check reads this script too.
   printf '{\n  "glossary": [\n    {\n      "term": "Abutment seepage",\n      "definition": "Water that moves through seams in the abutment \342\200\224 and exits downstream."\n    }\n  ]\n}\n' > "$d/Sources/SwiftNARACatalogBulkTestSupport/Fixtures/Glossary.json"
+  cp "$d/Sources/SwiftNARACatalogBulkTestSupport/Fixtures/Glossary.json" "$d/Sources/SwiftNARACatalogBulkTestSupport/Fixtures/record.jsonl"
   # The doc comment names what the code may not, and the type name starts with an SDK module's name,
   # so the clean arm fails if either the comment filter or the word boundary stops holding.
   cat > "$d/Sources/SwiftNARACatalogBulkModels/MediaType.swift" <<'EOF'
@@ -515,6 +517,10 @@ plant_third_violation() {
   # $1: directory, $2: check function; returns 1 when the check has fewer than three shapes
   local d="$1"
   case "$2" in
+    check_em_dash)
+      printf 'Authored prose \342\200\224 must remain checked.\n' > "$d/Tests/authored.jsonl" ;;
+    check_test_jargon)
+      printf 'Use a test double here.\n' > "$d/Tests/authored.jsonl" ;;
     # Importing one declaration is still importing the module.
     check_models_import_boundary)
       printf 'import struct HTTPCore.Request\n' > "$d/Sources/SwiftNARACatalogBulkModels/Leak.swift" ;;

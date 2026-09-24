@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   build:
-    # No documentation products or catalogs exist yet.
+    # Local catalogs pass; hosted qualification and delivery remain pending.
     if: ${{ false }}
     name: Build DocC site
     runs-on: macos-26
@@ -55,7 +55,7 @@ jobs:
     name: Deploy to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
-    # Publishing remains disabled until real products and catalogs pass local DocC gates.
+    # Publishing requires the package delivery decision and hosted qualification.
     if: ${{ false }}
     # Provisional until this package has green runs on main.
     timeout-minutes: 15

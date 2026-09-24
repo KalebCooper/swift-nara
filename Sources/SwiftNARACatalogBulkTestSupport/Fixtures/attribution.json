@@ -1,0 +1,102 @@
+[
+  {
+    "byteCount": 1843,
+    "file": "manifest-first.xml",
+    "headers": {
+      "x-amz-id-2": "JgXVTr1qfUcgxHdke4Xn2GcKU7gGi+iOJRFJuXmJN4js96O9+Psq9faZ3PgmaSv2ElgJlzux+30l9O7p2FBIXgqy/IubneoP",
+      "x-amz-request-id": "G2QKK7FHTWDYAM8P",
+      "Server": "AmazonS3",
+      "Date": "Thu, 24 Sep 2026 01:48:01 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-24T01:48:00.960611+00:00",
+    "sha256": "750b7681c2aec805e5e601a4b72f33e02f8bcdb2457b8d82596c7b09ad291d9f",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=4&prefix=descriptions%2Frecord-groups%2Frg_11%2F"
+  },
+  {
+    "byteCount": 2014,
+    "file": "manifest-second.xml",
+    "headers": {
+      "x-amz-id-2": "fPbJjR47zEbn1ggg2m3Y+VHQZDOYY2mn+hWhgCUz3IHH7Getn+l/MrHJ6uOOSb+cb5a8Xs49I0MC3wkSVP9tbPySwZcOzr7+",
+      "x-amz-request-id": "PWQQB3DSS63EB6AP",
+      "Server": "AmazonS3",
+      "Date": "Thu, 24 Sep 2026 01:48:02 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-24T01:48:01.193392+00:00",
+    "sha256": "33a4548c3345866b6c8edc6697682395a72d2b408441ffeda32ee699c04a7988",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=4&prefix=descriptions%2Frecord-groups%2Frg_11%2F&continuation-token=1cpY%2FaStNE6LXQMsT0ty1oO8ntibFqkokut04jGcpaXwH8W%2BfLH%2BroIlyLKxMLnkTyvhcuuWLimbplOdtNlm58C2tFMOWG1AJfkot%2Bmi8fHJPEzpR1mJvy5fuZpJ63Hv%2F"
+  },
+  {
+    "byteCount": 142657,
+    "file": "manifest-terminal.xml",
+    "headers": {
+      "x-amz-id-2": "6Ib3DtIMiwfPLynV4IKRfrfhSot86zPkMxEJ+68PlICqIEjXSbok9xu78PG2JLoKe7yq4VZuCavffmwiBKFeK+ksCNWk0Rrq",
+      "x-amz-request-id": "PWQSRA96QAGPX3RH",
+      "Server": "AmazonS3",
+      "Date": "Thu, 24 Sep 2026 01:48:02 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-24T01:48:01.705807+00:00",
+    "sha256": "ee8448a4457f72701b284521692b4c63fbe7139f74d814f0925cb80c120a4f08",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=1000&prefix=descriptions%2Fcollections%2Fcoll_FDR-FDRMSF%2F"
+  },
+  {
+    "byteCount": 417823,
+    "file": "rg11.jsonl",
+    "headers": {
+      "x-amz-request-id": "PWQSKD6DKQ6EM8PM",
+      "x-amz-id-2": "+jG+HejJ0PdQRL3v4NUy38b5UGJgSD0jSpYlh4gnXlLDeDWCwjTwX5+U3FINgG94hHEG0IACenV1n93uMivMlXlR58AYG0ye",
+      "Content-Length": "417823",
+      "Accept-Ranges": "bytes",
+      "Date": "Thu, 24 Sep 2026 01:48:01 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Thu, 09 Apr 2026 12:49:55 GMT",
+      "ETag": "\"c21eded7d1711eb3cbd549778015c49e\"",
+      "x-amz-version-id": "NMzzuN8JVdGUIQdIJ1oeIKXl.EHb_LYm",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-24T01:48:02.099161+00:00",
+    "sha256": "66225d2241f5f0302ade7f4f95bc602b54aadf28ccae09cd5400a90583ecbaf7",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/record-groups/rg_11/rg_11-1.jsonl"
+  },
+  {
+    "byteCount": 320707,
+    "file": "fdr.jsonl",
+    "headers": {
+      "x-amz-request-id": "DF5RQ73AEWYTNWKP",
+      "x-amz-id-2": "83KVJfEDWL+lMpFkrrl1HGZoWFqT7gNThWEzn34huHjofhvxkDwGIytkbMvUmiq9VkN5BLSV20w=",
+      "Content-Length": "320707",
+      "Accept-Ranges": "bytes",
+      "Date": "Thu, 24 Sep 2026 01:48:02 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Thu, 09 Apr 2026 17:28:28 GMT",
+      "ETag": "\"4ee6006efb1a7923711c088aaf8626a0\"",
+      "x-amz-version-id": "UJyiii_Crdud2H8tsuMrokVKx2zzjm.6",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-24T01:48:02.690874+00:00",
+    "sha256": "561cbfe38cf771ddb2ceeaca0149cee9e44d583e53051d01fbbdd4782755cef7",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl"
+  }
+]

@@ -13,6 +13,8 @@ DerivedData/
 
 # The demo resolves this package by local path; the root Package.resolved is the pin of record.
 /Examples/*/*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+/Examples/*/.build/
+/Examples/*/Package.resolved
 
 # Local planning docs, not part of the published repo.
 /plans/
