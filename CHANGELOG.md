@@ -12,3 +12,8 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 - Open source records preserving NAIDs, hierarchy, digital objects, OCR/contributions, unknown/null fields, metadata-only descriptions, and restrictions.
 - Attributed original manifest, RG11, and FDR fixtures, deterministic Swift Testing coverage, two DocC catalogs, and an offline command-line demo.
 - Provider evidence and explicit qualification status; source validation retains absent-subject and planted-violation coverage.
+
+### Fixed
+
+- Enable Apple, Android, Linux, strict formatting, and DocC build checks on pushes and pull requests.
+- Publish the DocC site after successful documentation builds on main.

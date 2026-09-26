@@ -13,8 +13,6 @@ on:
 
 jobs:
   linux:
-    # Disabled until the remaining local platform and demo gates pass.
-    if: ${{ false }}
     name: swift test (Linux)
     runs-on: ubuntu-latest
     container: swift:6.3-noble
@@ -51,8 +49,6 @@ jobs:
         run: swift test --scratch-path .build-default
 
   android:
-    # Disabled until the remaining local platform and demo gates pass.
-    if: ${{ false }}
     name: swift test (Android)
     # `ubuntu-24.04` rather than `ubuntu-latest`: the action below derives the swift.org host toolchain
     # URL from the runner's os-release id, and swift.org publishes no build for a newer Ubuntu, so a
@@ -95,8 +91,6 @@ jobs:
           swift-version: '6.3.3'
 
   apple:
-    # Disabled until the remaining local platform and demo gates pass.
-    if: ${{ false }}
     name: Build & Test (iOS ${{ matrix.os }} Simulator)
     # Apple qualification uses Xcode 27 on the xcode-27 image.
     # The iOS runtime pin is independent of the package deployment target.
@@ -135,8 +129,6 @@ jobs:
             SwiftNARACatalogBulkDemo "$PWD/Sources/SwiftNARACatalogBulkTestSupport/Fixtures"
 
   lint:
-    # Disabled until the remaining local platform and demo gates pass.
-    if: ${{ false }}
     name: swift-format lint
     runs-on: ubuntu-latest
     container: swift:6.3-noble

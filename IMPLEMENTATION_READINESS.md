@@ -15,21 +15,21 @@ The public swifty-networking 1.3.1 tag was verified before setting the dependenc
 
 ## Local qualification
 
-Verified September 24, 2026 UTC (September 23 in America/Chicago). Local logs and documentation archives are retained in the ignored `plans/` directory.
+Reverified September 26, 2026 UTC. Earlier qualification logs and documentation archives are retained in the ignored `plans/` directory.
 
 | Gate | Evidence and remaining limit |
 | --- | --- |
 | Source conventions | All 15 checks pass; 47 planted self-test cases pass. Recorded JSONL prose is excluded only inside the fixture directory, with negative coverage for authored JSONL elsewhere. |
 | Strict formatting | Sources, Tests, both package manifests, and demo source pass. |
-| Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, under Swift 6.3.3 in `swift:6.3-noble` (`plans/linux-final.log`). |
-| Apple via Xcode MCP | An earlier revision built successfully for iPhone 18 Pro / iOS 27, including build-for-testing. The test operation timed out without results; its log contained two incompatible macOS/iOS sysroot linker warnings. The bridge subsequently returned `Transport closed`, including after reopening this package. The final revision, test execution, and Apple Release demo remain unverified. No shared bridge reset or sibling workspace changes were made. |
+| Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, using `bash Scripts/linux-test.sh` and `swift:6.3-noble`. |
+| Apple via Xcode MCP | The generated `swift-nara-Package` scheme builds for testing and all 25 tests pass on iPhone 18 Pro / iOS 27 using Xcode 27. No tests fail, skip, or remain unrun. The build still emits incompatible macOS/iOS sysroot linker warnings for generated test products. The Apple Release demo remains unverified. |
 | Android | No installed Swift Android SDK, adb, or emulator was available. No Android compatibility result is claimed. |
-| DocC | Both catalogs convert with warnings treated as errors, models first, using final Linux symbols; merged archive and static site generation also pass (`plans/docc-final/`). Apple-only URLSession documentation remains part of the pending Apple qualification. |
+| DocC | `Scripts/build-docs.sh` passes using Apple iOS simulator modules built through Xcode MCP. Both catalogs convert with warnings treated as errors, models first; merged archive and static site generation pass, including Apple-only URLSession symbols. |
 | Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses. |
-| Hosted CI and delivery | No hosted run, remote creation, push, tag, release, or Pages deployment was performed. Platform and documentation jobs remain disabled; the source validation job runs the locally passing gate and self-tests. |
+| Hosted CI and delivery | The repository exists at `KalebCooper/swift-nara`. [CI run 36247312303](https://github.com/KalebCooper/swift-nara/actions/runs/36247312303) passed source validation while Apple, Android, Linux, and formatting jobs were disabled. [Docs run 36247312312](https://github.com/KalebCooper/swift-nara/actions/runs/36247312312) was skipped. These build checks are now enabled for pushes and pull requests; hosted results for the change are pending. Pages deployment is enabled after successful documentation builds on main. No release is published. |
 
 ## Remaining work
 
-Restore a working Xcode MCP connection and rerun the final Apple build, complete tests on Xcode 27, Apple DocC, and Release demo. Qualify the Android emulator lane when its SDK and tools are available. Run hosted workflows only after a separate delivery decision, then measure actual job durations before replacing provisional timeouts.
+Verify the enabled hosted Apple, Android, Linux, formatting, and DocC lanes, including the Apple Release demo and Pages deployment. Android has no local qualification result because its SDK and emulator are unavailable here. Measure actual green main job durations before replacing provisional timeouts. Releases require separate approval.
 
 The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, repository publication, and release approval remain outside this slice.
