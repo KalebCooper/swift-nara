@@ -14,8 +14,9 @@ struct Demo {
     let first = try Data(contentsOf: fixtures.appendingPathComponent("manifest-first.xml"))
     let second = try Data(contentsOf: fixtures.appendingPathComponent("manifest-second.xml"))
     let shard = try Data(contentsOf: fixtures.appendingPathComponent("fdr.jsonl"))
+    let person = try Data(contentsOf: fixtures.appendingPathComponent("person.jsonl"))
     let transport = MockTransport(
-      results: [first, second, shard].map { .success(Response(body: $0, status: .ok)) })
+      results: [first, second, shard, person].map { .success(Response(body: $0, status: .ok)) })
     // A fixed receipt instant makes this recorded example repeatable.
     let client = CatalogBulkClient(
       configuration: try CatalogBulkConfiguration(
@@ -58,6 +59,30 @@ struct Demo {
       print(
         "  level \(level), production date \(productionYear), ancestors \(ancestorCount), access restriction \(restrictionStatus), digital objects \(digitalObjectsState)"
       )
+      let transcriptions = line.record.transcriptions ?? []
+      var machineGeneratedTrue = 0
+      var machineGeneratedFalse = 0
+      var machineGeneratedNotDeclared = 0
+      for transcription in transcriptions {
+        switch transcription.isAIMachineGenerated {
+        case .some(true): machineGeneratedTrue += 1
+        case .some(false): machineGeneratedFalse += 1
+        case .none: machineGeneratedNotDeclared += 1
+        }
+      }
+      print(
+        "  transcriptions \(transcriptions.count), machine-generated true \(machineGeneratedTrue), false \(machineGeneratedFalse), not declared \(machineGeneratedNotDeclared)"
+      )
+    }
+    let authorityReceipt = try await client.download(
+      ShardReference(key: "authority-records/person/person-1.jsonl"),
+      to: directory.appendingPathComponent("person.jsonl"))
+    for try await line in try CatalogLineSequence(shard: authorityReceipt) {
+      let authority = line.record.authorityRecord
+      print(
+        "First person authority heading \(authority?.heading ?? "no heading"), type \(authority?.authorityType?.rawValue ?? "no type")"
+      )
+      break
     }
     print(
       "Read \(count) local records from \(receipt.byteCount) saved bytes; \(transport.requests.count) recorded HTTP responses."

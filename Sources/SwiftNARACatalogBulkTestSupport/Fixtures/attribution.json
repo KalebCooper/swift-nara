@@ -98,5 +98,116 @@
     "sha256": "561cbfe38cf771ddb2ceeaca0149cee9e44d583e53051d01fbbdd4782755cef7",
     "status": 200,
     "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl"
+  },
+  {
+    "byteCount": 31042,
+    "file": "geographic-reference.jsonl",
+    "headers": {
+      "x-amz-request-id": "FNC5780SDNDS5HV9",
+      "x-amz-id-2": "3JtWa0Nr38PxHyOfRinhXHlUgyI0TfL68B0gSsWhAeX+Z1SPYd5yzzzv7cKaIBBNRtUkGEio8dc=",
+      "Content-Length": "31042",
+      "Accept-Ranges": "bytes",
+      "Date": "Sat, 26 Sep 2026 20:12:35 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Mon, 06 Apr 2026 17:54:57 GMT",
+      "ETag": "\"97464265bf78cc7104985756a1b34e10\"",
+      "x-amz-version-id": "uxUDdZC3AOWywfbJUIckHkYyHFiAboGS",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T20:12:35.350330+00:00",
+    "sha256": "ae56751769f3865a8bd94ae24447456893da543a57feefa254a7fb6f08c15658",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/geographic-reference/geographic-reference-1.jsonl"
+  },
+  {
+    "byteCount": 392792,
+    "file": "organization.jsonl",
+    "headers": {
+      "x-amz-request-id": "FNC2ASXR96G66PR4",
+      "x-amz-id-2": "pZgQkneFUCE+1Uiv0EjfNSJ0CoXpgGQ/dN4We13E1TJg3nY5A1zXQKzHezEIwONVTAOBjg30T2c=",
+      "Content-Length": "392792",
+      "Accept-Ranges": "bytes",
+      "Date": "Sat, 26 Sep 2026 20:12:35 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Mon, 06 Apr 2026 17:55:21 GMT",
+      "ETag": "\"f81bca79c43b72b879572af1c07af093\"",
+      "x-amz-version-id": "WoQK5wMYdPfh8COg0QPm4l4TOQoTIcXo",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T20:12:35.661304+00:00",
+    "sha256": "64635225c4f3db8331b4659afa3ae99ae0edb9f3d48632b2fd94c334c2119297",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/organization/organization-1.jsonl"
+  },
+  {
+    "byteCount": 121358,
+    "file": "person.jsonl",
+    "headers": {
+      "x-amz-request-id": "FNCAF18YR4GETXN1",
+      "x-amz-id-2": "2Tb8nbOKgeLGkjwn0r/soEtPXjjg+UdV2G38GV+t+M/YzvyUyxiztPmtRH/JOr6Iyf0bORIt5Hg=",
+      "Content-Length": "121358",
+      "Accept-Ranges": "bytes",
+      "Date": "Sat, 26 Sep 2026 20:12:35 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Mon, 06 Apr 2026 17:55:47 GMT",
+      "ETag": "\"b39f48234733e3159058935318f76a93\"",
+      "x-amz-version-id": "Qtox9fnv0qeAKFgoIkmN2jgFZyREQDRP",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T20:12:35.931505+00:00",
+    "sha256": "1fb10ab45dcc5f48da0cb141e29bd8a2b5580f3924a1a0626cf02acc76537167",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/person/person-1.jsonl"
+  },
+  {
+    "byteCount": 537,
+    "file": "specific-records-type.jsonl",
+    "headers": {
+      "x-amz-request-id": "KHY4F1N4KWT8FKJX",
+      "x-amz-id-2": "Z7Vo7dXdiyalY+1kCxR/uijjsWKkAVzJ5P6H++ySN4zCJoQl4ivk0AOmZsZAeNGr5Z4CXgyA3UQ=",
+      "Content-Length": "537",
+      "Accept-Ranges": "bytes",
+      "Date": "Sat, 26 Sep 2026 20:12:36 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Mon, 06 Apr 2026 17:56:11 GMT",
+      "ETag": "\"d650312d4a8e0257d1711378e01ab1b9\"",
+      "x-amz-version-id": "MOtxUPRTDbR2IALbEb3imNjaGhW1HCB.",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T20:12:36.080052+00:00",
+    "sha256": "5aaae96cda8e66adff5ee3ad8867c7b6e94e0420684697053da67eedc92615d4",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/specific-records-type/specific-records-type-1.jsonl"
+  },
+  {
+    "byteCount": 22572,
+    "file": "topical-subject.jsonl",
+    "headers": {
+      "x-amz-request-id": "KHYCK8Z3328BTKFV",
+      "x-amz-id-2": "nLX8iOkRXSr74ypW3oAcZQGtuIEIQHKCU1cHy9ci8MDzAJq6jT3MJX+cupL8BfVqSXqHzTCdKDQ=",
+      "Content-Length": "22572",
+      "Accept-Ranges": "bytes",
+      "Date": "Sat, 26 Sep 2026 20:12:36 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Mon, 06 Apr 2026 17:56:38 GMT",
+      "ETag": "\"8560f696c0e489598c8f030ac3969903\"",
+      "x-amz-version-id": "gtB5tjrqXRspeDqGV.Vknk4hhQaqANor",
+      "Content-Type": "binary/octet-stream",
+      "x-amz-server-side-encryption": "AES256",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T20:12:36.256801+00:00",
+    "sha256": "dadae41eea572b6e318521716716dc86ebf96496e31ea8081ba0470d776fc1d5",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/topical-subject/topical-subject-1.jsonl"
   }
 ]

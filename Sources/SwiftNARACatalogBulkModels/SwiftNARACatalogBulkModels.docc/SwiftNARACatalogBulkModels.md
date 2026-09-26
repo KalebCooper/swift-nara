@@ -31,6 +31,22 @@ for try await line in try CatalogLineSequence(shard: receipt) {
 }
 ```
 
+`CatalogRecord.authorityRecord` projects an `authority`-typed envelope into `CatalogAuthorityRecord`, exposing an open `CatalogAuthorityType`, heading, source notes, source dates through `CatalogDate`, and typed `CatalogNAIDReference` values for related records. A person, organization, topical-subject, geographic-place-name, or specific-records-type authority can supply any evidenced member, and unprojected members remain in `source`. `CatalogRecord.comments`, `.tags`, and `.transcriptions` project the envelope's top-level `record_comment`, `record_tag`, and `record_transcription` arrays into `CatalogContribution` values in source order; `CatalogRecord.contributionMetadata` exposes the matching `metadata_*` arrays separately, never joined to a contribution by position. A contribution's `contributionSource` names a `CatalogContributionSource` such as `.communityMember` or `.naraStaff`. `isAIMachineGenerated` is the source's own flag, not a text-origin guarantee, and a contribution never replaces or corrects a digital object's OCR `extractedText`. Contributors are Catalog users named in `contributor` or `contributors`, not archival creators.
+
+```swift
+let shard = try ShardReference(key: "authority-records/person/person-1.jsonl")
+let receipt = try await bulk.download(shard, to: destination)
+for try await line in try CatalogLineSequence(shard: receipt) {
+  if let authority = line.record.authorityRecord {
+    print(authority.naID, authority.authorityType?.rawValue, authority.heading)
+  }
+  for transcription in line.record.transcriptions ?? [] {
+    print(transcription.contribution, transcription.target?.objectID)
+    print(transcription.isAIMachineGenerated, transcription.contributionSource?.rawValue)
+  }
+}
+```
+
 ## Topics
 
 ### Request values
@@ -57,6 +73,17 @@ for try await line in try CatalogLineSequence(shard: receipt) {
 - ``CatalogDescriptionLevel``
 - ``CatalogRestriction``
 - ``CatalogRestrictionStatus``
+
+### Authority records
+- ``CatalogAuthorityRecord``
+- ``CatalogAuthorityType``
+- ``CatalogNAIDReference``
+
+### Contributions
+- ``CatalogContribution``
+- ``CatalogContributionMetadata``
+- ``CatalogContributionSource``
+- ``CatalogContributionTarget``
 
 ### Provenance
 - ``CatalogLine``

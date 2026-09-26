@@ -1,6 +1,6 @@
 # Source verification
 
-The National Archives Catalog dataset was accessed on September 24, 2026 UTC from the [NARA-managed AWS registry](https://registry.opendata.aws/nara-national-archives-catalog/). Five original response bodies and their exact URLs, retrieval instants, HTTP status, headers, byte counts, and SHA-256 hashes are in [fixture attribution](Sources/SwiftNARACatalogBulkTestSupport/Fixtures/attribution.json). No Catalog HTTP API response is used.
+The National Archives Catalog dataset was accessed on September 24, 2026 UTC from the [NARA-managed AWS registry](https://registry.opendata.aws/nara-national-archives-catalog/). Five original response bodies and their exact URLs, retrieval instants, HTTP status, headers, byte counts, and SHA-256 hashes are in [fixture attribution](Sources/SwiftNARACatalogBulkTestSupport/Fixtures/attribution.json). No Catalog HTTP API response is used. Five authority-record bodies were added on September 26, 2026 UTC from the same bulk origin with the same attribution fields.
 
 ## Verified bulk contract
 
@@ -13,6 +13,10 @@ The [S3 ListObjectsV2 contract](https://docs.aws.amazon.com/AmazonS3/latest/API/
 The unmodified RG11 shard contains 35 records, including NAID 162246501 (April 8, 1816) and NAID 100358199 (December 26, 1817), with 9 and 7 digital objects respectively. The FDR shard contains seven records, including NAID 122179401 (1933, 25 objects) and NAID 122197642 (1943, 4 objects). It preserves original extracted OCR and contribution metadata.
 
 NAID 122205923 is a description whose digital objects are not declared: it has **no `digitalObjects` member in this capture**, so it is not reported as metadata-only, which only an explicit empty array indicates. Absence is preserved separately from JSON null and an explicit empty array. Tests also exercise an explicitly empty array in a labeled synthetic input. Campaign speeches, election certificates, and state-government descriptions remain in the source data. No presidential-office inclusion policy or cross-provider identity matching is implemented here.
+
+## Authority record evidence
+
+A ListObjectsV2 listing of each `authority-records/<type>/` prefix located the first shard of all five authority categories, and each fixture is the unmodified body of that object: `geographic-reference-1.jsonl` (31,042 bytes, 32 records), `organization-1.jsonl` (392,792 bytes, 156 records), `person-1.jsonl` (121,358 bytes, 125 records), `specific-records-type-1.jsonl` (537 bytes, two records), and `topical-subject-1.jsonl` (22,572 bytes, 54 records). Directory and file names are singular and end in `.jsonl`, unlike some examples in the bulk guide. Every line is one envelope whose `record` has `recordType` `authority`, a `naId`, a `heading`, and an `authorityType` of `geographicPlaceName`, `organization`, `person`, `specificRecordsType`, or `topicalSubject`. The first NAIDs are 485327416, 486117330, 470787114, 539925846, and 10636684 respectively. `preferred` is present in every record except four organization records. Other members vary by category. Envelopes in every category except specific records type can carry `record_tag` and `metadata_tag` contributions alongside the record, and some topical subject envelopes also carry `record_comment` and `metadata_comment`. Each object's ETag appears among its recorded response headers; an ETag is S3 object metadata and is not the SHA-256 of the captured bytes. These first shards show record shapes only; they establish no completeness for any authority category.
 
 ## Rights and restrictions
 

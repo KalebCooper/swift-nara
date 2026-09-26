@@ -6,7 +6,7 @@ Portable Swift models and a resource-bounded SDK for National Archives Catalog b
 
 ## Status
 
-Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible. Typed archival-description views (`CatalogDescription`, ancestors, production and inclusive dates, access/use restrictions) project the same envelope; typed dates carry the source's day, month, and year components and its logical-date string rather than an invented instant, and restriction status is an open code, not a reuse authorization.
+Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible. Typed archival-description views (`CatalogDescription`, ancestors, production and inclusive dates, access/use restrictions) project the same envelope; typed dates carry the source's day, month, and year components and its logical-date string rather than an invented instant, and restriction status is an open code, not a reuse authorization. Typed authority-record views (`CatalogAuthorityRecord`, `CatalogAuthorityType`, `CatalogNAIDReference`) project person, organization, topical-subject, geographic-place-name, and specific-records-type authority envelopes over the same source. Typed contribution views (`CatalogContribution`, `CatalogContributionSource`, `CatalogContributionTarget`, `CatalogContributionMetadata`) project the envelope's public comments, tags, and transcriptions; contributors are Catalog users, not archival creators, and OCR, community transcription, and machine-generated text are labeled separately, with none of it certified original text.
 
 The bulk distribution is a periodic archival snapshot. It does not guarantee current-administration coverage, complete history, stable pagination snapshots, OCR accuracy, or unrestricted reuse of linked media. The separate Catalog HTTP API is never used. Package code is MIT-licensed; source content retains its own rights and restrictions.
 
@@ -62,6 +62,23 @@ for try await line in try CatalogLineSequence(shard: receipt) {
   print(description.naID, description.levelOfDescription?.rawValue, description.title)
   print(description.productionDates?.first?.year, description.ancestors?.first?.naID)
   print(description.accessRestriction?.status?.rawValue)
+}
+```
+
+`line.record.authorityRecord`, `.comments`, `.tags`, and `.transcriptions` project the same envelope for authority records and their public contributions:
+
+```swift
+let shard = try ShardReference(key: "authority-records/person/person-1.jsonl")
+let receipt = try await client.download(shard, to: destination)
+
+for try await line in try CatalogLineSequence(shard: receipt) {
+  if let authority = line.record.authorityRecord {
+    print(authority.naID, authority.authorityType?.rawValue, authority.heading)
+  }
+  for transcription in line.record.transcriptions ?? [] {
+    print(transcription.contribution, transcription.target?.objectID)
+    print(transcription.isAIMachineGenerated, transcription.contributionSource?.rawValue)
+  }
 }
 ```
 
