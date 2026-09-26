@@ -22,14 +22,27 @@ Reverified September 26, 2026 UTC. Earlier qualification logs and documentation 
 | Source conventions | All 15 checks pass; 47 planted self-test cases pass. Recorded JSONL prose is excluded only inside the fixture directory, with negative coverage for authored JSONL elsewhere. |
 | Strict formatting | Sources, Tests, both package manifests, and demo source pass. |
 | Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, using `bash Scripts/linux-test.sh` and `swift:6.3-noble`. |
-| Apple via Xcode MCP | The generated `swift-nara-Package` scheme builds for testing and all 25 tests pass on iPhone 18 Pro / iOS 27 using Xcode 27. No tests fail, skip, or remain unrun. The build still emits incompatible macOS/iOS sysroot linker warnings for generated test products. The Apple Release demo remains unverified. |
-| Android | No installed Swift Android SDK, adb, or emulator was available. No Android compatibility result is claimed. |
+| Apple via Xcode MCP | The generated `swift-nara-Package` scheme builds for testing and all 25 tests pass on iPhone 18 Pro / iOS 27 using Xcode 27. No tests fail, skip, or remain unrun. The local build still emits incompatible macOS/iOS sysroot linker warnings for generated test products. Apple Release demo verification is hosted, as recorded below. |
+| Android | No installed Swift Android SDK, adb, or emulator was available locally. Hosted emulator qualification is recorded below. |
 | DocC | `Scripts/build-docs.sh` passes using Apple iOS simulator modules built through Xcode MCP. Both catalogs convert with warnings treated as errors, models first; merged archive and static site generation pass, including Apple-only URLSession symbols. |
 | Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses. |
-| Hosted CI and delivery | The repository exists at `KalebCooper/swift-nara`. [CI run 36247312303](https://github.com/KalebCooper/swift-nara/actions/runs/36247312303) passed source validation while Apple, Android, Linux, and formatting jobs were disabled. [Docs run 36247312312](https://github.com/KalebCooper/swift-nara/actions/runs/36247312312) was skipped. These build checks are now enabled for pushes and pull requests; hosted results for the change are pending. Pages deployment is enabled after successful documentation builds on main. No release is published. |
+
+## Hosted qualification
+
+Verified September 26, 2026 UTC at commit `9b0e9974888e955fe6674ed63340cf5b128c3dda`. [CI run 36249214603](https://github.com/KalebCooper/swift-nara/actions/runs/36249214603) and [Docs run 36249214583](https://github.com/KalebCooper/swift-nara/actions/runs/36249214583) pass with all seven jobs successful and none skipped. Pages deployment initially failed because the repository had no Pages configuration; after enabling Actions-based Pages, the failed deployment passed on retry.
+
+| Gate | Hosted evidence |
+| --- | --- |
+| Android | All 25 tests in 5 suites pass on the x86_64 emulator with Swift 6.3.3 and HTTPPortable; the complete job takes 4 minutes 50 seconds. |
+| Apple | All 25 tests pass on iPhone 18 Pro / iOS 27 with Xcode 27. The Release demo builds and reads seven recorded local records. The complete job takes 4 minutes 48 seconds. |
+| DocC | Both catalogs build with warnings treated as errors, merge, and produce the Pages artifact. The build job takes 1 minute 44 seconds. |
+| Linux | All 25 tests in 5 suites pass in both HTTPPortable and default configurations. The complete job takes 3 minutes 36 seconds. |
+| Pages | Actions-based deployment passes and publishes the [documentation site](https://kalebcooper.github.io/swift-nara/). The deployment job takes 12 seconds. |
+| Source conventions | Source validation and all 47 planted gate self-tests pass. |
+| Strict formatting | Sources, tests, and demo source pass hosted strict lint. |
 
 ## Remaining work
 
-Verify the enabled hosted Apple, Android, Linux, formatting, and DocC lanes, including the Apple Release demo and Pages deployment. Android has no local qualification result because its SDK and emulator are unavailable here. Measure actual green main job durations before replacing provisional timeouts. Releases require separate approval.
+The retained CI and documentation gates are qualified. Job durations above provide the first measured green main baseline for future timeout adjustments. No release is published; tagging and releases require separate approval.
 
-The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, repository publication, and release approval remain outside this slice.
+The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, and release approval remain outside this slice.
