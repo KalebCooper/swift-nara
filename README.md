@@ -6,7 +6,7 @@ Portable Swift models and a resource-bounded SDK for National Archives Catalog b
 
 ## Status
 
-Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible.
+Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible. Typed archival-description views (`CatalogDescription`, ancestors, production and inclusive dates, access/use restrictions) project the same envelope; typed dates carry the source's day, month, and year components and its logical-date string rather than an invented instant, and restriction status is an open code, not a reuse authorization.
 
 The bulk distribution is a periodic archival snapshot. It does not guarantee current-administration coverage, complete history, stable pagination snapshots, OCR accuracy, or unrestricted reuse of linked media. The separate Catalog HTTP API is never used. Package code is MIT-licensed; source content retains its own rights and restrictions.
 
@@ -51,6 +51,17 @@ let receipt = try await client.download(shard, to: destination)
 for try await line in try CatalogLineSequence(shard: receipt) {
   print(line.record.naID, line.lineNumber, line.byteOffset)
   // line.rawBytes preserves the original JSON and terminator.
+}
+```
+
+`line.record.archivalDescription` projects a `description`-typed record into `CatalogDescription`:
+
+```swift
+for try await line in try CatalogLineSequence(shard: receipt) {
+  guard let description = line.record.archivalDescription else { continue }
+  print(description.naID, description.levelOfDescription?.rawValue, description.title)
+  print(description.productionDates?.first?.year, description.ancestors?.first?.naID)
+  print(description.accessRestriction?.status?.rawValue)
 }
 ```
 

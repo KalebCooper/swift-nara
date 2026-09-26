@@ -9,23 +9,24 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 - Shared swifty-networking pagination with bounded page receipts, independent lazy page/object iterators, cancellation, token-cycle detection, and optional record-before-yield persistence.
 - Streamed JSONL downloads with byte bounds, HTTP receipts, new-file publication, and partial-file cleanup. Local JSONL reading is a separate bounded lazy operation.
 - Exact NAIDs, open source envelopes, hierarchy, digital-object and OCR metadata, restrictions, original line bytes, offsets, and retrieval provenance. Missing digital-object members remain distinct from null and explicit empty arrays.
+- Typed archival-description views over the same envelope: `CatalogRecord.archivalDescription` projects `description` records into `CatalogDescription` with ancestors, production and inclusive dates, and access/use restrictions. Dates keep the source's day, month, year, and logical-date string without inventing an instant; restriction status is an open code, not a reuse authorization. Absent, null, and wrong-shaped members project `nil` while `source` keeps them inspectable.
 - Five unchanged official fixtures with attributed URLs, timestamps, status, headers, byte counts, and SHA-256; historical 1816/1817 and FDR examples; typed failures; two DocC catalogs; and an offline command-line demo.
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
 ## Local qualification
 
-Reverified September 26, 2026 UTC. Earlier qualification logs and documentation archives are retained in the ignored `plans/` directory.
+Reverified September 26, 2026 UTC on the working tree committed as the direct child of `ec17bcd`, the commit that adds typed archival-description views and records this table. Earlier qualification logs and documentation archives are retained in the ignored `plans/` directory.
 
 | Gate | Evidence and remaining limit |
 | --- | --- |
 | Source conventions | All 15 checks pass; 47 planted self-test cases pass. Recorded JSONL prose is excluded only inside the fixture directory, with negative coverage for authored JSONL elsewhere. |
 | Strict formatting | Sources, Tests, both package manifests, and demo source pass. |
-| Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, using `bash Scripts/linux-test.sh` and `swift:6.3-noble`. |
-| Apple via Xcode MCP | The generated `swift-nara-Package` scheme builds for testing and all 25 tests pass on iPhone 18 Pro / iOS 27 using Xcode 27. No tests fail, skip, or remain unrun. The local build still emits incompatible macOS/iOS sysroot linker warnings for generated test products. Apple Release demo verification is hosted, as recorded below. |
-| Android | No installed Swift Android SDK, adb, or emulator was available locally. Hosted emulator qualification is recorded below. |
+| Linux default and HTTPPortable | 47 tests in 6 suites pass in each configuration, with no compiler warnings, using `bash Scripts/linux-test.sh` and `swift:6.3-noble`. |
+| Apple via Xcode MCP | The generated `swift-nara-Package` scheme builds for testing and all 47 tests pass on iPhone 18 Pro / iOS 27 using Xcode 27. No tests fail, skip, or remain unrun. The local build still emits incompatible macOS/iOS sysroot linker warnings for generated test products. Apple Release demo verification is hosted, as recorded below. |
+| Android | No installed Swift Android SDK, adb, or emulator was available locally. Android remains hosted-only; the hosted emulator qualification below predates the archival-description views and has not been rerun for this revision. |
 | DocC | `Scripts/build-docs.sh` passes using Apple iOS simulator modules built through Xcode MCP. Both catalogs convert with warnings treated as errors, models first; merged archive and static site generation pass, including Apple-only URLSession symbols. |
-| Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses. |
+| Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses, and prints each record's typed level, production date, ancestor count, access restriction, and digital-object declaration. |
 
 ## Hosted qualification
 

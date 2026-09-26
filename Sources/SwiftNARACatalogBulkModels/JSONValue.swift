@@ -83,3 +83,14 @@ public indirect enum JSONValue: Codable, Hashable, Sendable {
     }
   }
 }
+
+extension JSONValue {
+  /// An exact JSON integer; strings and nonintegral numbers are not converted.
+  var exactInteger: Int? {
+    switch self {
+    case .integer(let value): Int(exactly: value)
+    case .unsignedInteger(let value): Int(exactly: value)
+    default: nil
+    }
+  }
+}

@@ -43,6 +43,21 @@ struct Demo {
       print(
         "Line \(line.lineNumber), byte \(line.byteOffset), NAID \(line.record.naID): \(line.record.title ?? "Untitled")"
       )
+      let description = line.record.archivalDescription
+      let level = description?.levelOfDescription?.rawValue ?? "unknown level"
+      let productionYear =
+        description?.productionDates?.first?.year.map(String.init) ?? "no production date"
+      let ancestorCount = description?.ancestors?.count ?? 0
+      let restrictionStatus = description?.accessRestriction?.status?.rawValue ?? "undeclared"
+      let digitalObjectsState: String
+      switch line.record.isMetadataOnly {
+      case .some(true): digitalObjectsState = "metadata-only"
+      case .some(false): digitalObjectsState = "available"
+      case .none: digitalObjectsState = "not declared"
+      }
+      print(
+        "  level \(level), production date \(productionYear), ancestors \(ancestorCount), access restriction \(restrictionStatus), digital objects \(digitalObjectsState)"
+      )
     }
     print(
       "Read \(count) local records from \(receipt.byteCount) saved bytes; \(transport.requests.count) recorded HTTP responses."

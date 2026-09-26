@@ -12,7 +12,7 @@ The [S3 ListObjectsV2 contract](https://docs.aws.amazon.com/AmazonS3/latest/API/
 
 The unmodified RG11 shard contains 35 records, including NAID 162246501 (April 8, 1816) and NAID 100358199 (December 26, 1817), with 9 and 7 digital objects respectively. The FDR shard contains seven records, including NAID 122179401 (1933, 25 objects) and NAID 122197642 (1943, 4 objects). It preserves original extracted OCR and contribution metadata.
 
-NAID 122205923 is a metadata-only description with **no `digitalObjects` member in this capture**. Absence is preserved separately from JSON null and an explicit empty array. Tests also exercise an explicitly empty array in a labeled synthetic input. Campaign speeches, election certificates, and state-government descriptions remain in the source data. No presidential-office inclusion policy or cross-provider identity matching is implemented here.
+NAID 122205923 is a description whose digital objects are not declared: it has **no `digitalObjects` member in this capture**, so it is not reported as metadata-only, which only an explicit empty array indicates. Absence is preserved separately from JSON null and an explicit empty array. Tests also exercise an explicitly empty array in a labeled synthetic input. Campaign speeches, election certificates, and state-government descriptions remain in the source data. No presidential-office inclusion policy or cross-provider identity matching is implemented here.
 
 ## Rights and restrictions
 

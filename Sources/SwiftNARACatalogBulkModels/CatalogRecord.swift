@@ -29,6 +29,14 @@ public struct CatalogRecord: Codable, Hashable, Sendable {
   public var accessRestriction: JSONValue? { fields["accessRestriction"] }
   /// Source ancestors in source order, retaining distance and classification evidence.
   public var ancestors: [JSONValue]? { fields["ancestors"]?.array }
+  /// The typed archival description view, only when the source `recordType` is exactly
+  /// `description`.
+  ///
+  /// Authority, contribution, unknown, missing, and non-string record types return nil; their
+  /// members remain available through `fields` and `source`.
+  public var archivalDescription: CatalogDescription? {
+    fields["recordType"] == .string("description") ? CatalogDescription(source: fields) : nil
+  }
   /// Source digital objects. Nil means absent, null, or a different shape; inspect `fields` to distinguish them.
   public var digitalObjects: [CatalogDigitalObject]? {
     fields["digitalObjects"]?.array.map { $0.map { CatalogDigitalObject(source: $0) } }
