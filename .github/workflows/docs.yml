@@ -21,7 +21,7 @@ jobs:
     # Local catalogs pass; hosted qualification and delivery remain pending.
     if: ${{ false }}
     name: Build DocC site
-    runs-on: macos-26
+    runs-on: xcode-27
     # Provisional until this package has green runs on main.
     timeout-minutes: 15
     steps:
@@ -38,7 +38,7 @@ jobs:
           set -o pipefail
           xcodebuild build \
             -scheme SwiftNARACatalogBulk \
-            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.2' \
+            -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' \
             -derivedDataPath .derivedData \
             -skipPackagePluginValidation \
             | xcbeautify --renderer github-actions

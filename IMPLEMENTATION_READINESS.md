@@ -23,7 +23,6 @@ Verified September 24, 2026 UTC (September 23 in America/Chicago). Local logs an
 | Strict formatting | Sources, Tests, both package manifests, and demo source pass. |
 | Linux default and HTTPPortable | 25 tests in 5 suites pass in each configuration, with no compiler warnings, under Swift 6.3.3 in `swift:6.3-noble` (`plans/linux-final.log`). |
 | Apple via Xcode MCP | An earlier revision built successfully for iPhone 18 Pro / iOS 27, including build-for-testing. The test operation timed out without results; its log contained two incompatible macOS/iOS sysroot linker warnings. The bridge subsequently returned `Transport closed`, including after reopening this package. The final revision, test execution, and Apple Release demo remain unverified. No shared bridge reset or sibling workspace changes were made. |
-| Declared Apple floor | Xcode 26 / Swift 6.2 and the iOS 26 runtime were not qualified locally. |
 | Android | No installed Swift Android SDK, adb, or emulator was available. No Android compatibility result is claimed. |
 | DocC | Both catalogs convert with warnings treated as errors, models first, using final Linux symbols; merged archive and static site generation also pass (`plans/docc-final/`). Apple-only URLSession documentation remains part of the pending Apple qualification. |
 | Release demo | The standalone SwiftPM command-line example builds and runs in the Linux container, reading two manifest pages and seven shard records from recorded responses. |
@@ -31,6 +30,6 @@ Verified September 24, 2026 UTC (September 23 in America/Chicago). Local logs an
 
 ## Remaining work
 
-Restore a working Xcode MCP connection and rerun the final Apple build, complete tests, floor checks, Apple DocC, and Release demo. Qualify the Android emulator lane when its SDK and tools are available. Run hosted workflows only after a separate delivery decision, then measure actual job durations before replacing provisional timeouts.
+Restore a working Xcode MCP connection and rerun the final Apple build, complete tests on Xcode 27, Apple DocC, and Release demo. Qualify the Android emulator lane when its SDK and tools are available. Run hosted workflows only after a separate delivery decision, then measure actual job durations before replacing provisional timeouts.
 
 The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, repository publication, and release approval remain outside this slice.

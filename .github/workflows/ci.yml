@@ -98,24 +98,16 @@ jobs:
     # Disabled until the remaining local platform and demo gates pass.
     if: ${{ false }}
     name: Build & Test (iOS ${{ matrix.os }} Simulator)
-    # Two runners, one job. `xcode-27` is GitHub's public preview image for Xcode 27 (arm64 only, macOS
-    # 27.0, Xcode 27.0 RC as the default install; there is no `macos-27` label) and tests the newest
-    # toolchain and runtime. `macos-26` is the GA image with the Xcode 26 line and iOS 26 runtimes; it
-    # keeps coverage at the package's iOS 26 platform floor and proves the package still builds with
-    # Xcode 26 and its Swift 6.2 compiler, which the manifest's tools version declares.
+    # Apple qualification uses Xcode 27 on the xcode-27 image.
+    # The iOS runtime pin is independent of the package deployment target.
     strategy:
-      # A failure on the preview image must not cancel the macOS 26 run, so each entry reports on its own.
-      fail-fast: false
       matrix:
         include:
           - device: iPhone 18 Pro
             os: '27.0'
             runner: xcode-27
-          - device: iPhone 17 Pro
-            os: '26.2'
-            runner: macos-26
     runs-on: ${{ matrix.runner }}
-    # Provisional ceiling applies separately to each matrix entry.
+    # Provisional ceiling until measured green runs.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
@@ -125,13 +117,8 @@ jobs:
       # diagnosable from the log, not just a red X.
       - name: List available simulators
         run: xcrun simctl list devices available
-      # The OS is pinned instead of `latest` so a runner-image Xcode bump moves the tested platform only
-      # when someone edits the matrix, and each pin is the lowest runtime its image carries. `xcode-27`
-      # carries only iOS 27.0. 26.2 is the lowest `macos-26` offers; the package floor is 26.0, which
-      # that image carries no runtime for, and 26.2 matches swifty-networking's pin. The step above
-      # prints what the runner actually has; read it before editing a pin. This is also the only
-      # lane that compiles the URLSession path at all; the Linux and Android lanes compile it out
-      # under `#if canImport(Darwin)`.
+      # Pin iOS 27.0 explicitly; inspect the listed simulators before changing the pin.
+      # This lane compiles the Darwin URLSession path, unlike Linux and Android.
       - name: Build and test
         run: |
           set -o pipefail
@@ -143,7 +130,6 @@ jobs:
 
       # The command-line example reads recorded fixtures without contacting the provider.
       - name: Build demo for release
-        if: matrix.runner == 'xcode-27'
         run: |
           swift run -c release --package-path Examples/SwiftNARACatalogBulkDemo \
             SwiftNARACatalogBulkDemo "$PWD/Sources/SwiftNARACatalogBulkTestSupport/Fixtures"
