@@ -131,6 +131,9 @@ public struct CatalogBulkClient: Sendable {
     guard !Task.isCancelled else { throw .cancelled }
     let value: Value
     do { value = try Value.decode(answer.body) } catch { throw .decoding(error) }
+    if let query = endpoint.directoryQuery, let page = value as? BulkDirectoryPage {
+      do { _ = try query.next(after: page) } catch { throw .pagination(error) }
+    }
     if let query = endpoint.manifestQuery, let manifest = value as? BulkManifest {
       do { _ = try query.next(after: manifest) } catch { throw .pagination(error) }
     }
@@ -164,6 +167,7 @@ public struct CatalogBulkClient: Sendable {
 
   static func endpoint<Value>(for request: CatalogBulkRequest<Value>) -> Endpoint<Value> {
     switch request.resolution {
+    case .directory(let query): return Endpoint<Value>(directoryQuery: query)
     case .endpoint(let endpoint): return endpoint
     case .manifest(let query): return Endpoint<Value>(manifestQuery: query)
     }

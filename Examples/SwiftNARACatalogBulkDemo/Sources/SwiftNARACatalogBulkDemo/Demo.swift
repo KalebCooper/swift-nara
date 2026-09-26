@@ -11,17 +11,27 @@ struct Demo {
       return
     }
     let fixtures = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
+    let authorityDirectory = try Data(
+      contentsOf: fixtures.appendingPathComponent("directory-authority-records.xml"))
     let first = try Data(contentsOf: fixtures.appendingPathComponent("manifest-first.xml"))
     let second = try Data(contentsOf: fixtures.appendingPathComponent("manifest-second.xml"))
     let shard = try Data(contentsOf: fixtures.appendingPathComponent("fdr.jsonl"))
     let person = try Data(contentsOf: fixtures.appendingPathComponent("person.jsonl"))
     let transport = MockTransport(
-      results: [first, second, shard, person].map { .success(Response(body: $0, status: .ok)) })
+      results: [authorityDirectory, first, second, shard, person].map {
+        .success(Response(body: $0, status: .ok))
+      })
     // A fixed receipt instant makes this recorded example repeatable.
     let client = CatalogBulkClient(
       configuration: try CatalogBulkConfiguration(
         userAgent: "(swift-nara demo, https://github.com/KalebCooper/swift-nara)"),
       retrievalTime: { Date(timeIntervalSince1970: 1_790_208_000) }, transport: transport)
+    let directoryQuery = try BulkDirectoryQuery(directory: .authorityRecords, maxKeys: 20)
+    var partitionCount = 0
+    for try await partition in client.partitions(matching: directoryQuery) {
+      partitionCount += 1
+      print("Authority partition \(partitionCount): \(partition.prefix)")
+    }
     let query = try ManifestQuery(maxKeys: 4, prefix: "descriptions/record-groups/rg_11/")
     var pageCount = 0
     for try await page in client.manifestPages(matching: query) {

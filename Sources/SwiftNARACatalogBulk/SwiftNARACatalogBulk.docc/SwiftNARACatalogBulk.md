@@ -45,6 +45,18 @@ Manifest buffering is capped during receipt, defaulting to 4 MiB. XML nesting is
 
 The bulk distribution is a periodic archival snapshot. The package does not promise current-administration coverage, all-history completeness, stable snapshots, OCR accuracy, or permission to reuse every digital object. Missing digital-object members remain distinguishable from explicit empty arrays and nulls.
 
+## Discover a directory before requesting a partition
+
+```swift
+let query = try BulkDirectoryQuery(directory: .recordGroups)
+for try await partition in client.partitions(matching: query) {
+  let shards = try ManifestQuery(prefix: partition.prefix)
+  print(partition.prefix)
+}
+```
+
+`directory(matching:)` returns one validated `BulkDirectoryPage`; `directoryPages(matching:)` and `pages(for:record:)` give the same lazy source-response traversal the manifest methods use, extended to directory listings. `partitions(matching:)` drains each page's common prefixes before requesting the next page and never yields an object listed directly in the directory, such as a zero-byte marker key equal to the prefix itself. Discovery proves storage membership only at the moment of traversal, never a stable or current snapshot. A discovered prefix is a storage path, not a National Archives Identifier: `descriptions/record-groups/rg_11/` names a partition to list further, not NAID 11.
+
 ## Topics
 
 ### Client operations
@@ -56,3 +68,7 @@ The bulk distribution is a periodic archival snapshot. The package does not prom
 - ``BulkObjectSequence``
 - ``CatalogLineSequence``
 - ``ManifestPageSequence``
+
+### Directory discovery
+- ``BulkPartitionSequence``
+- ``DirectoryPageSequence``

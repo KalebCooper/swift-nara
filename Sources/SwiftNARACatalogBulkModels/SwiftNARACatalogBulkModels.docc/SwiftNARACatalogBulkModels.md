@@ -47,6 +47,15 @@ for try await line in try CatalogLineSequence(shard: receipt) {
 }
 ```
 
+`BulkDirectoryQuery` lists the immediate children of one `BulkDirectory`, either `.authorityRecords`, `.collections`, or `.recordGroups`, as an S3 ListObjectsV2 page that `BulkDirectoryCodec` decodes into `BulkDirectoryPage`. A `BulkPartitionReference` retains the exact discovered prefix and its directory; a prefix such as `descriptions/record-groups/rg_11/` is a storage path, never a parsed record group number or NAID, and padding such as `rg_020/` is kept as listed. Discovery proves storage membership only at the moment of listing.
+
+```swift
+let query = try BulkDirectoryQuery(directory: .recordGroups)
+let page = try BulkDirectoryPage.decode(data)
+print(page.prefixes)
+let partition = try BulkPartitionReference(directory: .recordGroups, prefix: page.prefixes[0])
+```
+
 ## Topics
 
 ### Request values
@@ -65,6 +74,13 @@ for try await line in try CatalogLineSequence(shard: receipt) {
 - ``JSONValue``
 - ``ManifestCodec``
 - ``ManifestError``
+
+### Directory discovery
+- ``BulkDirectory``
+- ``BulkDirectoryCodec``
+- ``BulkDirectoryPage``
+- ``BulkDirectoryQuery``
+- ``BulkPartitionReference``
 
 ### Archival descriptions
 - ``CatalogAncestor``

@@ -209,5 +209,95 @@
     "sha256": "dadae41eea572b6e318521716716dc86ebf96496e31ea8081ba0470d776fc1d5",
     "status": 200,
     "url": "https://nara-national-archives-catalog.s3.amazonaws.com/authority-records/topical-subject/topical-subject-1.jsonl"
+  },
+  {
+    "byteCount": 715,
+    "file": "directory-collections-first.xml",
+    "headers": {
+      "x-amz-id-2": "XFKXDYlCd7y9f5/XWOC0Q4CYLTqdqhf/3awIgmUsyrvrKoIL6hyin09NRg4bDUSzBuOfbA6ZmPtVJgMVpxfKs7K6pbk92yDc",
+      "x-amz-request-id": "QBTMVPGY2P14XDVW",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 21:07:25 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T21:07:24.063286+00:00",
+    "sha256": "117e723ca74b13144ff99d7359f959f9e4249992a13808181bef04454845deac",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?delimiter=%2F&list-type=2&max-keys=3&prefix=descriptions%2Fcollections%2F"
+  },
+  {
+    "byteCount": 864,
+    "file": "directory-collections-second.xml",
+    "headers": {
+      "x-amz-id-2": "8EgDWYGoZfDSZjNBCFEd4qgej8IUvpcDJ7kpW0BzxP5+UY2syImonrWLkuFVgQNbMbfBV2BlB1iFbbH9FmeJPhtRrrzYOWeJ",
+      "x-amz-request-id": "QBTQHXQRRQH1FWF8",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 21:07:25 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T21:07:24.273005+00:00",
+    "sha256": "c725a26ad9ccf7360ccad472c9ccee59d4e1db0088afa8b597d40584c5eb2d51",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?continuation-token=1vKoy990xdAaYk7IeulTw7YN3lqzxgzJUobs6jaPU768AB6%2FvlB7TQLVrLOZ6Lxs44%2BgY0H59tiSXR7041G3%2B0Zw754okniFAsEavEOa0D2I%3D&delimiter=%2F&list-type=2&max-keys=3&prefix=descriptions%2Fcollections%2F"
+  },
+  {
+    "byteCount": 713,
+    "file": "directory-record-groups.xml",
+    "headers": {
+      "x-amz-id-2": "TSAK+/FwKT6Qo0XeNi+Q5rnyJmmA/yhKt3HD0mKp9qL2J9TOW+cTPJYypNMJYV09vL1Ks67liUkzDB3Lsc3LqFBPshfo7Q+U",
+      "x-amz-request-id": "QBTH33GG3SHG40HD",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 21:07:25 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T21:07:24.422351+00:00",
+    "sha256": "62ae1ca3e47946d5126c64c4f79a203d99f501f2b5895aa9cd9270301745c477",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?delimiter=%2F&list-type=2&max-keys=3&prefix=descriptions%2Frecord-groups%2F"
+  },
+  {
+    "byteCount": 931,
+    "file": "directory-authority-records.xml",
+    "headers": {
+      "x-amz-id-2": "fW3me+oni41fx/ymueBExH9yUm27bL1dH2qB1MzAuEjMHmafmBXMvKxtripTe1baQc4EP0sfqBRIKyMBaf25mxsjbyrULq02",
+      "x-amz-request-id": "QBTSVBP3RSMYMMW5",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 21:07:25 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T21:07:24.567919+00:00",
+    "sha256": "24f59e707884ea9c5d3a93b16434a0d14aadafe44c0ba1b13fa4b4e5576465c1",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?delimiter=%2F&list-type=2&max-keys=20&prefix=authority-records%2F"
+  },
+  {
+    "byteCount": 3161,
+    "file": "directory-authority-records-undelimited.xml",
+    "headers": {
+      "x-amz-id-2": "xJpgkBxPYAymRPlYg4gNv1tweDTQ8ybd52Ezofo/YuPNHEywapanX/ONqHY+UK4QBfaLJdnF4Y423IwIRnP6bhy97AD3wVOv",
+      "x-amz-request-id": "QBTHVEY88FPM9VP0",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 21:07:25 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "retrievedAt": "2026-09-26T21:07:24.713517+00:00",
+    "sha256": "54296f82c053894c5f3256ab8420bb1cd3d8c5bfa16b4c71f84431b6cabf118f",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=8&prefix=authority-records%2F"
   }
 ]

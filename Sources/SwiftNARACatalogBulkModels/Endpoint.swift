@@ -11,6 +11,8 @@ import Foundation
 /// let endpoint = Endpoint.manifest(try ManifestQuery(maxKeys: 4, prefix: "descriptions/"))
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The exact query when this endpoint was created by the directory factory.
+  public private(set) var directoryQuery: BulkDirectoryQuery? = nil
   /// The exact query when this endpoint was created by the manifest factory.
   public private(set) var manifestQuery: ManifestQuery? = nil
   /// The public bucket origin used by every endpoint.
@@ -64,6 +66,18 @@ public struct Endpoint<Response>: Hashable, Sendable {
     self.path = path
   }
 
+  package init(directoryQuery query: BulkDirectoryQuery) {
+    var fields = [
+      "delimiter=%2F", "list-type=2", "max-keys=\(query.maxKeys)",
+      "prefix=\(Self.encoded(query.directory.prefix))",
+    ]
+    if let token = query.continuationToken {
+      fields.insert("continuation-token=" + Self.encoded(token), at: 0)
+    }
+    self = Self.builtIn("/?" + fields.joined(separator: "&"))
+    directoryQuery = query
+  }
+
   package init(manifestQuery query: ManifestQuery) {
     var fields = [
       "list-type=2", "max-keys=\(query.maxKeys)", "prefix=\(Self.encoded(query.prefix))",
@@ -109,6 +123,22 @@ public struct Endpoint<Response>: Hashable, Sendable {
       default: "%" + (byte < 16 ? "0" : "") + String(byte, radix: 16, uppercase: true)
       }
     }.joined()
+  }
+}
+
+extension Endpoint where Response == BulkDirectoryPage {
+  /// Describes one ListObjectsV2 request for the immediate children of a bulk directory.
+  ///
+  /// The query fixes the delimiter to `/`, so the page lists child prefixes and any objects
+  /// directly in the directory. Fields are sent in lexical order with the token first when
+  /// present; the endpoint performs no local sorting and sends nothing at construction.
+  /// ```swift
+  /// let endpoint = Endpoint.directory(try BulkDirectoryQuery(directory: .recordGroups))
+  /// ```
+  /// - Parameter query: The exact page selection.
+  /// - Returns: An independently executable directory endpoint.
+  public static func directory(_ query: BulkDirectoryQuery) -> Self {
+    Self(directoryQuery: query)
   }
 }
 

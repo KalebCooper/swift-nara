@@ -2,6 +2,16 @@ import Foundation
 
 /// Official source captures; exact requests, instants, headers, sizes, and hashes are in attribution.json.
 package enum Fixture: String, CaseIterable {
+  /// ListObjectsV2 for authority-records/, delimiter=/, max-keys=20.
+  case directoryAuthorityRecords = "directory-authority-records.xml"
+  /// ListObjectsV2 for authority-records/, max-keys=8, without a delimiter.
+  case directoryAuthorityRecordsUndelimited = "directory-authority-records-undelimited.xml"
+  /// ListObjectsV2 for descriptions/collections/, delimiter=/, max-keys=3.
+  case directoryCollectionsFirst = "directory-collections-first.xml"
+  /// The same listing with the first response's exact continuation token.
+  case directoryCollectionsSecond = "directory-collections-second.xml"
+  /// ListObjectsV2 for descriptions/record-groups/, delimiter=/, max-keys=3.
+  case directoryRecordGroups = "directory-record-groups.xml"
   /// descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl, unchanged.
   case fdr = "fdr.jsonl"
   /// authority-records/geographic-reference/geographic-reference-1.jsonl, unchanged.
