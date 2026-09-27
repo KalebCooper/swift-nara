@@ -35,9 +35,13 @@ public struct CatalogAncestor: Codable, Hashable, Sendable {
   /// source supplies it as an exact integer.
   public var distance: Int? { source["distance"]?.exactInteger }
   /// The ancestor's own inclusive end date, only when the source supplies a date object.
-  public var inclusiveEndDate: CatalogDate? { date("inclusiveEndDate") }
+  public var inclusiveEndDate: CatalogDate? {
+    source.objectMember("inclusiveEndDate").map(CatalogDate.init(source:))
+  }
   /// The ancestor's own inclusive start date, only when the source supplies a date object.
-  public var inclusiveStartDate: CatalogDate? { date("inclusiveStartDate") }
+  public var inclusiveStartDate: CatalogDate? {
+    source.objectMember("inclusiveStartDate").map(CatalogDate.init(source:))
+  }
   /// The source level of description, only when the source supplies it as a string.
   public var levelOfDescription: CatalogDescriptionLevel? {
     source["levelOfDescription"]?.string.map(CatalogDescriptionLevel.init(rawValue:))
@@ -48,12 +52,6 @@ public struct CatalogAncestor: Codable, Hashable, Sendable {
   public var recordGroupNumber: Int? { source["recordGroupNumber"]?.exactInteger }
   /// The source title, only when the source supplies it as a string.
   public var title: String? { source["title"]?.string }
-
-  /// Projects a date member only when the source supplies an object.
-  private func date(_ key: String) -> CatalogDate? {
-    guard let value = source[key], value.object != nil else { return nil }
-    return CatalogDate(source: value)
-  }
 }
 
 /// An extensible Catalog level of description code.

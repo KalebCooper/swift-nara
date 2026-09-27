@@ -37,7 +37,7 @@ public struct CatalogDescription: Codable, Hashable, Sendable {
   public init(source: JSONValue) { self.source = source }
   /// The description's access restriction, only when the source supplies an object.
   public var accessRestriction: CatalogRestriction? {
-    object("accessRestriction").map(CatalogRestriction.init(source:))
+    source.objectMember("accessRestriction").map(CatalogRestriction.init(source:))
   }
   /// The description's ancestors in source order, only when the source supplies an array.
   ///
@@ -62,11 +62,11 @@ public struct CatalogDescription: Codable, Hashable, Sendable {
   }
   /// The description's own inclusive end date, only when the source supplies a date object.
   public var inclusiveEndDate: CatalogDate? {
-    object("inclusiveEndDate").map(CatalogDate.init(source:))
+    source.objectMember("inclusiveEndDate").map(CatalogDate.init(source:))
   }
   /// The description's own inclusive start date, only when the source supplies a date object.
   public var inclusiveStartDate: CatalogDate? {
-    object("inclusiveStartDate").map(CatalogDate.init(source:))
+    source.objectMember("inclusiveStartDate").map(CatalogDate.init(source:))
   }
   /// The source level of description, only when the source supplies it as a string.
   public var levelOfDescription: CatalogDescriptionLevel? {
@@ -97,12 +97,6 @@ public struct CatalogDescription: Codable, Hashable, Sendable {
   public var title: String? { source["title"]?.string }
   /// The description's use restriction, only when the source supplies an object.
   public var useRestriction: CatalogRestriction? {
-    object("useRestriction").map(CatalogRestriction.init(source:))
-  }
-
-  /// Returns a member only when the source supplies an object for it.
-  private func object(_ key: String) -> JSONValue? {
-    guard let value = source[key], value.object != nil else { return nil }
-    return value
+    source.objectMember("useRestriction").map(CatalogRestriction.init(source:))
   }
 }

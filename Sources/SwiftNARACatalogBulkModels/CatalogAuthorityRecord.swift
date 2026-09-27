@@ -52,14 +52,18 @@ public struct CatalogAuthorityRecord: Codable, Hashable, Sendable {
   ///
   /// The date is the source's own statement with only the components it supplies; it is never
   /// normalized or completed from another record.
-  public var birthDate: CatalogDate? { date("birthDate") }
+  public var birthDate: CatalogDate? {
+    source.objectMember("birthDate").map(CatalogDate.init(source:))
+  }
   /// The source broader terms in source order, only when the source supplies an array.
   public var broaderTerms: [CatalogNAIDReference]? { references("broaderTerms") }
   /// The source death date with its source precision, only when the source supplies a date object.
   ///
   /// The date is the source's own statement with only the components it supplies; it is never
   /// normalized or completed from another record.
-  public var deathDate: CatalogDate? { date("deathDate") }
+  public var deathDate: CatalogDate? {
+    source.objectMember("deathDate").map(CatalogDate.init(source:))
+  }
   /// The source heading, such as `Aaron, David L., 1938-`, only when supplied as a string.
   public var heading: String? { source["heading"]?.string }
   /// The source `preferred` flag, only when the source supplies a Boolean.
@@ -108,12 +112,6 @@ public struct CatalogAuthorityRecord: Codable, Hashable, Sendable {
   public var useFor: [String]? { strings("useFor") }
   /// The source variant person names, unchanged, only when the source supplies an array.
   public var variantPersonNames: [JSONValue]? { source["variantPersonNames"]?.array }
-
-  /// Projects a date member only when the source supplies an object.
-  private func date(_ key: String) -> CatalogDate? {
-    guard let value = source[key], value.object != nil else { return nil }
-    return CatalogDate(source: value)
-  }
 
   /// Projects every element of a reference array in its source position.
   private func references(_ key: String) -> [CatalogNAIDReference]? {
