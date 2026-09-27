@@ -7,6 +7,7 @@ let package = Package(
   products: [
     .library(name: "SwiftNARACatalogBulk", targets: ["SwiftNARACatalogBulk"]),
     .library(name: "SwiftNARACatalogBulkModels", targets: ["SwiftNARACatalogBulkModels"]),
+    .library(name: "SwiftNARADigitalObjectsModels", targets: ["SwiftNARADigitalObjectsModels"]),
   ],
   traits: [
     .default(enabledTraits: []),
@@ -38,6 +39,10 @@ let package = Package(
     .target(
       name: "SwiftNARACatalogBulkTestSupport", resources: [.copy("Fixtures")],
       swiftSettings: swiftSettings),
+    .target(name: "SwiftNARADigitalObjectsModels", swiftSettings: swiftSettings),
+    .target(
+      name: "SwiftNARADigitalObjectsTestSupport", resources: [.copy("Fixtures")],
+      swiftSettings: swiftSettings),
     .testTarget(
       name: "SwiftNARACatalogBulkModelsTests",
       dependencies: ["SwiftNARACatalogBulkModels", "SwiftNARACatalogBulkTestSupport"],
@@ -50,6 +55,10 @@ let package = Package(
         .product(name: "HTTPTypes", package: "swift-http-types"),
         "SwiftNARACatalogBulk", "SwiftNARACatalogBulkModels", "SwiftNARACatalogBulkTestSupport",
       ], swiftSettings: swiftSettings),
+    .testTarget(
+      name: "SwiftNARADigitalObjectsModelsTests",
+      dependencies: ["SwiftNARADigitalObjectsModels", "SwiftNARADigitalObjectsTestSupport"],
+      swiftSettings: swiftSettings),
   ],
   swiftLanguageModes: [.v6]
 )
