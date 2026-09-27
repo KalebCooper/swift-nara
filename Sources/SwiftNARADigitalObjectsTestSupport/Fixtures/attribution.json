@@ -1,0 +1,133 @@
+[
+  {
+    "bulkObject": {
+      "file": "fdr.jsonl",
+      "line": 1,
+      "naId": 122178160,
+      "objectFileSize": 65981,
+      "objectId": "122178162",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg"
+    },
+    "byteCount": 65981,
+    "file": "msf00611_Page_01.jpg",
+    "headers": {
+      "Content-Type": "image/jpeg",
+      "Content-Length": "65981",
+      "Connection": "close",
+      "Date": "Sun, 27 Sep 2026 04:35:26 GMT",
+      "Last-Modified": "Mon, 04 Mar 2019 15:49:31 GMT",
+      "ETag": "\"03353e5c57368192275f91e5eed396df\"",
+      "x-amz-storage-class": "STANDARD_IA",
+      "x-amz-meta-s3b-last-modified": "20181214T191532Z",
+      "Content-Disposition": "attachment",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Hit from cloudfront",
+      "Via": "1.1 a83867a3ac3fea26ed170155d7e41ae6.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "1Dz0Cup2AammiNjlBNUBlUvnYcon2buQJiJ4KpRJfkTjeLQfq3QcFw==",
+      "Age": "33417"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.001685+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 122178160, file unit in series 577534 of the Franklin D. Roosevelt Master Speech Files (collection 577496), are both Unrestricted in fdr.jsonl line 1. The digital object carries no object-level restriction member, and the Catalog schema defines none for digital objects. The file unit ancestors carry no restriction members. The body is stored unchanged for tests; the package license does not cover it."
+    },
+    "sha256": "21ec8a0f324c4ecc5d319ad3bb71fd6bbef76e5cd4f504185d4bad6670c06de5",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg"
+  },
+  {
+    "bulkObject": {
+      "file": "rg11.jsonl",
+      "line": 3,
+      "naId": 63545805,
+      "objectFileSize": 2299069,
+      "objectId": "63545806",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/opastorage/live/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg"
+    },
+    "byteCount": 0,
+    "file": "medialive-no-content-type.headers.json",
+    "headers": {
+      "Content-Length": "2299069",
+      "Connection": "close",
+      "Date": "Sun, 27 Sep 2026 04:35:26 GMT",
+      "Last-Modified": "Thu, 25 May 2017 15:37:09 GMT",
+      "ETag": "\"d386336180c6be15b1fa5fe9ed3feb73\"",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Hit from cloudfront",
+      "Via": "1.1 e65b32b1d336e1f83a40a2861817027c.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "SoHCcYRmKxwAM_uEerUjQWAPlXplFUH4M9xfmTKcDdHx5FzGPvDKyw==",
+      "Age": "33417"
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.122947+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 63545805 are both Unrestricted in rg11.jsonl line 3. The digital object description reads \"Image provided by Fold3. (Page 1)\" with designator \"Fold3 File #6575614\": a partner-provided image. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg"
+  },
+  {
+    "bulkObject": null,
+    "byteCount": 5454,
+    "file": "missing-object.html",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "5454",
+      "Connection": "close",
+      "Accept-Ranges": "bytes",
+      "Date": "Sun, 27 Sep 2026 13:52:22 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Thu, 17 Sep 2026 00:44:09 GMT",
+      "ETag": "\"7d9eac38672044d4ca31d82db1b183c0\"",
+      "x-amz-server-side-encryption": "AES256",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 432913c0b9b6a4264c846f9505ef2ce6.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "4wnxgtHqfqeETLbSQFKLe56WahQqkwVPgcme4VzFnAzfDR4VLJW6Jg=="
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.202625+00:00",
+    "rights": {
+      "accessRestriction": null,
+      "useRestriction": null,
+      "notes": "Request for a key chosen not to exist, under the same series prefix as msf00611_Page_01.jpg. No bulk record names it. The response body is the Catalog web application page served in place of a missing object, stored unchanged."
+    },
+    "sha256": "64f334d04ad9c9e56607f11c4fad19022e8cd8cb5acb7de9a7b1938eb94b43d1",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/swift-nara-nonexistent-object.jpg"
+  }
+]

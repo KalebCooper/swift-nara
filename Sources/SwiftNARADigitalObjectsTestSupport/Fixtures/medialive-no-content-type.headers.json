@@ -1,0 +1,15 @@
+{
+  "Content-Length": "2299069",
+  "Connection": "close",
+  "Date": "Sun, 27 Sep 2026 04:35:26 GMT",
+  "Last-Modified": "Thu, 25 May 2017 15:37:09 GMT",
+  "ETag": "\"d386336180c6be15b1fa5fe9ed3feb73\"",
+  "x-amz-version-id": "null",
+  "Accept-Ranges": "bytes",
+  "Server": "AmazonS3",
+  "X-Cache": "Hit from cloudfront",
+  "Via": "1.1 e65b32b1d336e1f83a40a2861817027c.cloudfront.net (CloudFront)",
+  "X-Amz-Cf-Pop": "IAH50-P3",
+  "X-Amz-Cf-Id": "SoHCcYRmKxwAM_uEerUjQWAPlXplFUH4M9xfmTKcDdHx5FzGPvDKyw==",
+  "Age": "33417"
+}
