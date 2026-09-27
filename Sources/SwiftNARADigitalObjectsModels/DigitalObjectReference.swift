@@ -71,38 +71,9 @@ public struct DigitalObjectReference: Codable, Hashable, Sendable {
   ///   prefix; ``DigitalObjectReferenceError/traversal`` for a `.` or `..` segment; and
   ///   ``DigitalObjectReferenceError/malformedPath`` for any other invalid segment.
   public init(naID: String, objectID: String?, url: String) throws(DigitalObjectReferenceError) {
-    guard let components = URLComponents(string: url) else { throw .malformedURL }
-    guard components.scheme == "https" else { throw .unsupportedScheme }
-    guard components.percentEncodedUser == nil, components.percentEncodedPassword == nil else {
-      throw .userInfo
-    }
-    guard let host = components.percentEncodedHost, components.port == nil,
-      let mappings = Self.mappings[host]
-    else { throw .unsupportedOrigin }
-    guard components.percentEncodedFragment == nil else { throw .fragment }
-    guard components.percentEncodedQuery == nil else { throw .query }
-    let path = components.percentEncodedPath
-    guard "https://" + host + path == url else { throw .malformedURL }
-    guard let mapping = mappings.first(where: { path.hasPrefix($0.source) }) else {
-      throw .unsupportedPath
-    }
-    let remainder = String(path.dropFirst(mapping.source.count))
-    guard !remainder.isEmpty else { throw .emptyRemainder }
-    let segments = remainder.split(separator: "/", omittingEmptySubsequences: false)
-    for segment in segments {
-      if let value = Self.decoded(segment), value == "." || value == ".." { throw .traversal }
-    }
-    for segment in segments {
-      guard !segment.isEmpty, segment.utf8.allSatisfy({ Self.segmentBytes.contains($0) }),
-        let value = Self.decoded(segment),
-        !value.unicodeScalars.contains(where: {
-          $0 == "/" || $0 == "\\" || $0.value < 32 || $0.value == 127
-        })
-      else { throw .malformedPath }
-    }
     self.naID = naID
     self.objectID = objectID
-    self.transportPath = mapping.transport + remainder
+    self.transportPath = try Self.transportPath(for: url)
     self.url = url
   }
 
@@ -189,5 +160,42 @@ public struct DigitalObjectReference: Codable, Hashable, Sendable {
     case UInt8(ascii: "a")...UInt8(ascii: "f"): byte - UInt8(ascii: "a") + 10
     default: nil
     }
+  }
+
+  /// Validates a digital object URL and returns its derived transport path.
+  ///
+  /// This is the whole origin policy of ``init(naID:objectID:url:)``, with the same checks in
+  /// the same order.
+  static func transportPath(for url: String) throws(DigitalObjectReferenceError) -> String {
+    guard let components = URLComponents(string: url) else { throw .malformedURL }
+    guard components.scheme == "https" else { throw .unsupportedScheme }
+    guard components.percentEncodedUser == nil, components.percentEncodedPassword == nil else {
+      throw .userInfo
+    }
+    guard let host = components.percentEncodedHost, components.port == nil,
+      let mappings = Self.mappings[host]
+    else { throw .unsupportedOrigin }
+    guard components.percentEncodedFragment == nil else { throw .fragment }
+    guard components.percentEncodedQuery == nil else { throw .query }
+    let path = components.percentEncodedPath
+    guard "https://" + host + path == url else { throw .malformedURL }
+    guard let mapping = mappings.first(where: { path.hasPrefix($0.source) }) else {
+      throw .unsupportedPath
+    }
+    let remainder = String(path.dropFirst(mapping.source.count))
+    guard !remainder.isEmpty else { throw .emptyRemainder }
+    let segments = remainder.split(separator: "/", omittingEmptySubsequences: false)
+    for segment in segments {
+      if let value = Self.decoded(segment), value == "." || value == ".." { throw .traversal }
+    }
+    for segment in segments {
+      guard !segment.isEmpty, segment.utf8.allSatisfy({ Self.segmentBytes.contains($0) }),
+        let value = Self.decoded(segment),
+        !value.unicodeScalars.contains(where: {
+          $0 == "/" || $0 == "\\" || $0.value < 32 || $0.value == 127
+        })
+      else { throw .malformedPath }
+    }
+    return mapping.transport + remainder
   }
 }

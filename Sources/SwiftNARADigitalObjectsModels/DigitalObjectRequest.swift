@@ -1,0 +1,36 @@
+/// A reusable digital object operation with an inspectable value resolution.
+///
+/// A request holds only values: creating, storing, or comparing one performs no I/O and holds
+/// no transport closure.
+/// ```swift
+/// let request = DigitalObjectRequest.download(reference)
+/// ```
+public struct DigitalObjectRequest<Response>: Hashable, Sendable {
+  /// The operation to execute, with no transport closure or hidden I/O.
+  public enum Resolution: Hashable, Sendable {
+    /// One independently executable endpoint.
+    case endpoint(Endpoint<Response>)
+  }
+
+  /// The complete operation description.
+  public let resolution: Resolution
+
+  /// Describes one consumer-defined endpoint.
+  /// - Parameter endpoint: The independently executable operation.
+  public init(endpoint: Endpoint<Response>) { resolution = .endpoint(endpoint) }
+}
+
+extension DigitalObjectRequest where Response == DigitalObjectReceipt {
+  /// Describes the download of one digital object, independently of its destination file.
+  ///
+  /// The request resolves to ``DigitalObjectRequest/Resolution/endpoint(_:)`` with the same
+  /// endpoint as ``Endpoint/download(_:)``.
+  /// ```swift
+  /// let request = DigitalObjectRequest.download(reference)
+  /// ```
+  /// - Parameter reference: A validated digital object reference.
+  /// - Returns: An immutable download request.
+  public static func download(_ reference: DigitalObjectReference) -> Self {
+    Self(endpoint: .download(reference))
+  }
+}
