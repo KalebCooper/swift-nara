@@ -6,7 +6,7 @@ Portable Swift models and a resource-bounded SDK for National Archives Catalog b
 
 ## Status
 
-Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible. Typed archival-description views (`CatalogDescription`, ancestors, production and inclusive dates, access/use restrictions) project the same envelope; typed dates carry the source's day, month, and year components and its logical-date string rather than an invented instant, and restriction status is an open code, not a reuse authorization. Typed authority-record views (`CatalogAuthorityRecord`, `CatalogAuthorityType`, `CatalogNAIDReference`) project person, organization, topical-subject, geographic-place-name, and specific-records-type authority envelopes over the same source. Typed contribution views (`CatalogContribution`, `CatalogContributionSource`, `CatalogContributionTarget`, `CatalogContributionMetadata`) project the envelope's public comments, tags, and transcriptions; contributors are Catalog users, not archival creators, and OCR, community transcription, and machine-generated text are labeled separately, with none of it certified original text. Bulk directory discovery (`BulkDirectory`, `BulkDirectoryQuery`, `BulkPartitionReference`, `BulkDirectoryPage`, `BulkDirectoryCodec`) lists the immediate children of `authority-records/`, `descriptions/collections/`, and `descriptions/record-groups/`; a discovered prefix proves storage membership only at the moment of listing and is never a parsed record group number or National Archives Identifier.
+Implements paginated S3 XML manifests, streamed JSONL shard downloads, independent bounded local record iteration, and source-byte/HTTP receipts. Models preserve NAIDs, hierarchy, original dates, unknown fields and nulls, digital-object metadata, OCR and contribution provenance, and access/use restrictions. An absent digital-object member is distinct from null or an empty array; metadata-only descriptions remain accessible. Typed archival-description views (`CatalogDescription`, ancestors, production and inclusive dates, access/use restrictions) project the same envelope; typed dates carry the source's day, month, and year components and its logical-date string rather than an invented instant, and restriction status is an open code, not a reuse authorization. Typed authority-record views (`CatalogAuthorityRecord`, `CatalogAuthorityType`, `CatalogNAIDReference`) project person, organization, topical-subject, geographic-place-name, and specific-records-type authority envelopes over the same source. Typed contribution views (`CatalogContribution`, `CatalogContributionSource`, `CatalogContributionTarget`, `CatalogContributionMetadata`) project the envelope's public comments, tags, and transcriptions; contributors are Catalog users, not archival creators, and OCR, community transcription, and machine-generated text are labeled separately, with none of it certified original text. Bulk directory discovery (`BulkDirectory`, `BulkDirectoryQuery`, `BulkPartitionReference`, `BulkDirectoryPage`, `BulkDirectoryCodec`) lists the immediate children of `authority-records/`, `descriptions/collections/`, and `descriptions/record-groups/`; a discovered prefix proves storage membership only at the moment of listing and is never a parsed record group number or National Archives Identifier. Conditional shard refresh (`ShardCondition`, `ShardRefreshResult`, `BulkObjectChange`) downloads a shard only while its entity tag does or does not still match a previously recorded value, distinguishing a not-modified retrieval from a new download, comparing a saved and a current object listing hint, and never retrying or replacing an existing destination file.
 
 The bulk distribution is a periodic archival snapshot. It does not guarantee current-administration coverage, complete history, stable pagination snapshots, OCR accuracy, or unrestricted reuse of linked media. The separate Catalog HTTP API is never used. Package code is MIT-licensed; source content retains its own rights and restrictions.
 
@@ -93,6 +93,22 @@ for try await line in try CatalogLineSequence(shard: receipt) {
   }
 }
 ```
+
+Refresh a shard against a previously recorded entity tag instead of re-downloading it unconditionally:
+
+```swift
+let reference = try ShardReference(key: currentObject.key)
+switch try await client.refresh(
+  reference, condition: try .ifNoneMatch(previousETag), to: newDestination)
+{
+case .downloaded(let receipt):
+  print(receipt.byteCount)
+case .notModified(let retrieval):
+  print(retrieval.status)  // keep the previous file and receipt
+}
+```
+
+A `304` leaves the destination untouched and creates no file; a `412` means the source's current entity tag does not match the one supplied, calling for renewed inventory rather than a retry. `BulkObjectChange.compare(previous:current:)` compares a saved and a current object listing hint by key, ETag, size, and last-modified to decide which shards are worth refreshing.
 
 The parent directory must exist and the destination must be new. Failures remove only the temporary download; no incomplete receipt is returned. A completed receipt proves HTTP/file completion, not that every JSONL record is valid. Local parsing reports malformed or oversized lines with their original physical location. Default limits are 4 MiB buffered responses, 1 GiB per download, and 8 MiB per line. The local reader uses a read buffer no larger than 64 KiB. ETags are opaque version hints, not SHA-256 digests; hash saved bytes when your storage policy requires a digest.
 

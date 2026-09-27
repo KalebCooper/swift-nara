@@ -52,3 +52,20 @@ extension CatalogBulkRequest where Response == ShardReceipt {
     Self(endpoint: .shard(reference))
   }
 }
+
+extension CatalogBulkRequest where Response == ShardRefreshResult {
+  /// Describes a conditional JSONL download, independently of its destination file.
+  ///
+  /// The request resolves to ``CatalogBulkRequest/Resolution/endpoint(_:)`` with the same endpoint as
+  /// ``Endpoint/refresh(_:condition:)``.
+  /// ```swift
+  /// let request = CatalogBulkRequest.refresh(reference, condition: try .ifNoneMatch(previousETag))
+  /// ```
+  /// - Parameters:
+  ///   - reference: The selected object and optional version.
+  ///   - condition: The single validator the executor sends with the download.
+  /// - Returns: An immutable conditional shard request.
+  public static func refresh(_ reference: ShardReference, condition: ShardCondition) -> Self {
+    Self(endpoint: .refresh(reference, condition: condition))
+  }
+}

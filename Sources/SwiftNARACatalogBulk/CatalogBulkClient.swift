@@ -174,8 +174,17 @@ public struct CatalogBulkClient: Sendable {
   }
 
   static func request<Value>(_ endpoint: Endpoint<Value>) -> Request {
-    Request(
-      headers: [.acceptEncoding: "identity"],
+    var headers: HTTPFields = [.acceptEncoding: "identity"]
+    if let condition = endpoint.condition {
+      let name: HTTPField.Name =
+        switch condition.kind {
+        case .ifMatch: .ifMatch
+        case .ifNoneMatch: .ifNoneMatch
+        }
+      headers.append(HTTPField(name: name, value: condition.etag))
+    }
+    return Request(
+      headers: headers,
       options: RequestOptions(redirectPolicy: .never, requiresAuth: false), path: endpoint.path)
   }
 

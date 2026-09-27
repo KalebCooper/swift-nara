@@ -57,6 +57,26 @@ for try await partition in client.partitions(matching: query) {
 
 `directory(matching:)` returns one validated `BulkDirectoryPage`; `directoryPages(matching:)` and `pages(for:record:)` give the same lazy source-response traversal the manifest methods use, extended to directory listings. `partitions(matching:)` drains each page's common prefixes before requesting the next page and never yields an object listed directly in the directory, such as a zero-byte marker key equal to the prefix itself. Discovery proves storage membership only at the moment of traversal, never a stable or current snapshot. A discovered prefix is a storage path, not a National Archives Identifier: `descriptions/record-groups/rg_11/` names a partition to list further, not NAID 11.
 
+## Refresh selected shards
+
+```swift
+let reference = try ShardReference(key: currentObject.key)
+switch try await client.refresh(
+  reference, condition: try .ifNoneMatch(previousETag), to: newDestination)
+{
+case .downloaded(let receipt):
+  print(receipt.byteCount, receipt.retrieval)
+case .notModified(let retrieval):
+  print(retrieval.status)  // keep the consumer's previous file and receipt
+}
+```
+
+Scheduling, durable inventories, checkpoints, hashing policy, and record reconciliation stay in the consumer: enumerate only the selected prefixes, compare each listed object's key, ETag, size, and last-modified hint against a saved inventory with `BulkObjectChange.compare(previous:current:)`, fetch changed candidates into new destinations, then checkpoint the validated result in consumer storage.
+
+A `304 Not Modified` leaves the destination untouched, creates no file and no temporary file, and reports only retrieval evidence, so the consumer keeps its previous file and receipt. A `412 Precondition Failed` means the source's current entity tag does not match the one supplied; renew the inventory before deciding what to fetch, since the client does not retry. A single `403` or `404` seen while scanning is not evidence of deletion; a full inventory difference is evidence for reconciliation, and reconciliation, including any deletion, stays a consumer decision.
+
+Refreshing to a destination that already exists throws before any request is sent, even when the source would answer 304. `refresh(_:condition:to:)`, `value(for:to:)`, and `send(_:to:)` agree at all three levels. An endpoint built from a raw path or a link carries no condition and is sent unconditionally.
+
 ## Topics
 
 ### Client operations

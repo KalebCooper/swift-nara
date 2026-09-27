@@ -299,5 +299,53 @@
     "sha256": "54296f82c053894c5f3256ab8420bb1cd3d8c5bfa16b4c71f84431b6cabf118f",
     "status": 200,
     "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=8&prefix=authority-records%2F"
+  },
+  {
+    "byteCount": 0,
+    "file": "refresh-not-modified.headers.json",
+    "headers": {
+      "x-amz-id-2": "4ycKkvsvfyuRWYfYnGoPoZJRswlDoKAZGVA2UXqKbs/PcN3rAT8tY/zcY5ydpOwkMGLHk4Z0dDDe0L3ApXO10Aqu4z6/LoAd",
+      "x-amz-request-id": "Q7MNFBP9BVKRMK6V",
+      "Server": "AmazonS3",
+      "Date": "Sat, 26 Sep 2026 22:47:43 GMT",
+      "Last-Modified": "Thu, 09 Apr 2026 17:28:28 GMT",
+      "ETag": "\"4ee6006efb1a7923711c088aaf8626a0\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-version-id": "UJyiii_Crdud2H8tsuMrokVKx2zzjm.6"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "nara-national-archives-catalog.s3.amazonaws.com",
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "If-None-Match": "\"4ee6006efb1a7923711c088aaf8626a0\""
+    },
+    "retrievedAt": "2026-09-26T22:47:43.031094+00:00",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 304,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl"
+  },
+  {
+    "byteCount": 348,
+    "file": "refresh-precondition-failed.xml",
+    "headers": {
+      "Server": "AmazonS3",
+      "x-amz-request-id": "X29SP3GJM6G96RNY",
+      "x-amz-id-2": "+nkpI9+XRw4oohS+vi1IVf65J4mhMi7ePhh2eb1gqyS5rRGvXIaiVuRWIjIWuACGravSeCiUeKYVYhpjSYnfTWi+VDPeou4q",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Date": "Sat, 26 Sep 2026 22:47:42 GMT"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "nara-national-archives-catalog.s3.amazonaws.com",
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "If-Match": "\"0000000000000000000000000000dead\""
+    },
+    "retrievedAt": "2026-09-26T22:47:43.188258+00:00",
+    "sha256": "7b678b342d27a5a9c9684e38dcd77603b8081b8433482a835dbc8aec338613c2",
+    "status": 412,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl"
   }
 ]

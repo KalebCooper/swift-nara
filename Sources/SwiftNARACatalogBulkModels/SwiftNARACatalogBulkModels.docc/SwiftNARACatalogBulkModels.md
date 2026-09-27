@@ -56,6 +56,14 @@ print(page.prefixes)
 let partition = try BulkPartitionReference(directory: .recordGroups, prefix: page.prefixes[0])
 ```
 
+``ShardCondition`` holds one entity tag exactly as supplied, quotes and any `W/` prefix included, built through the throwing `.ifNoneMatch(_:)` or `.ifMatch(_:)` factory; an empty entity tag, a control character, a leading or trailing space or tab, the wildcard `*`, or a comma throws `ManifestError.invalidQuery`. A consumer sending requests with its own networking reads `ShardCondition.fieldName` for the exact header name to send. `Endpoint.refresh(_:condition:)` and `CatalogBulkRequest.refresh(_:condition:)` describe a conditional shard download the same way `.shard(_:)` describes an unconditional one; an endpoint built from a raw path or a link carries no condition. `ShardRefreshResult` distinguishes `.downloaded(ShardReceipt)` from `.notModified(SourceRetrieval)`; a not-modified result carries only retrieval evidence, with no file, byte count, or receipt. `BulkObjectChange.compare(previous:current:)` is a pure comparison of two `BulkObject` hints by key, ETag, size, and last-modified; `storageClass` is not compared. An unchanged result means no observed metadata change, not verified byte identity, and a key difference means the two hints describe different objects, so any other differing field reported alongside it is not evidence about one object's history.
+
+```swift
+let condition = try ShardCondition.ifNoneMatch(previousETag)
+let endpoint = Endpoint.refresh(reference, condition: condition)
+let request = CatalogBulkRequest.refresh(reference, condition: condition)
+```
+
 ## Topics
 
 ### Request values
@@ -100,6 +108,11 @@ let partition = try BulkPartitionReference(directory: .recordGroups, prefix: pag
 - ``CatalogContributionMetadata``
 - ``CatalogContributionSource``
 - ``CatalogContributionTarget``
+
+### Selective refresh
+- ``BulkObjectChange``
+- ``ShardCondition``
+- ``ShardRefreshResult``
 
 ### Provenance
 - ``CatalogLine``

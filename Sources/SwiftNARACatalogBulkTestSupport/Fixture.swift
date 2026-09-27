@@ -26,6 +26,12 @@ package enum Fixture: String, CaseIterable {
   case organization = "organization.jsonl"
   /// authority-records/person/person-1.jsonl, unchanged.
   case person = "person.jsonl"
+  /// Response headers of the 304 to a GET of descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl
+  /// with If-None-Match "4ee6006efb1a7923711c088aaf8626a0"; the response had no body.
+  case refreshNotModified = "refresh-not-modified.headers.json"
+  /// Body of the 412 to a GET of descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl
+  /// with If-Match "0000000000000000000000000000dead", unchanged.
+  case refreshPreconditionFailed = "refresh-precondition-failed.xml"
   /// descriptions/record-groups/rg_11/rg_11-1.jsonl, unchanged.
   case rg11 = "rg11.jsonl"
   /// authority-records/specific-records-type/specific-records-type-1.jsonl, unchanged.

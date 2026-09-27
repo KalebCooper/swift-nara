@@ -11,6 +11,8 @@ import Foundation
 /// let endpoint = Endpoint.manifest(try ManifestQuery(maxKeys: 4, prefix: "descriptions/"))
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The conditional validator when this endpoint was created by the refresh factory.
+  public private(set) var condition: ShardCondition? = nil
   /// The exact query when this endpoint was created by the directory factory.
   public private(set) var directoryQuery: BulkDirectoryQuery? = nil
   /// The exact query when this endpoint was created by the manifest factory.
@@ -156,11 +158,39 @@ extension Endpoint where Response == ShardReceipt {
   /// - Parameter shard: A validated JSONL object reference.
   /// - Returns: A streaming download endpoint.
   public static func shard(_ shard: ShardReference) -> Self {
-    builtIn(
-      "/"
-        + shard.key.split(separator: "/", omittingEmptySubsequences: false).map {
-          encoded(String($0))
-        }.joined(separator: "/")
-        + (shard.versionID.map { "?versionId=" + encoded($0) } ?? ""))
+    builtIn(shardPath(shard))
+  }
+}
+
+extension Endpoint where Response == ShardRefreshResult {
+  /// Describes a conditional download of one JSONL shard, optionally pinning an S3 version.
+  ///
+  /// The path equals the ``Endpoint/shard(_:)`` path for the same reference, including any
+  /// version pin, and the condition is stored as a value for the executor to send. Creating
+  /// the endpoint sends nothing.
+  /// ```swift
+  /// let reference = try ShardReference(key: "descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl")
+  /// let endpoint = Endpoint.refresh(
+  ///   reference, condition: try .ifNoneMatch("\"4ee6006efb1a7923711c088aaf8626a0\""))
+  /// ```
+  /// - Parameters:
+  ///   - shard: A validated JSONL object reference.
+  ///   - condition: The single validator the executor sends with the download.
+  /// - Returns: A conditional streaming download endpoint.
+  public static func refresh(_ shard: ShardReference, condition: ShardCondition) -> Self {
+    var endpoint = builtIn(shardPath(shard))
+    endpoint.condition = condition
+    return endpoint
+  }
+}
+
+extension Endpoint {
+  /// The encoded object path for a shard, with its optional version pin.
+  static func shardPath(_ shard: ShardReference) -> String {
+    "/"
+      + shard.key.split(separator: "/", omittingEmptySubsequences: false).map {
+        encoded(String($0))
+      }.joined(separator: "/")
+      + (shard.versionID.map { "?versionId=" + encoded($0) } ?? "")
   }
 }

@@ -1,7 +1,13 @@
 import Foundation
 import HTTPTesting
+import HTTPTypes
 import SwiftNARACatalogBulk
 import SwiftNARACatalogBulkModels
+
+/// A header name recorded in a fixture that `HTTPField.Name` refuses to parse.
+struct DemoFixtureHeaderError: Error, CustomStringConvertible {
+  let description: String
+}
 
 @main
 struct Demo {
@@ -96,6 +102,47 @@ struct Demo {
     }
     print(
       "Read \(count) local records from \(receipt.byteCount) saved bytes; \(transport.requests.count) recorded HTTP responses."
+    )
+    let notModifiedHeadersData = try Data(
+      contentsOf: fixtures.appendingPathComponent("refresh-not-modified.headers.json"))
+    let recordedHeaders = try JSONDecoder().decode(
+      [String: String].self, from: notModifiedHeadersData)
+    var notModifiedFields = HTTPFields()
+    for (name, value) in recordedHeaders.sorted(by: { $0.key < $1.key }) {
+      guard let fieldName = HTTPField.Name(name) else {
+        throw DemoFixtureHeaderError(
+          description: "Recorded refresh header name \"\(name)\" is not a valid HTTP field name")
+      }
+      notModifiedFields.append(HTTPField(name: fieldName, value: value))
+    }
+    // Answer 6: the recorded 304, replayed against the shard already saved above.
+    transport.enqueue(
+      .success(MockTransport.Answer(chunks: [], headers: notModifiedFields, status: .notModified)))
+    // Answer 7: the recorded 200, replayed into a second, different destination.
+    transport.enqueue(.success(MockTransport.Answer(chunks: [shard])))
+    let refreshCondition = try ShardCondition.ifNoneMatch("\"4ee6006efb1a7923711c088aaf8626a0\"")
+    let refreshReference = try ShardReference(
+      key: "descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl")
+    let notModifiedResult = try await client.refresh(
+      refreshReference, condition: refreshCondition,
+      to: directory.appendingPathComponent("fdr-refresh-not-modified.jsonl"))
+    guard case .notModified(let retrieval) = notModifiedResult else {
+      print("Refresh replay unexpectedly downloaded a new body")
+      return
+    }
+    let etag = retrieval.headers.first { $0.name.lowercased() == "etag" }?.value ?? "no ETag"
+    print("Refresh replay: not modified, ETag \(etag)")
+    let downloadedResult = try await client.refresh(
+      refreshReference, condition: refreshCondition,
+      to: directory.appendingPathComponent("fdr-refresh-downloaded.jsonl"))
+    guard case .downloaded(let refreshedReceipt) = downloadedResult else {
+      print("Refresh replay unexpectedly reported not modified")
+      return
+    }
+    let priorAttributes = try FileManager.default.attributesOfItem(atPath: receipt.fileURL.path)
+    let priorByteCount = (priorAttributes[.size] as? Int) ?? -1
+    print(
+      "Refresh replay: downloaded \(refreshedReceipt.byteCount) bytes to \(refreshedReceipt.fileURL.lastPathComponent); prior file \(receipt.fileURL.lastPathComponent) remains \(priorByteCount) bytes"
     )
   }
 }
