@@ -3,10 +3,27 @@ import Foundation
 /// Official digital object captures; exact requests, instants, headers, sizes, and hashes are in
 /// attribution.json.
 package enum Fixture: String, CaseIterable {
+  /// Response headers of the 200 image/tiff with X-Cache "Miss from cloudfront" to a HEAD of
+  /// /medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif on
+  /// catalog.archives.gov, with no query, on September 28, 2026 UTC; the response had no body.
+  case cacheMissObject = "cache-miss-object.headers.json"
+  /// Response headers of the 200 text/html to a HEAD of
+  /// /medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM on
+  /// catalog.archives.gov, with no query, on September 28, 2026 UTC; an archival HTML object.
+  case htmlObjectMedialive = "html-object-medialive.headers.json"
+  /// Response headers of the 200 text/html to a HEAD of
+  /// /medialz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html on catalog.archives.gov,
+  /// with no query, on September 28, 2026 UTC; an archival HTML object.
+  case htmlObjectMedialz = "html-object-medialz.headers.json"
   /// Response headers of the 200 to a HEAD of
   /// /medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg on
   /// catalog.archives.gov, with no query; the response had no body and no Content-Type.
   case medialiveNoContentType = "medialive-no-content-type.headers.json"
+  /// Body of the 200 text/html to a GET of
+  /// /medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/swift-nara-nonexistent-object.jpg
+  /// on catalog.archives.gov, with no query, on September 28, 2026 UTC, a key chosen not to exist;
+  /// unchanged.
+  case missingMedialiveObject = "missing-medialive-object.html"
   /// Body of the 200 text/html to a GET of
   /// /medialz/presidential-libraries/roosevelt/577534/swift-nara-nonexistent-object.jpg on
   /// catalog.archives.gov, with no query, a key chosen not to exist; unchanged.

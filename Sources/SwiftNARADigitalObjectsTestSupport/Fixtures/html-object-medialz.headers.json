@@ -1,0 +1,18 @@
+{
+  "Content-Type": "text/html",
+  "Content-Length": "41948",
+  "Connection": "close",
+  "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+  "Last-Modified": "Fri, 31 Jan 2020 17:11:52 GMT",
+  "ETag": "\"b9dcda676394366f3c73ca71c7efb6a6\"",
+  "x-amz-storage-class": "STANDARD_IA",
+  "x-amz-meta-s3b-last-modified": "20190729T114005Z",
+  "Content-Disposition": "attachment",
+  "x-amz-version-id": "null",
+  "Accept-Ranges": "bytes",
+  "Server": "AmazonS3",
+  "X-Cache": "Miss from cloudfront",
+  "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+  "X-Amz-Cf-Pop": "IAH50-P3",
+  "X-Amz-Cf-Id": "fMzCWbUfP6R0_I35-Fg9xoNs_06M7fN5S7WX3ee9k9ekQuvY1bwXiw=="
+}

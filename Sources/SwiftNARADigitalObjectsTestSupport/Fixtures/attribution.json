@@ -129,5 +129,207 @@
     "sha256": "64f334d04ad9c9e56607f11c4fad19022e8cd8cb5acb7de9a7b1938eb94b43d1",
     "status": 200,
     "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/swift-nara-nonexistent-object.jpg"
+  },
+  {
+    "bulkObject": null,
+    "byteCount": 5454,
+    "file": "missing-medialive-object.html",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "5454",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Thu, 17 Sep 2026 00:44:09 GMT",
+      "ETag": "\"7d9eac38672044d4ca31d82db1b183c0\"",
+      "x-amz-server-side-encryption": "AES256",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 333d2e46da1024d9e242b2e6d8096250.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "DFzLab13rc1MJ8PMdYimh1RE_enwBnU4lkb_k1klsRIXiKs3ESning=="
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:55.946741+00:00",
+    "rights": {
+      "accessRestriction": null,
+      "useRestriction": null,
+      "notes": "Request for a key chosen not to exist, under the same /medialive/ prefix as medialive-no-content-type.headers.json. No bulk record names it. The body is stored unchanged and is byte-identical to missing-object.html, with the same ETag and Last-Modified."
+    },
+    "sha256": "64f334d04ad9c9e56607f11c4fad19022e8cd8cb5acb7de9a7b1938eb94b43d1",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/swift-nara-nonexistent-object.jpg"
+  },
+  {
+    "bulkObject": {
+      "line": 1,
+      "naId": 1129195,
+      "objectFileSize": 41948,
+      "objectId": "160924454",
+      "objectType": "HTML",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html",
+      "shard": {
+        "contentLength": 1305656,
+        "etag": "\"44d19e7cc25b3dcd66d5a6c31812347a\"",
+        "key": "descriptions/record-groups/rg_341/rg_341-1.jsonl",
+        "lastModified": "Thu, 09 Apr 2026 13:29:34 GMT",
+        "located": "Line located on September 28, 2026 UTC with an unsigned ranged GET of bytes 0-524287 of this key; the shard is not stored. The HEAD recorded here identifies the shard version current at capture; its Last-Modified precedes the ranged read.",
+        "method": "HEAD",
+        "retrievedAt": "2026-09-28T01:41:56.332709+00:00",
+        "status": 200,
+        "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/record-groups/rg_341/rg_341-1.jsonl",
+        "versionId": "di2Tsvx.5AY0Ny0CuOwKKRVk02mcDAos"
+      }
+    },
+    "byteCount": 0,
+    "file": "html-object-medialz.headers.json",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "41948",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Fri, 31 Jan 2020 17:11:52 GMT",
+      "ETag": "\"b9dcda676394366f3c73ca71c7efb6a6\"",
+      "x-amz-storage-class": "STANDARD_IA",
+      "x-amz-meta-s3b-last-modified": "20190729T114005Z",
+      "Content-Disposition": "attachment",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "fMzCWbUfP6R0_I35-Fg9xoNs_06M7fN5S7WX3ee9k9ekQuvY1bwXiw=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.519458+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 1129195, file unit \"Airlift Mission Data File (ALOREP1), September 1968\" in series 630623 of Record Group 341, are both Unrestricted in rg_341-1.jsonl line 1. The digital object (\"ALOREP1 1968 Sep Layout File\", designator \"Technical Documentation\") carries no object-level restriction member, and its ancestors carry no restriction members. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html"
+  },
+  {
+    "bulkObject": {
+      "line": 3,
+      "naId": 26879728,
+      "objectFileSize": 2477,
+      "objectId": "26879729",
+      "objectType": "HTML",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/opastorage/live/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+      "shard": {
+        "contentLength": 574959,
+        "etag": "\"c24cb1656c7c7501bb8b3856e310dcba\"",
+        "key": "descriptions/record-groups/rg_267/rg_267-1.jsonl",
+        "lastModified": "Thu, 09 Apr 2026 13:19:15 GMT",
+        "located": "Line located on September 28, 2026 UTC with an unsigned ranged GET of bytes 0-524287 of this key; the shard is not stored. The HEAD recorded here identifies the shard version current at capture; its Last-Modified precedes the ranged read.",
+        "method": "HEAD",
+        "retrievedAt": "2026-09-28T01:41:56.652364+00:00",
+        "status": 200,
+        "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/record-groups/rg_267/rg_267-1.jsonl",
+        "versionId": "32_Ul1CI83NTccNEs2wZ.pjeqdYGyGAY"
+      }
+    },
+    "byteCount": 0,
+    "file": "html-object-medialive.headers.json",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "2477",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Sun, 10 Apr 2016 07:34:59 GMT",
+      "ETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 1872828d3fd83436a195653bd07088ba.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "FmzWYFZWjQNEY7RuRdCB_SwnLbA_Uj0-HEc-0ckgxp-vuhrHqISdzA=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.804585+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 26879728, a file unit in Record Group 267, are both Unrestricted in rg_267-1.jsonl line 3. The digital object carries no object-level restriction member. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM"
+  },
+  {
+    "bulkObject": {
+      "file": "rg11.jsonl",
+      "line": 21,
+      "naId": 162246501,
+      "objectFileSize": 12345678,
+      "objectId": "171484703",
+      "objectType": "Image (TIFF)",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif"
+    },
+    "byteCount": 0,
+    "file": "cache-miss-object.headers.json",
+    "headers": {
+      "Content-Type": "image/tiff",
+      "Content-Length": "606560908",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Fri, 02 Oct 2020 20:44:07 GMT",
+      "ETag": "\"a70901bcff19a4987bac6122f262eeb0-73\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 698d8d562800b85574a23b6e1fbeb998.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "e7gwACrm850Fpn6QUncRyRuZzK_mIfQCZL_UcNwxqi1P0YXN2HNO-g=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.931242+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 162246501 are both Unrestricted in rg11.jsonl line 21; its ancestors and the digital object carry no restriction members. The object is the uncompressed TIFF master of page 4, not requested by this package before. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif"
   }
 ]

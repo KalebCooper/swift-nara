@@ -1,0 +1,15 @@
+{
+  "Content-Type": "text/html",
+  "Content-Length": "2477",
+  "Connection": "close",
+  "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+  "Last-Modified": "Sun, 10 Apr 2016 07:34:59 GMT",
+  "ETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+  "x-amz-version-id": "null",
+  "Accept-Ranges": "bytes",
+  "Server": "AmazonS3",
+  "X-Cache": "Miss from cloudfront",
+  "Via": "1.1 1872828d3fd83436a195653bd07088ba.cloudfront.net (CloudFront)",
+  "X-Amz-Cf-Pop": "IAH50-P3",
+  "X-Amz-Cf-Id": "FmzWYFZWjQNEY7RuRdCB_SwnLbA_Uj0-HEc-0ckgxp-vuhrHqISdzA=="
+}

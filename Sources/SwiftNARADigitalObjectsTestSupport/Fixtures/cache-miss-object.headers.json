@@ -1,0 +1,16 @@
+{
+  "Content-Type": "image/tiff",
+  "Content-Length": "606560908",
+  "Connection": "close",
+  "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+  "Last-Modified": "Fri, 02 Oct 2020 20:44:07 GMT",
+  "ETag": "\"a70901bcff19a4987bac6122f262eeb0-73\"",
+  "x-amz-storage-class": "INTELLIGENT_TIERING",
+  "x-amz-version-id": "null",
+  "Accept-Ranges": "bytes",
+  "Server": "AmazonS3",
+  "X-Cache": "Miss from cloudfront",
+  "Via": "1.1 698d8d562800b85574a23b6e1fbeb998.cloudfront.net (CloudFront)",
+  "X-Amz-Cf-Pop": "IAH50-P3",
+  "X-Amz-Cf-Id": "e7gwACrm850Fpn6QUncRyRuZzK_mIfQCZL_UcNwxqi1P0YXN2HNO-g=="
+}
