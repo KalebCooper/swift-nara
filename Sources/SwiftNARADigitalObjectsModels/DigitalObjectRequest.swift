@@ -20,6 +20,19 @@ public struct DigitalObjectRequest<Response>: Hashable, Sendable {
   public init(endpoint: Endpoint<Response>) { resolution = .endpoint(endpoint) }
 }
 
+extension DigitalObjectRequest where Response == DigitalObjectRangeReceipt {
+  /// Describes one validated partial-original operation without I/O.
+  /// - Parameters:
+  ///   - range: One explicit inclusive byte interval.
+  ///   - reference: Known original identity, validator and complete length.
+  /// - Returns: An independently executable range operation.
+  public static func range(
+    _ range: DigitalObjectByteRange, of reference: DigitalObjectRangeReference
+  ) -> Self {
+    Self(endpoint: .range(range, of: reference))
+  }
+}
+
 extension DigitalObjectRequest where Response == DigitalObjectReceipt {
   /// Describes the download of one digital object, independently of its destination file.
   ///

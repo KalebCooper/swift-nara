@@ -28,6 +28,10 @@ public struct Endpoint<Response>: Hashable, Sendable {
   public private(set) var imageRequest: IIIFImageRequest? = nil
   /// The exact encoded object path relative to ``origin``.
   public let path: String
+  /// The selected byte interval for a range operation, otherwise nil.
+  public private(set) var range: DigitalObjectByteRange? = nil
+  /// The known original representation for a range operation, otherwise nil.
+  public private(set) var rangeReference: DigitalObjectRangeReference? = nil
   /// The reference when this endpoint was created by the download factory, or `nil` when it
   /// was created from a link.
   public private(set) var reference: DigitalObjectReference? = nil
@@ -68,9 +72,28 @@ public struct Endpoint<Response>: Hashable, Sendable {
     path = imageRequest.path
   }
 
+  private init(range: DigitalObjectByteRange, reference: DigitalObjectRangeReference) {
+    path = reference.object.transportPath
+    self.range = range
+    rangeReference = reference
+  }
+
   private init(reference: DigitalObjectReference) {
     path = reference.transportPath
     self.reference = reference
+  }
+}
+
+extension Endpoint where Response == DigitalObjectRangeReceipt {
+  /// Describes one validated partial-original operation without I/O.
+  /// - Parameters:
+  ///   - range: One explicit inclusive byte interval.
+  ///   - reference: Known original identity, validator and complete length.
+  /// - Returns: An independently executable range operation.
+  public static func range(
+    _ range: DigitalObjectByteRange, of reference: DigitalObjectRangeReference
+  ) -> Self {
+    Self(range: range, reference: reference)
   }
 }
 

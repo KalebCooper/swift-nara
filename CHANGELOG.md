@@ -6,6 +6,8 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 
 ### Added
 
+- Bounded original-media and bulk byte ranges with strong validators, optional bulk version pins, strict partial-response validation, and distinct fragment receipts.
+
 - Validated full-image IIIF JPEG resizing with width, height, fit and server-maximum sizes, separate derivative receipts, and bounded file publication.
 
 - Bounded IIIF Image API 3 information with validated source mapping, raw JSON preservation, dimensions, server limits, and retrieval evidence.

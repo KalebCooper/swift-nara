@@ -19,3 +19,15 @@ National Archives Catalog was accessed on September 24, 2026 UTC from the [NARA-
 - `refresh-precondition-failed.xml`: unchanged S3 `PreconditionFailed` error body of the HTTP 412 to a GET of the FDR shard with a mismatched `If-Match`.
 
 These are source data, not coverage claims or a reuse license for linked media. Source restrictions and contribution attribution remain in the captured records. Synthetic edge cases are created and labeled inside tests; they do not replace the original fixtures.
+
+## Range excerpts
+
+The `range-*.bin` files are unchanged 32-byte responses for `bytes=16-47`, captured
+October 4, 2026. They are excerpts, not whole JSONL, ZIP, JPEG, or HTML objects. Attribution
+records the exact URL, If-Match and Range headers, full representation length, version,
+Content-Range, retrieval instant and SHA-256. The associated `*.headers.json` files retain
+request/response metadata for mismatched-validator 412 and unsatisfiable-range 416 probes;
+no response bodies were retained for those probes. Their hashes describe the stored metadata
+representation, not an HTTP response body.
+The FDR range source is 320,707 bytes with ETag `"bc6d5d2f3ef93a382d7eefbbe5649ab9"`;
+this is newer source evidence than the unchanged older complete `fdr.jsonl` capture.

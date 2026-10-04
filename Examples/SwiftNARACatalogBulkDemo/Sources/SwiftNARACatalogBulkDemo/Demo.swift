@@ -148,5 +148,7 @@ struct Demo {
     print(
       "Refresh replay: downloaded \(refreshedReceipt.byteCount) bytes to \(refreshedReceipt.fileURL.lastPathComponent); prior file \(receipt.fileURL.lastPathComponent) remains \(priorByteCount) bytes"
     )
+    try await demonstrateRange(
+      client: client, directory: directory, fixtures: fixtures, transport: transport)
   }
 }

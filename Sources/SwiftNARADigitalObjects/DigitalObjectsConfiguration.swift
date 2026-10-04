@@ -6,6 +6,8 @@ public struct DigitalObjectsConfiguration: Sendable {
   public let maximumInformationBytes: Int
   /// The maximum bytes accepted for one complete object.
   public let maximumObjectBytes: Int64
+  /// The maximum bytes accepted for one range, independent of complete-object size.
+  public let maximumRangeBytes: Int64
   /// The caller's application identity and contact information.
   public let userAgent: String
 
@@ -14,21 +16,24 @@ public struct DigitalObjectsConfiguration: Sendable {
   ///   - maximumErrorBodyBytes: A positive diagnostic-body limit.
   ///   - maximumInformationBytes: A positive information budget, defaulting to one MiB.
   ///   - maximumObjectBytes: A positive whole-object limit, independent of bulk metadata.
+  ///   - maximumRangeBytes: Positive per-range bound, defaulting to four MiB.
   ///   - userAgent: A nonempty HTTP field value identifying the caller.
   /// - Throws: `DigitalObjectsError.invalidConfiguration` for invalid bounds or identity.
   public init(
     maximumErrorBodyBytes: Int, maximumInformationBytes: Int = 1_048_576, maximumObjectBytes: Int64,
-    userAgent: String
+    maximumRangeBytes: Int64 = 4 * 1024 * 1024, userAgent: String
   )
     throws(DigitalObjectsError)
   {
     guard maximumErrorBodyBytes > 0, maximumInformationBytes > 0, maximumObjectBytes > 0,
+      maximumRangeBytes > 0,
       userAgent.contains(where: { !$0.isWhitespace }),
       !userAgent.unicodeScalars.contains(where: { $0.value < 32 || $0.value == 127 })
     else { throw .invalidConfiguration }
     self.maximumErrorBodyBytes = maximumErrorBodyBytes
     self.maximumInformationBytes = maximumInformationBytes
     self.maximumObjectBytes = maximumObjectBytes
+    self.maximumRangeBytes = maximumRangeBytes
     self.userAgent = userAgent
   }
 }

@@ -2,6 +2,8 @@ import Foundation
 
 /// Official source captures; exact requests, instants, headers, sizes, and hashes are in attribution.json.
 package enum Fixture: String, CaseIterable {
+  /// Exact capture attribution and HTTP metadata.
+  case attribution = "attribution.json"
   /// ListObjectsV2 for authority-records/, delimiter=/, max-keys=20.
   case directoryAuthorityRecords = "directory-authority-records.xml"
   /// ListObjectsV2 for authority-records/, max-keys=8, without a delimiter.
@@ -26,6 +28,10 @@ package enum Fixture: String, CaseIterable {
   case organization = "organization.jsonl"
   /// authority-records/person/person-1.jsonl, unchanged.
   case person = "person.jsonl"
+  /// Exact bytes 16 through 47 of the September 2026 authority archive, not a full ZIP.
+  case rangeAuthorityArchive = "range-authority-archive.bin"
+  /// Exact bytes 16 through 47 of the October 4 FDR shard version, not a full record.
+  case rangeFDRJSONL = "range-fdr-jsonl.bin"
   /// Response headers of the 304 to a GET of descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl
   /// with If-None-Match "4ee6006efb1a7923711c088aaf8626a0"; the response had no body.
   case refreshNotModified = "refresh-not-modified.headers.json"

@@ -72,3 +72,23 @@ information identity, requested transform and actual response evidence.
 - ``DigitalObjectsConfiguration``
 - ``DigitalObjectsError``
 
+
+## Retrieve a bounded byte interval
+
+```swift
+let range = try DigitalObjectByteRange(lowerBound: 16, upperBound: 47)
+let fragment = try await client.downloadRange(range, of: knownOriginal, to: destination)
+let request = DigitalObjectRequest.range(range, of: knownOriginal)
+```
+
+Supply a range reference with an already-observed strong ETag and complete length.
+The operation performs one request with `If-Match`, `Range`, and `Accept-Encoding: identity`.
+It requires 206, the exact expected interval and total, an unchanged validator, and an exact
+saved-byte count. The requested end may be clipped to the known EOF. A 200 is a
+`rangeNotHonored` failure; 412 and 416 retain their transport status. Nothing retries or
+appends to a previous file. Existing destinations are refused, and failure cleans up the
+owned temporary. The default per-range bound is four MiB, separate from complete downloads.
+
+Caller-supplied transports must preserve response representation metadata, honor identity
+encoding, refuse redirects, and avoid unbounded buffering. A transport that silently rewrites
+both bytes and metadata cannot supply verifiable range evidence.

@@ -18,6 +18,8 @@ public enum CatalogBulkError: Error {
   case line(byteOffset: Int64, lineNumber: Int64, reason: CatalogDecodingError)
   /// The S3 listing did not provide valid forward progress.
   case pagination(ManifestError)
+  /// An interval or partial representation does not meet the range contract.
+  case range(BulkRangeError)
   /// The caller's response recorder failed; that page is not yielded.
   case recording(any Error)
   /// Received file bytes disagree with the declared receipt or content length.

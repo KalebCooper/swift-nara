@@ -1,0 +1,27 @@
+{
+  "method": "GET",
+  "requestHeaders": {
+    "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+    "Accept-Encoding": "identity",
+    "Range": "bytes=48559426-48559441",
+    "If-Match": "\"6b4bd5bccbc5394e1fefdd29325df604-6\""
+  },
+  "retrievedAt": "2026-10-04T20:01:52.893483+00:00",
+  "rightsBasis": "Public NARA bulk archive; exact 32-byte ZIP fragment, not a complete archive.",
+  "status": 416,
+  "url": "https://nara-national-archives-catalog.s3.amazonaws.com/zip/nac_export_authorities_2026-09-14.zip?versionId=NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+  "headers": {
+    "x-amz-request-id": "1CKD2YHKCEZR3YW8",
+    "x-amz-id-2": "G/Ko7GSns2dInyxBfFTve9fEdXjQgL1xYwA/w6goB3ljOroNEBmrmMD7+PjADDSU/FQmJ8n6aw4=",
+    "Content-Type": "application/xml",
+    "Transfer-Encoding": "chunked",
+    "Date": "Sun, 04 Oct 2026 20:01:52 GMT",
+    "Server": "AmazonS3",
+    "Connection": "close"
+  },
+  "totalByteCount": 48559426,
+  "expectedETag": "\"6b4bd5bccbc5394e1fefdd29325df604-6\"",
+  "sourceVersionID": "NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+  "scenario": "unsatisfiable",
+  "bodyRetained": false
+}

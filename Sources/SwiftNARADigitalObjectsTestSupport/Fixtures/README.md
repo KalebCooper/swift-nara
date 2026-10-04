@@ -11,3 +11,13 @@ Three unsigned requests to `https://catalog.archives.gov` were recorded on Septe
 - `cache-miss-object.headers.json`: response headers of an HTTP 200 HEAD of `https://catalog.archives.gov/medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif`, exactly as received, in order: `Content-Type: image/tiff`, `Content-Length: 606560908`, `X-Cache: Miss from cloudfront`. Its bulk object is `objectId` 171484703 of NAID 162246501 in `rg11.jsonl` line 21, whose `objectFileSize` is the placeholder 12345678. No object bytes are stored.
 
 These are source data, not coverage claims or a reuse license for the media. The package license covers package code only. Record-level restrictions stay in the bulk records, and a successful download does not establish permission to reuse a digital object.
+
+## Range excerpts
+
+The `range-*.bin` files are unchanged 32-byte responses for `bytes=16-47`, captured
+October 4, 2026. They are excerpts, not whole JSONL, ZIP, JPEG, or HTML objects. Attribution
+records the exact URL, If-Match and Range headers, full representation length, version,
+Content-Range, retrieval instant and SHA-256. The associated `*.headers.json` files retain
+request/response metadata for mismatched-validator 412 and unsatisfiable-range 416 probes;
+no response bodies were retained for those probes. Their hashes describe the stored metadata
+representation, not an HTTP response body.

@@ -22,6 +22,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
   /// The exact encoded path and query relative to the bucket origin.
   public let path: String
 
+  /// The interval when constructed by the range factory.
+  public private(set) var range: BulkByteRange? = nil
+  /// The known representation when constructed by the range factory.
+  public private(set) var rangeReference: BulkRangeReference? = nil
+
   /// The full source URL, with its original encoded query.
   public var url: URL {
     guard let url = URL(string: Self.origin + path) else {
@@ -91,6 +96,12 @@ public struct Endpoint<Response>: Hashable, Sendable {
     manifestQuery = query
   }
 
+  private init(range: BulkByteRange, reference: BulkRangeReference) {
+    self.range = range
+    self.rangeReference = reference
+    path = reference.path
+  }
+
   static func builtIn(_ path: String) -> Self {
     guard let value = Self(path: path) else {
       preconditionFailure("Encoded validated source inputs form valid bucket paths.")
@@ -150,6 +161,17 @@ extension Endpoint where Response == BulkManifest {
   /// - Returns: An independently executable manifest endpoint.
   public static func manifest(_ query: ManifestQuery) -> Self {
     Self(manifestQuery: query)
+  }
+}
+
+extension Endpoint where Response == BulkRangeReceipt {
+  /// Describes one interval of a known bulk representation, without construction I/O.
+  /// - Parameters:
+  ///   - range: Inclusive requested interval.
+  ///   - reference: Key, strong validator, known total and optional version pin.
+  /// - Returns: An independently executable partial-download endpoint.
+  public static func range(_ range: BulkByteRange, of reference: BulkRangeReference) -> Self {
+    Self(range: range, reference: reference)
   }
 }
 

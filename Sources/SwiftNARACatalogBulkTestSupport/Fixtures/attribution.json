@@ -347,5 +347,201 @@
     "sha256": "7b678b342d27a5a9c9684e38dcd77603b8081b8433482a835dbc8aec338613c2",
     "status": 412,
     "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl"
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\""
+    },
+    "retrievedAt": "2026-10-04T20:01:51.661150+00:00",
+    "rightsBasis": "Public NARA bulk distribution; exact 32-byte excerpt.",
+    "status": 206,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl?versionId=bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "headers": {
+      "x-amz-id-2": "EIuGhtLpmNPcHNqnOzWt+ioEiebbHnhx1SwIYgrE2NvodIEMrlw494ueniZqXCFDxgp1+e069VcdfadAMX39oJLzd8dCxC7b",
+      "x-amz-request-id": "M4Q3CWYDPHE21GQE",
+      "Server": "AmazonS3",
+      "Date": "Sun, 04 Oct 2026 20:01:52 GMT",
+      "Last-Modified": "Wed, 30 Sep 2026 02:00:35 GMT",
+      "ETag": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-server-side-encryption": "AES256",
+      "x-amz-version-id": "bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+      "Accept-Ranges": "bytes",
+      "Content-Range": "bytes 16-47/320707",
+      "Content-Type": "binary/octet-stream",
+      "Content-Length": "32",
+      "Connection": "close"
+    },
+    "totalByteCount": 320707,
+    "expectedETag": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\"",
+    "sourceVersionID": "bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "scenario": "match",
+    "file": "range-fdr-jsonl.bin",
+    "byteCount": 32,
+    "sha256": "ade9b6c95fe3fcc6e746751100bd2ac429f8f98da5dcfcb91e449674539c3580"
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"swift-nara-nonmatching-validator\""
+    },
+    "retrievedAt": "2026-10-04T20:01:51.971091+00:00",
+    "rightsBasis": "Public NARA bulk distribution; exact 32-byte excerpt.",
+    "status": 412,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl?versionId=bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "headers": {
+      "Server": "AmazonS3",
+      "x-amz-request-id": "GCXR3EKZ8P9KD5JT",
+      "x-amz-id-2": "6kT6Qq15+ccQKOFsucmrwTBLAvSK/bwdMMUOocKGFaClqWGw9hnIS/fh6fSs3jVIWGbXoKxtwB7xYb0oMNaHqjCFIbZBwnPC",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Date": "Sun, 04 Oct 2026 20:01:52 GMT",
+      "Connection": "close"
+    },
+    "totalByteCount": 320707,
+    "expectedETag": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\"",
+    "sourceVersionID": "bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "scenario": "mismatch",
+    "bodyRetained": false,
+    "file": "range-fdr-jsonl-mismatch.headers.json",
+    "byteCount": 1112,
+    "sha256": "2fc9836a5465e3e5d7157faed46e347b7b76ee5f8a08d107fa8b346f2e8348c1",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=320707-320722",
+      "If-Match": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\""
+    },
+    "retrievedAt": "2026-10-04T20:01:52.229033+00:00",
+    "rightsBasis": "Public NARA bulk distribution; exact 32-byte excerpt.",
+    "status": 416,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl?versionId=bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "headers": {
+      "Server": "AmazonS3",
+      "x-amz-request-id": "GCXQ22MJH9MHEFGN",
+      "x-amz-id-2": "V9uPXM+b8ZaNk4VHf8vi6fSwlIACqEs4mAliWZcyONOzL6QikNqoRWwGtK0ziB2EuZ/AeD58qrbnmeZBdYLVY7b+A43Zv2sg",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Date": "Sun, 04 Oct 2026 20:01:51 GMT",
+      "Connection": "close"
+    },
+    "totalByteCount": 320707,
+    "expectedETag": "\"bc6d5d2f3ef93a382d7eefbbe5649ab9\"",
+    "sourceVersionID": "bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs",
+    "scenario": "unsatisfiable",
+    "bodyRetained": false,
+    "file": "range-fdr-jsonl-unsatisfiable.headers.json",
+    "byteCount": 1125,
+    "sha256": "02d950ef7327b33630d5d1cecf57d281c65365e6df4786b15323ac842b8e95b2",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"6b4bd5bccbc5394e1fefdd29325df604-6\""
+    },
+    "retrievedAt": "2026-10-04T20:01:52.520309+00:00",
+    "rightsBasis": "Public NARA bulk archive; exact 32-byte ZIP fragment, not a complete archive.",
+    "status": 206,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/zip/nac_export_authorities_2026-09-14.zip?versionId=NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "headers": {
+      "x-amz-id-2": "DH9EQ3t/nSEXz4TXczxXsHcMpcFjC+kFVwUZ4i6V+Qxj/rIzA+PMsw6BcywwWg/r4AU6hNSlaew=",
+      "x-amz-request-id": "GCXT6CJ6PFQ0SM19",
+      "Date": "Sun, 04 Oct 2026 20:01:53 GMT",
+      "Last-Modified": "Thu, 01 Oct 2026 14:03:49 GMT",
+      "ETag": "\"6b4bd5bccbc5394e1fefdd29325df604-6\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-server-side-encryption": "AES256",
+      "x-amz-version-id": "NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+      "Accept-Ranges": "bytes",
+      "Content-Range": "bytes 16-47/48559426",
+      "Content-Type": "application/zip",
+      "Content-Length": "32",
+      "Server": "AmazonS3",
+      "Connection": "close"
+    },
+    "totalByteCount": 48559426,
+    "expectedETag": "\"6b4bd5bccbc5394e1fefdd29325df604-6\"",
+    "sourceVersionID": "NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "scenario": "match",
+    "file": "range-authority-archive.bin",
+    "byteCount": 32,
+    "sha256": "79323c1182dacff71050e56f19e59ce22eeeba1af1d93a7273c6982266f0ba5c"
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"swift-nara-nonmatching-validator\""
+    },
+    "retrievedAt": "2026-10-04T20:01:52.769155+00:00",
+    "rightsBasis": "Public NARA bulk archive; exact 32-byte ZIP fragment, not a complete archive.",
+    "status": 412,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/zip/nac_export_authorities_2026-09-14.zip?versionId=NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "headers": {
+      "x-amz-request-id": "GCXYQ3SQ16CWRM3R",
+      "x-amz-id-2": "VVc44WGoJv1XNpAgSQHARZtotSZWAD3g5Ty0wYBHpKkMP5Mbn8ir4TcmNsyAs3Cnf6LfUyxh5n0=",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Date": "Sun, 04 Oct 2026 20:01:52 GMT",
+      "Server": "AmazonS3",
+      "Connection": "close"
+    },
+    "totalByteCount": 48559426,
+    "expectedETag": "\"6b4bd5bccbc5394e1fefdd29325df604-6\"",
+    "sourceVersionID": "NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "scenario": "mismatch",
+    "bodyRetained": false,
+    "file": "range-authority-archive-mismatch.headers.json",
+    "byteCount": 1097,
+    "sha256": "98b3e3c724b98ac7e18ec9f3845938db6a228f2bedcacb9295447d991f32da5c",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=48559426-48559441",
+      "If-Match": "\"6b4bd5bccbc5394e1fefdd29325df604-6\""
+    },
+    "retrievedAt": "2026-10-04T20:01:52.893483+00:00",
+    "rightsBasis": "Public NARA bulk archive; exact 32-byte ZIP fragment, not a complete archive.",
+    "status": 416,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/zip/nac_export_authorities_2026-09-14.zip?versionId=NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "headers": {
+      "x-amz-request-id": "1CKD2YHKCEZR3YW8",
+      "x-amz-id-2": "G/Ko7GSns2dInyxBfFTve9fEdXjQgL1xYwA/w6goB3ljOroNEBmrmMD7+PjADDSU/FQmJ8n6aw4=",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Date": "Sun, 04 Oct 2026 20:01:52 GMT",
+      "Server": "AmazonS3",
+      "Connection": "close"
+    },
+    "totalByteCount": 48559426,
+    "expectedETag": "\"6b4bd5bccbc5394e1fefdd29325df604-6\"",
+    "sourceVersionID": "NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA",
+    "scenario": "unsatisfiable",
+    "bodyRetained": false,
+    "file": "range-authority-archive-unsatisfiable.headers.json",
+    "byteCount": 1116,
+    "sha256": "e53b5353e825ae29ac658fddf12c82f3cbdbdeb32f7608754d3512ba52c66844",
+    "representation": "Request and response metadata only; body was not retained."
   }
 ]

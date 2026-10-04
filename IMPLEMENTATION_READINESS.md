@@ -18,6 +18,42 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 local byte-range qualification
+
+Both service pairs now expose a single explicit closed range through everyday, request
+and endpoint calls. Strong ETags, known total lengths, optional meaningful bulk version
+pins, strict Content-Range and byte-count validation, bounded temporary files and distinct
+partial receipts are implemented. Bulk ranges support JSONL and ZIP keys; media ranges
+support original objects on both observed prefixes. Existing complete downloads retain
+their whole-file contract. Resume, full archive acquisition and ZIP ingestion are still
+pending implementation.
+
+At the working revision based on `14d401d`, Xcode 27 MCP on macOS 27 and Linux
+`swift:6.3-noble` default/HTTPPortable each pass 203 tests in 24 suites, with no failures,
+skips or unrun tests. Mac and Linux builds have no compiler warnings. The iOS 27 simulator
+build passes with four generated-test-product incompatible-sysroot linker warnings;
+no simulator test execution is claimed for this slice. Source checks pass 15 gates and
+55 planted arms, including strict formatting. Four DocC catalogs convert with warnings
+as errors, and both Linux Release demos replay their additional 32-byte range example.
+Twelve new range evidence files match their attributed byte counts and SHA-256 values.
+
+URLSession and HTTPPortable were also exercised against a local synthetic server through
+Xcode MCP. Identity bytes and representation headers are preserved; gzip remains labeled
+when transparently decompressed. The two SDKs reject the encoded URLSession response.
+HTTPPortable was exercised with decompression disabled and enabled. These observations
+are on macOS; Linux SDK execution is recorded separately. The initial Xcode and Docker
+stalls were recovered, and the initial test compilation failures were fixed before the
+passing runs. Evidence: `plans/p9r1-apple-evidence.json`, `plans/p9r1-linux-second.log`,
+`plans/p9r1-source-final.log`, `plans/p9r1-self-tests-final.log`, `plans/p9r1-docc-final.log`,
+and `plans/p9r1-demo-*.log`.
+
+Historical OFR disposition/codification work is owner-deferred from this repository task.
+Resumable downloads await approval of an SDK-only integrity dependency. Archive-reader
+selection and live Catalog credentials/fixture policy remain separate gates. Android,
+current hosted CI, Pages and release remain unqualified; the phase is not fully qualified
+across all required platforms. No sibling or remote change was made, and the entry
+lockfile edit is preserved.
+
 ## October 4 local IIIF derivative qualification
 
 Full-image default-quality JPEG requests now support positive width, height, fit and

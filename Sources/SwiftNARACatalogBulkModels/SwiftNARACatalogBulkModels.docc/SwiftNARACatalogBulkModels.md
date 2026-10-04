@@ -142,3 +142,11 @@ for object in record.digitalObjects ?? [] {
 - ``SourceHeader``
 - ``SourceResponse``
 - ``SourceRetrieval``
+
+## Partial-byte evidence
+
+`BulkByteRange` selects one closed interval. `BulkRangeReference` binds a strong
+quoted ETag and positive known total length to a validated source.
+`BulkRangeReceipt` describes only the saved interval; it is never a complete-file receipt.
+Bulk references accept JSONL shard keys or ZIP keys and can pin a meaningful S3 version.
+A partial JSONL interval may split a UTF-8 character or record and cannot be read as a shard.

@@ -3,6 +3,8 @@ import Foundation
 /// Official digital object captures; exact requests, instants, headers, sizes, and hashes are in
 /// attribution.json.
 package enum Fixture: String, CaseIterable {
+  /// Capture attribution including exact range requests.
+  case attribution = "attribution.json"
   /// Response headers of the 200 image/tiff with X-Cache "Miss from cloudfront" to a HEAD of
   /// /medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif on
   /// catalog.archives.gov, with no query, on September 28, 2026 UTC; the response had no body.
@@ -38,6 +40,11 @@ package enum Fixture: String, CaseIterable {
   /// /medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg on
   /// catalog.archives.gov, with no query; unchanged.
   case msf00611Page01 = "msf00611_Page_01.jpg"
+
+  /// Bytes 16 through 47 of the reviewed FDR JPEG, never a complete image.
+  case rangeFDRJPEG = "range-fdr-jpeg.bin"
+  /// Bytes 16 through 47 of the reviewed archival HTML object, never a complete document.
+  case rangeMedialiveHTML = "range-medialive-html.bin"
 
   /// Loads one recorded body without a live request.
   package func data() throws -> Data { try Data(contentsOf: url()) }

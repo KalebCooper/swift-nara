@@ -9,3 +9,7 @@ swift run --package-path Examples/SwiftNARACatalogBulkDemo SwiftNARACatalogBulkD
 ```
 
 Requires Swift 6.2 or later and macOS 26 or Linux. For live operation, supply a real transport, your application identity, and a retrieval clock to `CatalogBulkClient`.
+
+The range example replays an attributed 32-byte interval separately from the complete-file
+example, prints its offset and full-source length, and removes the temporary fragment afterward.
+It performs no live request, persistence, retry, or resume.

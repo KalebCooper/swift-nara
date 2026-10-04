@@ -136,3 +136,52 @@ Public `git ls-remote --tags` verified swifty-networking `1.3.1`, tag object `61
 ## Fixtures and mutations
 
 Original fixture bodies are never normalized. `attribution.json` contains their SHA-256 checksums. Tests derive explicitly synthetic variants for invalid XML, token cycles, unknown/null JSON values, CRLF, missing terminators, long lines, and malformed JSONL. They do not label synthetic mutations as additional official responses. Unit tests make no live requests.
+
+## October 4 conditional byte-range evidence
+
+The [S3 GetObject contract](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)
+supports one Range and an If-Match precondition, plus an optional versionId. The
+[HTTP Content-Range contract](https://www.rfc-editor.org/rfc/rfc9110.html#name-content-range)
+distinguishes a selected interval from the complete representation. The clients require
+known total length, exact strong validator, one matching 206 interval and identity encoding;
+ETags are not treated as local content digests.
+
+Four unsigned identity-encoded GETs retained only bytes 16 through 47, exactly 32 bytes
+per response. Exact URLs, conditional request headers, UTC instants, full response headers,
+SHA-256 and rights basis are recorded in the two fixture attribution files. Associated
+mismatched-validator and unsatisfiable-range probes returned 412 and 416 respectively;
+only their request/response metadata was retained, with no error response bodies. None of
+the sampled 416 responses supplied Content-Range. No Catalog API content or Fold3 media
+was saved.
+
+| Source | Whole length | Strong ETag | Version evidence |
+| --- | ---: | --- | --- |
+| FDR collection shard | 320707 | `"bc6d5d2f3ef93a382d7eefbbe5649ab9"` | `bhqgv1RpNZ2Sex.1UjZ_L3iKnV.n8gVs` |
+| September 14 authority ZIP | 48559426 | `"6b4bd5bccbc5394e1fefdd29325df604-6"` | `NFgawcUH5rQgJR3hb6rXGfpNFf_bFTNA` |
+| FDR original JPEG, NAID 122178160 / object 122178162 | 65981 | `"03353e5c57368192275f91e5eed396df"` | literal null, not an immutable version pin |
+| Archival HTML, NAID 26879728 / object 26879729 | 2477 | `"3d4579f368d79fb46d9a3aa0330982e9"` | literal null, not an immutable version pin |
+
+The FDR source validator/version differs from the September complete-shard capture.
+The newly captured 32 bytes equal that older fixture's interval; this establishes neither
+whole-body identity nor whole-body change. Previous captures remain unchanged.
+The ZIP and JSONL fragments are opaque partial bytes; they are not complete archives or
+readable shard receipts. The media excerpts retain the previously reviewed Unrestricted
+source labels, which are evidence about those specific examples, not blanket reuse rights.
+
+### Local transport observations
+
+A loopback-only synthetic server returned a 32-byte identity response and a 52-byte gzip
+representation with 206, ETag and Content-Range. Through Xcode 27 MCP on macOS 27,
+URLSession delivered 32 decoded gzip bytes while retaining Content-Encoding: gzip and
+Content-Length: 52. Both clients accepted identity bytes and rejected the encoded response
+without a destination file. HTTPPortable's AsyncHTTPClient transport delivered 52 bytes
+with decompression disabled and 32 with decompression explicitly enabled; both retained
+the representation headers. The portable transport runs ended with exit code 0 in Xcode's
+console, despite RunProject's misleading rapid-exit launch-failure summary. These are
+macOS transport observations, separate from the passing Linux SDK test matrix.
+
+Evidence is retained in `plans/p9r1-apple-evidence.json` and `plans/range-transport-probe/`.
+An earlier direct container probe was blocked by the global Swift-command hook and is
+not execution evidence. Xcode MCP supplied the completed alternative. Transports supplied
+by consumers must preserve representation metadata; a transport rewriting both metadata
+and bytes cannot establish exact range provenance.

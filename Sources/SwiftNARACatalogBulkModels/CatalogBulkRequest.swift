@@ -44,6 +44,17 @@ extension CatalogBulkRequest where Response == BulkManifest {
   public static func manifest(_ query: ManifestQuery) -> Self { Self(resolution: .manifest(query)) }
 }
 
+extension CatalogBulkRequest where Response == BulkRangeReceipt {
+  /// Describes one validated byte-range transfer without a destination or construction I/O.
+  /// - Parameters:
+  ///   - range: Inclusive requested interval.
+  ///   - reference: The known source representation.
+  /// - Returns: A reusable partial-download request.
+  public static func range(_ range: BulkByteRange, of reference: BulkRangeReference) -> Self {
+    Self(endpoint: .range(range, of: reference))
+  }
+}
+
 extension CatalogBulkRequest where Response == ShardReceipt {
   /// Describes a streamed JSONL download, independently of its destination file.
   /// - Parameter reference: The selected object and optional version.

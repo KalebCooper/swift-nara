@@ -23,6 +23,8 @@ public enum DigitalObjectsError: Error {
   case invalidImage
   /// The response exceeds the caller's whole-object bound.
   case limitExceeded
+  /// A byte interval or partial representation does not meet the range contract.
+  case range(DigitalObjectRangeError)
   /// Whole-body status, encoding, content range, or byte length is inconsistent.
   case sizeMismatch
   /// HTTP or transport failure, with bounded status-body evidence and received headers.

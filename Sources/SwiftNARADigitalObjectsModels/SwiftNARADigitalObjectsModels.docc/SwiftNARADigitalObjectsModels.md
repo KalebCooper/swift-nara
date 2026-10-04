@@ -61,3 +61,11 @@ from an original-file receipt. No request construction fetches information.
 ### Retrieval evidence
 - ``DigitalObjectReceipt``
 
+
+## Partial-byte evidence
+
+`DigitalObjectByteRange` selects one closed interval. `DigitalObjectRangeReference` binds a strong
+quoted ETag and positive known total length to a validated source.
+`DigitalObjectRangeReceipt` describes only the saved interval; it is never a complete-file receipt.
+Original archival identifiers and both supported media path mappings are preserved.
+IIIF derivatives are excluded from this range operation.

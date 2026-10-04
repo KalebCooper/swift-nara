@@ -58,6 +58,8 @@ struct Demo {
       resize, to: directory.appendingPathComponent("width200.jpg"))
     print(
       "Saved \(derivative.byteCount) derivative bytes for \(derivative.request.size.parameter).")
+    try await demonstrateRange(
+      client: client, directory: directory, fixtures: fixtures, transport: transport)
     print("Replayed \(transport.requests.count) recorded responses; no live request.")
   }
 }
