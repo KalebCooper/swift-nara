@@ -40,12 +40,15 @@ readonly SCRATCH_VOLUME="swift-nara-linux-build"
 
 readonly REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 
-if ! docker info >/dev/null 2>&1; then
+# Query only daemon connectivity, without the broader docker info diagnostics.
+if ! docker version --format '{{.Server.Version}}' >/dev/null 2>&1; then
   echo "error: docker is not available. Start Docker Desktop and try again." >&2
   exit 1
 fi
 
-docker volume create "$SCRATCH_VOLUME" >/dev/null
+if ! docker volume inspect "$SCRATCH_VOLUME" >/dev/null 2>&1; then
+  docker volume create "$SCRATCH_VOLUME" >/dev/null
+fi
 
 # $1: trait list, empty for the default trait set; the rest: additional swiftpm arguments.
 run_suite() {

@@ -8,6 +8,8 @@ public enum CatalogBulkError: Error {
   case cancelled
   /// A bounded source document could not be decoded.
   case decoding(CatalogDecodingError)
+  /// The retained download's local state does not permit safe continuation.
+  case downloadState(BulkDownloadStateError)
   /// Local file access failed; no complete download is published.
   case file(any Error)
   /// A caller supplied an invalid size bound or non-file destination.
@@ -18,6 +20,8 @@ public enum CatalogBulkError: Error {
   case line(byteOffset: Int64, lineNumber: Int64, reason: CatalogDecodingError)
   /// The S3 listing did not provide valid forward progress.
   case pagination(ManifestError)
+  /// An interval or partial representation does not meet the range contract.
+  case range(BulkRangeError)
   /// The caller's response recorder failed; that page is not yielded.
   case recording(any Error)
   /// Received file bytes disagree with the declared receipt or content length.

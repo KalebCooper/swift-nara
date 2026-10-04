@@ -35,7 +35,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild build \
-            -scheme SwiftNARACatalogBulk \
+            -scheme swift-nara-Package \
             -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=27.0' \
             -derivedDataPath .derivedData \
             -skipPackagePluginValidation \

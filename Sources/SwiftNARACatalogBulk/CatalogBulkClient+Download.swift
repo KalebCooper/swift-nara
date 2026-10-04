@@ -27,6 +27,13 @@ extension CatalogBulkClient {
   public func send(_ endpoint: Endpoint<ShardReceipt>, to destination: URL)
     async throws(CatalogBulkError) -> ShardReceipt
   {
+    try await stream(endpoint, to: destination)
+  }
+
+  /// Streams any shard endpoint's successful body to a new file, publishing it only when complete.
+  func stream<Value>(_ endpoint: Endpoint<Value>, to destination: URL)
+    async throws(CatalogBulkError) -> ShardReceipt
+  {
     guard !Task.isCancelled else { throw .cancelled }
     guard destination.isFileURL else { throw .invalidConfiguration }
     let manager = FileManager.default

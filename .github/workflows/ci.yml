@@ -127,6 +127,8 @@ jobs:
         run: |
           swift run -c release --package-path Examples/SwiftNARACatalogBulkDemo \
             SwiftNARACatalogBulkDemo "$PWD/Sources/SwiftNARACatalogBulkTestSupport/Fixtures"
+          swift run -c release --package-path Examples/SwiftNARADigitalObjectsDemo \
+            SwiftNARADigitalObjectsDemo "$PWD/Sources/SwiftNARADigitalObjectsTestSupport/Fixtures"
 
   lint:
     name: swift-format lint
@@ -140,7 +142,7 @@ jobs:
         run: swift format --version
       # Any finding fails the job.
       - name: Lint
-        run: swift format lint --strict --recursive Sources Tests Examples/SwiftNARACatalogBulkDemo/Sources
+        run: swift format lint --strict --recursive Sources Tests Package.swift Examples/SwiftNARACatalogBulkDemo/Package.swift Examples/SwiftNARACatalogBulkDemo/Sources Examples/SwiftNARADigitalObjectsDemo/Package.swift Examples/SwiftNARADigitalObjectsDemo/Sources
 
   source:
     name: Validate source conventions

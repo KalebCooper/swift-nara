@@ -72,6 +72,16 @@ struct ManifestTests {
     #expect(throws: CatalogDecodingError.limitExceeded) {
       try ManifestCodec.decode(data, maximumBytes: data.count - 1)
     }
+    // A listing grouped by a delimiter is a directory page, never a manifest.
+    for fixture in [
+      Fixture.directoryAuthorityRecords, .directoryCollectionsFirst, .directoryCollectionsSecond,
+      .directoryRecordGroups,
+    ] {
+      let directory = try fixture.data()
+      #expect(throws: CatalogDecodingError.malformedXML, "\(fixture)") {
+        try ManifestCodec.decode(directory)
+      }
+    }
   }
 
   @Test("Namespaces and escaped key text decode portably")

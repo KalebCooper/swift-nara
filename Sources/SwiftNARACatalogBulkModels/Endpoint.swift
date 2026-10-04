@@ -11,12 +11,25 @@ import Foundation
 /// let endpoint = Endpoint.manifest(try ManifestQuery(maxKeys: 4, prefix: "descriptions/"))
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The archive selected by the archive factory, otherwise nil.
+  public private(set) var archiveReference: BulkArchiveReference? = nil
+  /// The conditional validator when this endpoint was created by the refresh factory.
+  public private(set) var condition: ShardCondition? = nil
+  /// The exact query when this endpoint was created by the directory factory.
+  public private(set) var directoryQuery: BulkDirectoryQuery? = nil
+  /// The representation selected for a resumable original download, otherwise nil.
+  public private(set) var downloadReference: BulkRangeReference? = nil
   /// The exact query when this endpoint was created by the manifest factory.
   public private(set) var manifestQuery: ManifestQuery? = nil
   /// The public bucket origin used by every endpoint.
   public static var origin: String { "https://nara-national-archives-catalog.s3.amazonaws.com" }
   /// The exact encoded path and query relative to the bucket origin.
   public let path: String
+
+  /// The interval when constructed by the range factory.
+  public private(set) var range: BulkByteRange? = nil
+  /// The known representation when constructed by the range factory.
+  public private(set) var rangeReference: BulkRangeReference? = nil
 
   /// The full source URL, with its original encoded query.
   public var url: URL {
@@ -64,6 +77,28 @@ public struct Endpoint<Response>: Hashable, Sendable {
     self.path = path
   }
 
+  private init(archiveReference: BulkArchiveReference) {
+    self.archiveReference = archiveReference
+    path = archiveReference.path
+  }
+
+  package init(directoryQuery query: BulkDirectoryQuery) {
+    var fields = [
+      "delimiter=%2F", "list-type=2", "max-keys=\(query.maxKeys)",
+      "prefix=\(Self.encoded(query.directory.prefix))",
+    ]
+    if let token = query.continuationToken {
+      fields.insert("continuation-token=" + Self.encoded(token), at: 0)
+    }
+    self = Self.builtIn("/?" + fields.joined(separator: "&"))
+    directoryQuery = query
+  }
+
+  private init(downloadReference: BulkRangeReference) {
+    self.downloadReference = downloadReference
+    path = downloadReference.path
+  }
+
   package init(manifestQuery query: ManifestQuery) {
     var fields = [
       "list-type=2", "max-keys=\(query.maxKeys)", "prefix=\(Self.encoded(query.prefix))",
@@ -73,6 +108,12 @@ public struct Endpoint<Response>: Hashable, Sendable {
     }
     self = Self.builtIn("/?" + fields.joined(separator: "&"))
     manifestQuery = query
+  }
+
+  private init(range: BulkByteRange, reference: BulkRangeReference) {
+    self.range = range
+    self.rangeReference = reference
+    path = reference.path
   }
 
   static func builtIn(_ path: String) -> Self {
@@ -112,6 +153,40 @@ public struct Endpoint<Response>: Hashable, Sendable {
   }
 }
 
+extension Endpoint where Response == BulkArchiveReceipt {
+  /// Describes acquisition of one selected ZIP without file or network I/O.
+  /// - Parameter reference: A validated archive key and optional version.
+  /// - Returns: A complete-archive endpoint, separate from shard and range receipts.
+  public static func archive(_ reference: BulkArchiveReference) -> Self {
+    Self(archiveReference: reference)
+  }
+}
+
+extension Endpoint where Response == BulkDirectoryPage {
+  /// Describes one ListObjectsV2 request for the immediate children of a bulk directory.
+  ///
+  /// The query fixes the delimiter to `/`, so the page lists child prefixes and any objects
+  /// directly in the directory. Fields are sent in lexical order with the token first when
+  /// present; the endpoint performs no local sorting and sends nothing at construction.
+  /// ```swift
+  /// let endpoint = Endpoint.directory(try BulkDirectoryQuery(directory: .recordGroups))
+  /// ```
+  /// - Parameter query: The exact page selection.
+  /// - Returns: An independently executable directory endpoint.
+  public static func directory(_ query: BulkDirectoryQuery) -> Self {
+    Self(directoryQuery: query)
+  }
+}
+
+extension Endpoint where Response == BulkDownloadReceipt {
+  /// Describes serial validated ranges without capturing a local file or performing I/O.
+  /// - Parameter reference: The exact known original representation.
+  /// - Returns: An independently executable resumable-download endpoint.
+  public static func resumableDownload(_ reference: BulkRangeReference) -> Self {
+    Self(downloadReference: reference)
+  }
+}
+
 extension Endpoint where Response == BulkManifest {
   /// Describes one ListObjectsV2 request without a delimiter or local sorting.
   /// - Parameter query: The exact page selection.
@@ -121,16 +196,55 @@ extension Endpoint where Response == BulkManifest {
   }
 }
 
+extension Endpoint where Response == BulkRangeReceipt {
+  /// Describes one interval of a known bulk representation, without construction I/O.
+  /// - Parameters:
+  ///   - range: Inclusive requested interval.
+  ///   - reference: Key, strong validator, known total and optional version pin.
+  /// - Returns: An independently executable partial-download endpoint.
+  public static func range(_ range: BulkByteRange, of reference: BulkRangeReference) -> Self {
+    Self(range: range, reference: reference)
+  }
+}
+
 extension Endpoint where Response == ShardReceipt {
   /// Describes the download of one JSONL shard, optionally pinning an S3 version.
   /// - Parameter shard: A validated JSONL object reference.
   /// - Returns: A streaming download endpoint.
   public static func shard(_ shard: ShardReference) -> Self {
-    builtIn(
-      "/"
-        + shard.key.split(separator: "/", omittingEmptySubsequences: false).map {
-          encoded(String($0))
-        }.joined(separator: "/")
-        + (shard.versionID.map { "?versionId=" + encoded($0) } ?? ""))
+    builtIn(shardPath(shard))
+  }
+}
+
+extension Endpoint where Response == ShardRefreshResult {
+  /// Describes a conditional download of one JSONL shard, optionally pinning an S3 version.
+  ///
+  /// The path equals the ``Endpoint/shard(_:)`` path for the same reference, including any
+  /// version pin, and the condition is stored as a value for the executor to send. Creating
+  /// the endpoint sends nothing.
+  /// ```swift
+  /// let reference = try ShardReference(key: "descriptions/collections/coll_FDR-FDRMSF/coll_FDR-FDRMSF-1.jsonl")
+  /// let endpoint = Endpoint.refresh(
+  ///   reference, condition: try .ifNoneMatch("\"4ee6006efb1a7923711c088aaf8626a0\""))
+  /// ```
+  /// - Parameters:
+  ///   - shard: A validated JSONL object reference.
+  ///   - condition: The single validator the executor sends with the download.
+  /// - Returns: A conditional streaming download endpoint.
+  public static func refresh(_ shard: ShardReference, condition: ShardCondition) -> Self {
+    var endpoint = builtIn(shardPath(shard))
+    endpoint.condition = condition
+    return endpoint
+  }
+}
+
+extension Endpoint {
+  /// The encoded object path for a shard, with its optional version pin.
+  static func shardPath(_ shard: ShardReference) -> String {
+    "/"
+      + shard.key.split(separator: "/", omittingEmptySubsequences: false).map {
+        encoded(String($0))
+      }.joined(separator: "/")
+      + (shard.versionID.map { "?versionId=" + encoded($0) } ?? "")
   }
 }

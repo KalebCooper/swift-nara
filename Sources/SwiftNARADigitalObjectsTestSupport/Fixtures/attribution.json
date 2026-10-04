@@ -1,0 +1,636 @@
+[
+  {
+    "bulkObject": {
+      "file": "fdr.jsonl",
+      "line": 1,
+      "naId": 122178160,
+      "objectFileSize": 65981,
+      "objectId": "122178162",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg"
+    },
+    "byteCount": 65981,
+    "file": "msf00611_Page_01.jpg",
+    "headers": {
+      "Content-Type": "image/jpeg",
+      "Content-Length": "65981",
+      "Connection": "close",
+      "Date": "Sun, 27 Sep 2026 04:35:26 GMT",
+      "Last-Modified": "Mon, 04 Mar 2019 15:49:31 GMT",
+      "ETag": "\"03353e5c57368192275f91e5eed396df\"",
+      "x-amz-storage-class": "STANDARD_IA",
+      "x-amz-meta-s3b-last-modified": "20181214T191532Z",
+      "Content-Disposition": "attachment",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Hit from cloudfront",
+      "Via": "1.1 a83867a3ac3fea26ed170155d7e41ae6.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "1Dz0Cup2AammiNjlBNUBlUvnYcon2buQJiJ4KpRJfkTjeLQfq3QcFw==",
+      "Age": "33417"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.001685+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 122178160, file unit in series 577534 of the Franklin D. Roosevelt Master Speech Files (collection 577496), are both Unrestricted in fdr.jsonl line 1. The digital object carries no object-level restriction member, and the Catalog schema defines none for digital objects. The file unit ancestors carry no restriction members. The body is stored unchanged for tests; the package license does not cover it."
+    },
+    "sha256": "21ec8a0f324c4ecc5d319ad3bb71fd6bbef76e5cd4f504185d4bad6670c06de5",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg"
+  },
+  {
+    "bulkObject": {
+      "file": "rg11.jsonl",
+      "line": 3,
+      "naId": 63545805,
+      "objectFileSize": 2299069,
+      "objectId": "63545806",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/opastorage/live/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg"
+    },
+    "byteCount": 0,
+    "file": "medialive-no-content-type.headers.json",
+    "headers": {
+      "Content-Length": "2299069",
+      "Connection": "close",
+      "Date": "Sun, 27 Sep 2026 04:35:26 GMT",
+      "Last-Modified": "Thu, 25 May 2017 15:37:09 GMT",
+      "ETag": "\"d386336180c6be15b1fa5fe9ed3feb73\"",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Hit from cloudfront",
+      "Via": "1.1 e65b32b1d336e1f83a40a2861817027c.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "SoHCcYRmKxwAM_uEerUjQWAPlXplFUH4M9xfmTKcDdHx5FzGPvDKyw==",
+      "Age": "33417"
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.122947+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 63545805 are both Unrestricted in rg11.jsonl line 3. The digital object description reads \"Image provided by Fold3. (Page 1)\" with designator \"Fold3 File #6575614\": a partner-provided image. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg"
+  },
+  {
+    "bulkObject": null,
+    "byteCount": 5454,
+    "file": "missing-object.html",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "5454",
+      "Connection": "close",
+      "Accept-Ranges": "bytes",
+      "Date": "Sun, 27 Sep 2026 13:52:22 GMT",
+      "Server": "AmazonS3",
+      "Last-Modified": "Thu, 17 Sep 2026 00:44:09 GMT",
+      "ETag": "\"7d9eac38672044d4ca31d82db1b183c0\"",
+      "x-amz-server-side-encryption": "AES256",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 432913c0b9b6a4264c846f9505ef2ce6.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "4wnxgtHqfqeETLbSQFKLe56WahQqkwVPgcme4VzFnAzfDR4VLJW6Jg=="
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-27T13:52:22.202625+00:00",
+    "rights": {
+      "accessRestriction": null,
+      "useRestriction": null,
+      "notes": "Request for a key chosen not to exist, under the same series prefix as msf00611_Page_01.jpg. No bulk record names it. The response body is the Catalog web application page served in place of a missing object, stored unchanged."
+    },
+    "sha256": "64f334d04ad9c9e56607f11c4fad19022e8cd8cb5acb7de9a7b1938eb94b43d1",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/swift-nara-nonexistent-object.jpg"
+  },
+  {
+    "bulkObject": null,
+    "byteCount": 5454,
+    "file": "missing-medialive-object.html",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "5454",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Thu, 17 Sep 2026 00:44:09 GMT",
+      "ETag": "\"7d9eac38672044d4ca31d82db1b183c0\"",
+      "x-amz-server-side-encryption": "AES256",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 333d2e46da1024d9e242b2e6d8096250.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "DFzLab13rc1MJ8PMdYimh1RE_enwBnU4lkb_k1klsRIXiKs3ESning=="
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:55.946741+00:00",
+    "rights": {
+      "accessRestriction": null,
+      "useRestriction": null,
+      "notes": "Request for a key chosen not to exist, under the same /medialive/ prefix as medialive-no-content-type.headers.json. No bulk record names it. The body is stored unchanged and is byte-identical to missing-object.html, with the same ETag and Last-Modified."
+    },
+    "sha256": "64f334d04ad9c9e56607f11c4fad19022e8cd8cb5acb7de9a7b1938eb94b43d1",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/swift-nara-nonexistent-object.jpg"
+  },
+  {
+    "bulkObject": {
+      "line": 1,
+      "naId": 1129195,
+      "objectFileSize": 41948,
+      "objectId": "160924454",
+      "objectType": "HTML",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html",
+      "shard": {
+        "contentLength": 1305656,
+        "etag": "\"44d19e7cc25b3dcd66d5a6c31812347a\"",
+        "key": "descriptions/record-groups/rg_341/rg_341-1.jsonl",
+        "lastModified": "Thu, 09 Apr 2026 13:29:34 GMT",
+        "located": "Line located on September 28, 2026 UTC with an unsigned ranged GET of bytes 0-524287 of this key; the shard is not stored. The HEAD recorded here identifies the shard version current at capture; its Last-Modified precedes the ranged read.",
+        "method": "HEAD",
+        "retrievedAt": "2026-09-28T01:41:56.332709+00:00",
+        "status": 200,
+        "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/record-groups/rg_341/rg_341-1.jsonl",
+        "versionId": "di2Tsvx.5AY0Ny0CuOwKKRVk02mcDAos"
+      }
+    },
+    "byteCount": 0,
+    "file": "html-object-medialz.headers.json",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "41948",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Fri, 31 Jan 2020 17:11:52 GMT",
+      "ETag": "\"b9dcda676394366f3c73ca71c7efb6a6\"",
+      "x-amz-storage-class": "STANDARD_IA",
+      "x-amz-meta-s3b-last-modified": "20190729T114005Z",
+      "Content-Disposition": "attachment",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "fMzCWbUfP6R0_I35-Fg9xoNs_06M7fN5S7WX3ee9k9ekQuvY1bwXiw=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.519458+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 1129195, file unit \"Airlift Mission Data File (ALOREP1), September 1968\" in series 630623 of Record Group 341, are both Unrestricted in rg_341-1.jsonl line 1. The digital object (\"ALOREP1 1968 Sep Layout File\", designator \"Technical Documentation\") carries no object-level restriction member, and its ancestors carry no restriction members. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html"
+  },
+  {
+    "bulkObject": {
+      "line": 3,
+      "naId": 26879728,
+      "objectFileSize": 2477,
+      "objectId": "26879729",
+      "objectType": "HTML",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/opastorage/live/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+      "shard": {
+        "contentLength": 574959,
+        "etag": "\"c24cb1656c7c7501bb8b3856e310dcba\"",
+        "key": "descriptions/record-groups/rg_267/rg_267-1.jsonl",
+        "lastModified": "Thu, 09 Apr 2026 13:19:15 GMT",
+        "located": "Line located on September 28, 2026 UTC with an unsigned ranged GET of bytes 0-524287 of this key; the shard is not stored. The HEAD recorded here identifies the shard version current at capture; its Last-Modified precedes the ranged read.",
+        "method": "HEAD",
+        "retrievedAt": "2026-09-28T01:41:56.652364+00:00",
+        "status": 200,
+        "url": "https://nara-national-archives-catalog.s3.amazonaws.com/descriptions/record-groups/rg_267/rg_267-1.jsonl",
+        "versionId": "32_Ul1CI83NTccNEs2wZ.pjeqdYGyGAY"
+      }
+    },
+    "byteCount": 0,
+    "file": "html-object-medialive.headers.json",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "2477",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Sun, 10 Apr 2016 07:34:59 GMT",
+      "ETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 1872828d3fd83436a195653bd07088ba.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "FmzWYFZWjQNEY7RuRdCB_SwnLbA_Uj0-HEc-0ckgxp-vuhrHqISdzA=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.804585+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 26879728, a file unit in Record Group 267, are both Unrestricted in rg_267-1.jsonl line 3. The digital object carries no object-level restriction member. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM"
+  },
+  {
+    "bulkObject": {
+      "file": "rg11.jsonl",
+      "line": 21,
+      "naId": 162246501,
+      "objectFileSize": 12345678,
+      "objectId": "171484703",
+      "objectType": "Image (TIFF)",
+      "objectUrl": "https://s3.amazonaws.com/NARAprodstorage/lz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif"
+    },
+    "byteCount": 0,
+    "file": "cache-miss-object.headers.json",
+    "headers": {
+      "Content-Type": "image/tiff",
+      "Content-Length": "606560908",
+      "Connection": "close",
+      "Date": "Mon, 28 Sep 2026 01:41:57 GMT",
+      "Last-Modified": "Fri, 02 Oct 2020 20:44:07 GMT",
+      "ETag": "\"a70901bcff19a4987bac6122f262eeb0-73\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-version-id": "null",
+      "Accept-Ranges": "bytes",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 698d8d562800b85574a23b6e1fbeb998.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "e7gwACrm850Fpn6QUncRyRuZzK_mIfQCZL_UcNwxqi1P0YXN2HNO-g=="
+    },
+    "method": "HEAD",
+    "requestHeaders": {
+      "Host": "catalog.archives.gov",
+      "User-agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-encoding": "identity"
+    },
+    "retrievedAt": "2026-09-28T01:41:56.931242+00:00",
+    "rights": {
+      "accessRestriction": {
+        "status": "Unrestricted"
+      },
+      "useRestriction": {
+        "status": "Unrestricted"
+      },
+      "notes": "Record-level access and use restrictions of NAID 162246501 are both Unrestricted in rg11.jsonl line 21; its ancestors and the digital object carry no restriction members. The object is the uncompressed TIFF master of page 4, not requested by this package before. Only response headers were requested and stored; no object bytes are retained."
+    },
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": 200,
+    "url": "https://catalog.archives.gov/medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif"
+  },
+  {
+    "byteCount": 832,
+    "file": "iiif-fdr-info.json",
+    "headers": {
+      "Content-Type": "application/ld+json;charset=UTF-8;profile=\"http://iiif.io/api/image/3/context.json\"",
+      "Content-Length": "832",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 698d8d562800b85574a23b6e1fbeb998.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "q0J3JeUcE4TW55UM0EVQz1lrWh6mCFSesX5y9xUN-3u9NiHrS_CEcw=="
+    },
+    "method": "GET",
+    "naId": "122178160",
+    "objectId": "122178162",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:42.998005+00:00",
+    "sha256": "b35bf951a8e19aa5c5cbbe73e9b07b4d9986374580e529acaf6e4b3c162dc989",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/info.json",
+    "rightsBasis": "IIIF service metadata only; no media bytes retained."
+  },
+  {
+    "byteCount": 864,
+    "file": "iiif-medialive-info.json",
+    "headers": {
+      "Content-Type": "application/ld+json;charset=UTF-8;profile=\"http://iiif.io/api/image/3/context.json\"",
+      "Content-Length": "864",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 9e558bd4808c765ba06f3acd7caad6a2.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "TQE78EuvgvWfbU7o4320ZR8v1xndiUWfdirlQRYxKuS6yycsSgehqw=="
+    },
+    "method": "GET",
+    "naId": "63545805",
+    "objectId": "63545806",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:43.380514+00:00",
+    "sha256": "ca40d16b802843d429b3ed312c104cc1909234c63fecb673f7357bf3a1bd8f04",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/opastorage%2Flive%2F5%2F5458%2F63545805%2Fcontent%2FTB149%2FM1518%2FM1518_0007%2Fimages%2F0065.jpg/info.json",
+    "rightsBasis": "IIIF service metadata only; no media bytes retained."
+  },
+  {
+    "byteCount": 6031,
+    "file": "iiif-fdr-width200.jpg",
+    "headers": {
+      "Content-Type": "image/jpeg",
+      "Content-Length": "6031",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Link": "<https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/full/200,253/0/default.jpg>;rel=\"canonical\"",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 8205a00c3afca74afbf1bd92b37714e8.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "EVZAXTsbF5MvwSfySE3QvYC_5eqiWmCRjekQnQxKZhYtECtUjvyIWg=="
+    },
+    "method": "GET",
+    "naId": "122178160",
+    "objectId": "122178162",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:43.700572+00:00",
+    "sha256": "4c3e5d0e37054573b3960affddfd301c702a68e6e4b50960b0d32243c115e9af",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/full/200,/0/default.jpg",
+    "rightsBasis": "Derivative of the already reviewed FDR object 122178162; bulk record 122178160 access/use Unrestricted, no object-level restriction. Package license does not grant content reuse rights."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"03353e5c57368192275f91e5eed396df\""
+    },
+    "retrievedAt": "2026-10-04T20:01:53.353843+00:00",
+    "rightsBasis": "NAID 122178160 / object 122178162; Unrestricted source labels already reviewed; excerpt of existing retained media.",
+    "status": 206,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg",
+    "headers": {
+      "Content-Type": "image/jpeg",
+      "Content-Length": "32",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 20:01:54 GMT",
+      "Last-Modified": "Mon, 04 Mar 2019 15:49:31 GMT",
+      "ETag": "\"03353e5c57368192275f91e5eed396df\"",
+      "x-amz-storage-class": "STANDARD_IA",
+      "x-amz-meta-s3b-last-modified": "20181214T191532Z",
+      "Content-Disposition": "attachment",
+      "x-amz-version-id": "null",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 caafc03067a3b56299391de5835582d0.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "YzhvB6qbK3F9zKSDuuquvwaawxhmhOledm5dY8OCbe66pIsM14ujPw==",
+      "Content-Range": "bytes 16-47/65981"
+    },
+    "totalByteCount": 65981,
+    "expectedETag": "\"03353e5c57368192275f91e5eed396df\"",
+    "sourceVersionID": "null",
+    "scenario": "match",
+    "file": "range-fdr-jpeg.bin",
+    "byteCount": 32,
+    "sha256": "820297843830cd229b3599eebb2bcc5f1b5722a18221adc309c1874bda83aad7"
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"swift-nara-nonmatching-validator\""
+    },
+    "retrievedAt": "2026-10-04T20:01:53.575755+00:00",
+    "rightsBasis": "NAID 122178160 / object 122178162; Unrestricted source labels already reviewed; excerpt of existing retained media.",
+    "status": 412,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "20",
+      "Connection": "close",
+      "Server": "CloudFront",
+      "Date": "Sun, 04 Oct 2026 20:01:53 GMT",
+      "Expires": "Sun, 04 Oct 2026 20:01:53 GMT",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 333d2e46da1024d9e242b2e6d8096250.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "MXeIGFb0DUv6k0-dR2ljKlut0SPIuS2BBFC5sSHJQxAoqCyGikOlmQ=="
+    },
+    "totalByteCount": 65981,
+    "expectedETag": "\"03353e5c57368192275f91e5eed396df\"",
+    "sourceVersionID": "null",
+    "scenario": "mismatch",
+    "bodyRetained": false,
+    "file": "range-fdr-jpeg-mismatch.headers.json",
+    "byteCount": 1183,
+    "sha256": "badfecdf8f3b88aed32f0eccb071b994fdf0065eec673fa8af362d18ff633fd0",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=65981-65996",
+      "If-Match": "\"03353e5c57368192275f91e5eed396df\""
+    },
+    "retrievedAt": "2026-10-04T20:01:53.651053+00:00",
+    "rightsBasis": "NAID 122178160 / object 122178162; Unrestricted source labels already reviewed; excerpt of existing retained media.",
+    "status": 416,
+    "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg",
+    "headers": {
+      "Server": "CloudFront",
+      "Date": "Sun, 04 Oct 2026 20:01:53 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "903",
+      "Connection": "close",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "dvuedRBdhPS0wjQQTAK4JGJh1jPQFLVhyrHDYkOYxlO3YJZloD8DBA=="
+    },
+    "totalByteCount": 65981,
+    "expectedETag": "\"03353e5c57368192275f91e5eed396df\"",
+    "sourceVersionID": "null",
+    "scenario": "unsatisfiable",
+    "bodyRetained": false,
+    "file": "range-fdr-jpeg-unsatisfiable.headers.json",
+    "byteCount": 1147,
+    "sha256": "8ff539a69f2b4bae53f91bdce2dd90420053d05dca664fba3979a18ce286ce5c",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"3d4579f368d79fb46d9a3aa0330982e9\""
+    },
+    "retrievedAt": "2026-10-04T20:01:53.833438+00:00",
+    "rightsBasis": "NAID 26879728 / object 26879729; Unrestricted source labels and HTML object reviewed in SOURCE_VERIFICATION.md; 32-byte excerpt only, no Fold3 bytes.",
+    "status": 206,
+    "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "32",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 20:01:54 GMT",
+      "Last-Modified": "Sun, 10 Apr 2016 07:34:59 GMT",
+      "ETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+      "x-amz-version-id": "null",
+      "Server": "AmazonS3",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 e24a256ed9ca2c1dc233db8cbb444ecc.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "p5zucIMQ7laOnAMh3q4CLdS24jDpU-7-csIZdnjYaxio0Qko-Qo3oA==",
+      "Content-Range": "bytes 16-47/2477"
+    },
+    "totalByteCount": 2477,
+    "expectedETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+    "sourceVersionID": "null",
+    "scenario": "match",
+    "file": "range-medialive-html.bin",
+    "byteCount": 32,
+    "sha256": "75d01a68165d7f7a34218a21caef50c9fe167a2efecd87b144ccdcb1cb5eb25d"
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=16-47",
+      "If-Match": "\"swift-nara-nonmatching-validator\""
+    },
+    "retrievedAt": "2026-10-04T20:01:54.007115+00:00",
+    "rightsBasis": "NAID 26879728 / object 26879729; Unrestricted source labels and HTML object reviewed in SOURCE_VERIFICATION.md; 32-byte excerpt only, no Fold3 bytes.",
+    "status": 412,
+    "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+    "headers": {
+      "Content-Type": "text/html",
+      "Content-Length": "20",
+      "Connection": "close",
+      "Server": "CloudFront",
+      "Date": "Sun, 04 Oct 2026 20:01:54 GMT",
+      "Expires": "Sun, 04 Oct 2026 20:01:54 GMT",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 2f53b2a42da11eb983dc0598b59159a8.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "Om7SNygpBIw6vuM9Wc2SgtSyGxMK-eJF7GDYQ5cHZwJParZNQ0ubYg=="
+    },
+    "totalByteCount": 2477,
+    "expectedETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+    "sourceVersionID": "null",
+    "scenario": "mismatch",
+    "bodyRetained": false,
+    "file": "range-medialive-html-mismatch.headers.json",
+    "byteCount": 1229,
+    "sha256": "198412c1040ce2f4e4c2db787bfa60be35d96359cec8692e3ec9ab37e6ce7903",
+    "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "method": "GET",
+    "requestHeaders": {
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+      "Accept-Encoding": "identity",
+      "Range": "bytes=2477-2492",
+      "If-Match": "\"3d4579f368d79fb46d9a3aa0330982e9\""
+    },
+    "retrievedAt": "2026-10-04T20:01:54.049311+00:00",
+    "rightsBasis": "NAID 26879728 / object 26879729; Unrestricted source labels and HTML object reviewed in SOURCE_VERIFICATION.md; 32-byte excerpt only, no Fold3 bytes.",
+    "status": 416,
+    "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+    "headers": {
+      "Server": "CloudFront",
+      "Date": "Sun, 04 Oct 2026 20:01:54 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "903",
+      "Connection": "close",
+      "X-Cache": "Error from cloudfront",
+      "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "u_Gz_XCtp6EiZXmcKg-UW-MuMjbCkxdTwkEPmXFvX6KHhQpBtsTQFw=="
+    },
+    "totalByteCount": 2477,
+    "expectedETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+    "sourceVersionID": "null",
+    "scenario": "unsatisfiable",
+    "bodyRetained": false,
+    "file": "range-medialive-html-unsatisfiable.headers.json",
+    "byteCount": 1191,
+    "sha256": "9fabcf3d89ae8f0f2037235e69e99a98588fd387c147f4fbcd2af9b7bd2ea6ff",
+    "representation": "Request and response metadata only; body was not retained."
+  }
+]

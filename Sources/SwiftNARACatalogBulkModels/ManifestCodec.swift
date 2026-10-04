@@ -59,7 +59,7 @@ public enum ManifestCodec {
   }
 }
 
-private struct S3XMLNode {
+struct S3XMLNode {
   var children: [S3XMLNode] = []
   let name: String
   let namespace: String
@@ -79,7 +79,7 @@ private struct S3XMLNode {
   }
 }
 
-private struct S3XMLParser {
+struct S3XMLParser {
   let bytes: [UInt8]
   var index = 0
   var nodes = 0

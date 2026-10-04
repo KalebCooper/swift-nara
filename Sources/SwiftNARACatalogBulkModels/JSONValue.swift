@@ -83,3 +83,27 @@ public indirect enum JSONValue: Codable, Hashable, Sendable {
     }
   }
 }
+
+extension JSONValue {
+  /// An exact JSON integer; strings and nonintegral numbers are not converted.
+  var exactInteger: Int? {
+    switch self {
+    case .integer(let value): Int(exactly: value)
+    case .unsignedInteger(let value): Int(exactly: value)
+    default: nil
+    }
+  }
+
+  /// Returns the member for `key`, only when this value is an object and the member is itself
+  /// an object.
+  ///
+  /// A missing member, an explicit null, or a wrong-shaped value all return nil; inspect the
+  /// member directly through `subscript(_:)` to distinguish them.
+  ///
+  /// - Parameter key: The object member name to look up.
+  /// - Returns: The member's value when it is a JSON object, otherwise nil.
+  func objectMember(_ key: String) -> JSONValue? {
+    guard let value = self[key], value.object != nil else { return nil }
+    return value
+  }
+}

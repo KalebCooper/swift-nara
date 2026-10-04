@@ -21,7 +21,7 @@ set -u
 # Source-dependent validation is unavailable until both real service modules exist.
 readiness_root="${VERIFY_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 if [ "${1:-}" != "--self-test" ]; then
-  for module in SwiftNARACatalogBulk SwiftNARACatalogBulkModels; do
+  for module in SwiftNARACatalogBulk SwiftNARACatalogBulkModels SwiftNARADigitalObjects SwiftNARADigitalObjectsModels; do
     if [ ! -d "$readiness_root/Sources/$module" ] || ! find "$readiness_root/Sources/$module" -name '*.swift' -type f | grep -q .; then
       echo "Not ready: $module source is not implemented; see IMPLEMENTATION_READINESS.md." >&2
       exit 1
@@ -63,10 +63,15 @@ check_force_ops() {
 # Prohibition. SwiftNARACatalogBulkModels builds on every platform the package supports, so it imports Foundation
 # only under the `#else` of a `#if canImport(FoundationEssentials)`.
 check_models_foundation_import() {
-  local name="every import Foundation in Sources/SwiftNARACatalogBulkModels sits under #else"
+  local name="every models import Foundation sits under #else"
   local files hits
-  files=$(swift_files Sources/SwiftNARACatalogBulkModels)
-  if [ -z "$files" ]; then fail "$name (Sources/SwiftNARACatalogBulkModels holds no Swift file; the check has lost its subject)"; return; fi
+  files=""
+  local module subject
+  for module in SwiftNARACatalogBulkModels SwiftNARADigitalObjectsModels; do
+    subject=$(swift_files "Sources/$module")
+    if [ -z "$subject" ]; then fail "$name ($module has lost its subject)"; return; fi
+    files="$files $subject"
+  done
   # awk rather than grep -B1: a file whose first line is the import has no preceding line for -B1 to
   # show, and the filter would drop the hit.
   hits=$(awk 'FNR == 1 { prev = "" } /^import Foundation$/ && prev != "#else" { print FILENAME ":" FNR ": " $0 } { prev = $0 }' $files 2>/dev/null || true)
@@ -79,11 +84,16 @@ check_models_foundation_import() {
 # declaration kind), so an import cannot hide behind one; `\b` keeps `SwiftNARACatalogBulkModels` itself out of
 # the `SwiftNARACatalogBulk` match.
 check_models_import_boundary() {
-  local name="no swifty-networking, transport, or SDK import in Sources/SwiftNARACatalogBulkModels"
+  local name="no swifty-networking, transport, or SDK import in models"
   local files hits
-  files=$(swift_files Sources/SwiftNARACatalogBulkModels)
-  if [ -z "$files" ]; then fail "$name (Sources/SwiftNARACatalogBulkModels holds no Swift file; the check has lost its subject)"; return; fi
-  hits=$(code_lines $files | grep -E ':[0-9]+:[[:space:]]*(@[A-Za-z_]+(\([^)]*\))?[[:space:]]+)*((public|package|internal|fileprivate|private)[[:space:]]+)?import[[:space:]]+((typealias|struct|class|enum|protocol|let|var|func)[[:space:]]+)?(AsyncHTTPClient|FoundationNetworking|HTTPCore|HTTPPortable|HTTPTesting|HTTPTypes|HTTPTypesFoundation|HTTPURLSession|_?NIO[A-Za-z0-9_]*|SwiftNARACatalogBulk)\b|\bURLSession' || true)
+  files=""
+  local module subject
+  for module in SwiftNARACatalogBulkModels SwiftNARADigitalObjectsModels; do
+    subject=$(swift_files "Sources/$module")
+    if [ -z "$subject" ]; then fail "$name ($module has lost its subject)"; return; fi
+    files="$files $subject"
+  done
+  hits=$(code_lines $files | grep -E ':[0-9]+:[[:space:]]*(@[A-Za-z_]+(\([^)]*\))?[[:space:]]+)*((public|package|internal|fileprivate|private)[[:space:]]+)?import[[:space:]]+((typealias|struct|class|enum|protocol|let|var|func)[[:space:]]+)?(AsyncHTTPClient|Crypto|FoundationNetworking|HTTPCore|HTTPPortable|HTTPTesting|HTTPTypes|HTTPTypesFoundation|HTTPURLSession|SystemPackage|_?NIO[A-Za-z0-9_]*|SwiftNARACatalogBulk|SwiftNARADigitalObjects)\b|\bURLSession' || true)
   if [ -z "$hits" ]; then pass "$name"; else fail "$name"; printf '%s\n' "$hits"; fi
 }
 
@@ -292,7 +302,7 @@ check_nothing_local_tracked() {
 check_format() {
   local name="swift format lint --strict reports zero findings"
   if ! command -v swift >/dev/null 2>&1; then fail "$name (swift toolchain not found)"; return; fi
-  if (cd "$ROOT" && swift format lint --strict --recursive Sources Tests >/dev/null 2>&1); then
+  if (cd "$ROOT" && swift format lint --strict --recursive Sources Tests Package.swift Examples/SwiftNARACatalogBulkDemo/Package.swift Examples/SwiftNARACatalogBulkDemo/Sources Examples/SwiftNARADigitalObjectsDemo/Package.swift Examples/SwiftNARADigitalObjectsDemo/Sources >/dev/null 2>&1); then
     pass "$name"
   else
     fail "$name"
@@ -331,6 +341,9 @@ write_clean_tree() {
   # $1: directory
   local d="$1"
   mkdir -p "$d/Sources/SwiftNARACatalogBulkModels" "$d/Sources/SwiftNARACatalogBulk" "$d/Sources/SwiftNARACatalogBulkTestSupport/Fixtures" "$d/Tests/SwiftNARACatalogBulkModelsTests" "$d/Tests/SwiftNARACatalogBulkTests" "$d/Scripts"
+  mkdir -p "$d/Sources/SwiftNARADigitalObjectsModels" "$d/Sources/SwiftNARADigitalObjects"
+  printf '#if canImport(FoundationEssentials)\nimport FoundationEssentials\n#else\nimport Foundation\n#endif\n' > "$d/Sources/SwiftNARADigitalObjectsModels/Reference.swift"
+  printf 'import HTTPCore\n' > "$d/Sources/SwiftNARADigitalObjects/Client.swift"
   # A recorded response body, carrying the provider's own em dash and the provider's own "seams", so
   # the clean arm fails if either scan stops skipping recordings. Written with an escape because the
   # em-dash check reads this script too.
@@ -649,6 +662,34 @@ self_test() {
       arms=$((arms + 1))
       if [ "$got" = FAIL ]; then pass "self-test: $check fails when its subject is gone"; else fail "self-test: $check PASSED with its subject gone"; fi
     fi
+  done
+  # Every models module must fail both on a planted import and on a missing subject.
+  local module violation
+  for module in SwiftNARACatalogBulkModels SwiftNARADigitalObjectsModels; do
+    for check in check_models_foundation_import check_models_import_boundary; do
+      planted="$scratch/model-$module-$check"
+      write_clean_tree "$planted"
+      if [ "$check" = check_models_foundation_import ]; then violation=Foundation; else violation=SwiftNARADigitalObjects; fi
+      printf 'import %s\n' "$violation" > "$planted/Sources/$module/Leak.swift"
+      got=$(outcome_of "$planted" "$check")
+      arms=$((arms + 1))
+      if [ "$got" = FAIL ]; then pass "self-test: $check rejects $module violation"; else fail "self-test: $check MISSED $module violation"; fi
+      rm -rf "$planted/Sources/$module"
+      got=$(outcome_of "$planted" "$check")
+      arms=$((arms + 1))
+      if [ "$got" = FAIL ]; then pass "self-test: $check rejects absent $module"; else fail "self-test: $check MISSED absent $module"; fi
+    done
+  done
+  # Models must not import hashing or filesystem packages.
+  for module in SwiftNARACatalogBulkModels SwiftNARADigitalObjectsModels; do
+    for violation in Crypto SystemPackage; do
+      planted="$scratch/model-$module-$violation"
+      write_clean_tree "$planted"
+      printf 'import %s\n' "$violation" > "$planted/Sources/$module/Leak.swift"
+      got=$(outcome_of "$planted" check_models_import_boundary)
+      arms=$((arms + 1))
+      if [ "$got" = FAIL ]; then pass "self-test: models reject $violation in $module"; else fail "self-test: models MISSED $violation in $module"; fi
+    done
   done
   printf '%d self-test arms\n' "$arms"
 }

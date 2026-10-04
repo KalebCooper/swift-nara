@@ -1,0 +1,7 @@
+{
+  "byteCount": 229,
+  "file": "synthetic-archive.zip",
+  "member": "descriptions/example.jsonl",
+  "origin": "Locally authored synthetic ZIP_STORED fixture. No provider response or bulk-derived records. Generated using Python zipfile with fixed timestamp and POSIX mode.",
+  "sha256": "93b9503f61b3b89fd29a3de15c6309be948c4c34af22bb42fb61d32d79214da9"
+}

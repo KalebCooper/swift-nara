@@ -1,0 +1,29 @@
+{
+  "method": "GET",
+  "requestHeaders": {
+    "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+    "Accept-Encoding": "identity",
+    "Range": "bytes=2477-2492",
+    "If-Match": "\"3d4579f368d79fb46d9a3aa0330982e9\""
+  },
+  "retrievedAt": "2026-10-04T20:01:54.049311+00:00",
+  "rightsBasis": "NAID 26879728 / object 26879729; Unrestricted source labels and HTML object reviewed in SOURCE_VERIFICATION.md; 32-byte excerpt only, no Fold3 bytes.",
+  "status": 416,
+  "url": "https://catalog.archives.gov/medialive/28/8797/26879728/content/electronic-records/rg-267/appellate/96-289.HTM",
+  "headers": {
+    "Server": "CloudFront",
+    "Date": "Sun, 04 Oct 2026 20:01:54 GMT",
+    "Content-Type": "text/html",
+    "Content-Length": "903",
+    "Connection": "close",
+    "X-Cache": "Error from cloudfront",
+    "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop": "IAH50-P3",
+    "X-Amz-Cf-Id": "u_Gz_XCtp6EiZXmcKg-UW-MuMjbCkxdTwkEPmXFvX6KHhQpBtsTQFw=="
+  },
+  "totalByteCount": 2477,
+  "expectedETag": "\"3d4579f368d79fb46d9a3aa0330982e9\"",
+  "sourceVersionID": "null",
+  "scenario": "unsatisfiable",
+  "bodyRetained": false
+}

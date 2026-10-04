@@ -20,6 +20,7 @@ public struct CatalogBulkClient: Sendable {
   let configuration: CatalogBulkConfiguration
   let http: HTTPClient
   let retrievalTime: @Sendable () -> Date
+  var saveCheckpoint: @Sendable (BulkDownloadCheckpoint) throws -> Void = BulkDownloadFile.persist
 
   /// Creates a client with explicit source identity and retrieval time.
   /// - Parameters:
@@ -131,6 +132,9 @@ public struct CatalogBulkClient: Sendable {
     guard !Task.isCancelled else { throw .cancelled }
     let value: Value
     do { value = try Value.decode(answer.body) } catch { throw .decoding(error) }
+    if let query = endpoint.directoryQuery, let page = value as? BulkDirectoryPage {
+      do { _ = try query.next(after: page) } catch { throw .pagination(error) }
+    }
     if let query = endpoint.manifestQuery, let manifest = value as? BulkManifest {
       do { _ = try query.next(after: manifest) } catch { throw .pagination(error) }
     }
@@ -164,14 +168,24 @@ public struct CatalogBulkClient: Sendable {
 
   static func endpoint<Value>(for request: CatalogBulkRequest<Value>) -> Endpoint<Value> {
     switch request.resolution {
+    case .directory(let query): return Endpoint<Value>(directoryQuery: query)
     case .endpoint(let endpoint): return endpoint
     case .manifest(let query): return Endpoint<Value>(manifestQuery: query)
     }
   }
 
   static func request<Value>(_ endpoint: Endpoint<Value>) -> Request {
-    Request(
-      headers: [.acceptEncoding: "identity"],
+    var headers: HTTPFields = [.acceptEncoding: "identity"]
+    if let condition = endpoint.condition {
+      let name: HTTPField.Name =
+        switch condition.kind {
+        case .ifMatch: .ifMatch
+        case .ifNoneMatch: .ifNoneMatch
+        }
+      headers.append(HTTPField(name: name, value: condition.etag))
+    }
+    return Request(
+      headers: headers,
       options: RequestOptions(redirectPolicy: .never, requiresAuth: false), path: endpoint.path)
   }
 

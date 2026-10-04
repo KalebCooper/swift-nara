@@ -1,0 +1,29 @@
+{
+  "method": "GET",
+  "requestHeaders": {
+    "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)",
+    "Accept-Encoding": "identity",
+    "Range": "bytes=65981-65996",
+    "If-Match": "\"03353e5c57368192275f91e5eed396df\""
+  },
+  "retrievedAt": "2026-10-04T20:01:53.651053+00:00",
+  "rightsBasis": "NAID 122178160 / object 122178162; Unrestricted source labels already reviewed; excerpt of existing retained media.",
+  "status": 416,
+  "url": "https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg",
+  "headers": {
+    "Server": "CloudFront",
+    "Date": "Sun, 04 Oct 2026 20:01:53 GMT",
+    "Content-Type": "text/html",
+    "Content-Length": "903",
+    "Connection": "close",
+    "X-Cache": "Error from cloudfront",
+    "Via": "1.1 36df1f9826c5956f15e4e6c71ad55e0a.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop": "IAH50-P3",
+    "X-Amz-Cf-Id": "dvuedRBdhPS0wjQQTAK4JGJh1jPQFLVhyrHDYkOYxlO3YJZloD8DBA=="
+  },
+  "totalByteCount": 65981,
+  "expectedETag": "\"03353e5c57368192275f91e5eed396df\"",
+  "sourceVersionID": "null",
+  "scenario": "unsatisfiable",
+  "bodyRetained": false
+}
