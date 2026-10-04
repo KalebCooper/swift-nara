@@ -24,6 +24,15 @@ public struct CatalogBulkRequest<Response>: Hashable, Sendable {
   private init(resolution: Resolution) { self.resolution = resolution }
 }
 
+extension CatalogBulkRequest where Response == BulkArchiveReceipt {
+  /// Selects an archive without downloading or extracting it.
+  /// - Parameter reference: The archive key and optional version pin.
+  /// - Returns: A reusable request; limits and destination are supplied at execution.
+  public static func archive(_ reference: BulkArchiveReference) -> Self {
+    Self(endpoint: .archive(reference))
+  }
+}
+
 extension CatalogBulkRequest where Response == BulkDirectoryPage {
   /// Describes a directory listing lookup or independent lazy traversal.
   ///

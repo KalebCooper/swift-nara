@@ -11,6 +11,8 @@ import Foundation
 /// let endpoint = Endpoint.manifest(try ManifestQuery(maxKeys: 4, prefix: "descriptions/"))
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The archive selected by the archive factory, otherwise nil.
+  public private(set) var archiveReference: BulkArchiveReference? = nil
   /// The conditional validator when this endpoint was created by the refresh factory.
   public private(set) var condition: ShardCondition? = nil
   /// The exact query when this endpoint was created by the directory factory.
@@ -73,6 +75,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
       else { return nil }
     }
     self.path = path
+  }
+
+  private init(archiveReference: BulkArchiveReference) {
+    self.archiveReference = archiveReference
+    path = archiveReference.path
   }
 
   package init(directoryQuery query: BulkDirectoryQuery) {
@@ -143,6 +150,15 @@ public struct Endpoint<Response>: Hashable, Sendable {
       default: "%" + (byte < 16 ? "0" : "") + String(byte, radix: 16, uppercase: true)
       }
     }.joined()
+  }
+}
+
+extension Endpoint where Response == BulkArchiveReceipt {
+  /// Describes acquisition of one selected ZIP without file or network I/O.
+  /// - Parameter reference: A validated archive key and optional version.
+  /// - Returns: A complete-archive endpoint, separate from shard and range receipts.
+  public static func archive(_ reference: BulkArchiveReference) -> Self {
+    Self(archiveReference: reference)
   }
 }
 

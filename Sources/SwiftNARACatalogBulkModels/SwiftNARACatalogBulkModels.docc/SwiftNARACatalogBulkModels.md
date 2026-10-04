@@ -4,6 +4,13 @@ Describe NARA bulk requests and preserve source metadata without a networking de
 
 ## Overview
 
+`BulkArchiveReference` selects only ZIP keys under `zip/`, retaining optional version pins.
+`BulkArchiveReceipt` preserves complete acquisition evidence and full local SHA-256, with
+an optional retained checkpoint. Its Codable validation checks internal consistency without
+inspecting a file. `.archive(_:)` requests and endpoints stay separate from JSONL shards;
+acquisition budgets and file state are supplied only at execution.
+
+
 `BulkDownloadCheckpoint` is a versioned persistence value for source identity,
 committed byte count, file identity, and a SHA-256 prefix digest. Decoding repeats
 source and checkpoint validation without reading any file. This model does not

@@ -18,6 +18,25 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 archive acquisition, hosted qualification pending
+
+Complete ZIP acquisition and archive-specific receipts are implemented with explicit
+transfer/workspace budgets, whole-file SHA-256, selected-version checks, and archive
+resume through all call forms. The existing bulk paginator discovers ZIP inventory;
+no archive-entry reader, corpus extraction, or live Catalog service is implemented yet.
+Two attributed public S3 listings and one 229-byte locally authored ZIP fixture were added.
+Archive receipt decoding checks internal identity/digest/length consistency without I/O.
+
+Local Xcode 27 MCP macOS tests passed 245/245 before the final receipt-persistence addition;
+the final persistence source and tests build successfully (BuildProject-Log-20261004-173824.txt).
+Source gates, 59 self-test arms and strict formatting pass. Hosted CI is the designated
+acceptance gate for this final revision, including Linux, Android, demos and DocC.
+The owner explicitly requested CI today to avoid Docker resource use. Two local Linux
+attempts did not start because the daemon socket was absent; neither is test evidence.
+No Docker work continues. Final hosted results, exact SHA and run URLs will be recorded
+when complete. A qualification branch and draft PR are authorized; merging, default-branch
+publication, tags and release are not authorized by that testing request.
+
 ## October 4 durable resume local qualification
 
 Begin/resume/discard now execute for bulk JSONL/ZIP representations and original media.

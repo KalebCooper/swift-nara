@@ -1,6 +1,6 @@
 import Foundation
 
-/// Official source captures; exact requests, instants, headers, sizes, and hashes are in attribution.json.
+/// Attributed official captures and explicitly labeled local synthetic fixtures.
 package enum Fixture: String, CaseIterable {
   /// Exact capture attribution and HTTP metadata.
   case attribution = "attribution.json"
@@ -18,6 +18,10 @@ package enum Fixture: String, CaseIterable {
   case fdr = "fdr.jsonl"
   /// authority-records/geographic-reference/geographic-reference-1.jsonl, unchanged.
   case geographicReference = "geographic-reference.jsonl"
+  /// ListObjectsV2 for zip/nac_export_, max-keys=10; exact published export object inventory.
+  case manifestArchiveExports = "manifest-archive-exports.xml"
+  /// ListObjectsV2 for zip/, max-keys=10; discovery without a corpus download.
+  case manifestArchives = "manifest-archives.xml"
   /// ListObjectsV2 for descriptions/record-groups/rg_11/, max-keys=4.
   case manifestFirst = "manifest-first.xml"
   /// The same listing with the first response's exact continuation token.
@@ -42,6 +46,8 @@ package enum Fixture: String, CaseIterable {
   case rg11 = "rg11.jsonl"
   /// authority-records/specific-records-type/specific-records-type-1.jsonl, unchanged.
   case specificRecordsType = "specific-records-type.jsonl"
+  /// Locally authored complete ZIP_STORED fixture, not an official response; see synthetic-archive.json.
+  case syntheticArchive = "synthetic-archive.zip"
   /// authority-records/topical-subject/topical-subject-1.jsonl, unchanged.
   case topicalSubject = "topical-subject.jsonl"
 

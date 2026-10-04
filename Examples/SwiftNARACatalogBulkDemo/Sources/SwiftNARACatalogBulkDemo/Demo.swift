@@ -151,5 +151,7 @@ struct Demo {
     try await demonstrateRange(
       client: client, directory: directory, fixtures: fixtures, transport: transport)
     try await demonstrateResume(in: directory)
+    try await demonstrateArchive(
+      client: client, directory: directory, fixtures: fixtures, transport: transport)
   }
 }

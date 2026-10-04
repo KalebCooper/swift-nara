@@ -1,5 +1,28 @@
 # Source verification
 
+## October 4 archive acquisition evidence
+
+The official bulk guide still links the September 2026 authority and description ZIPs.
+Two exact unsigned S3 ListObjectsV2 pages were retained for archive discovery: zip/
+(max-keys=10), 3825 bytes, and zip/nac_export_ (max-keys=10), 3260 bytes. Exact URLs,
+headers, timestamps, sizes and SHA-256 values are in the existing bulk attribution file.
+The broad prefix contains a directory marker and loose JSONL; the export prefix includes
+historical archives and remains truncated. No latest-date policy or two-object atomic
+release is inferred. The prior attributed 32-byte authority ZIP fragment and versioned
+header evidence remain applicable. No real full archive was downloaded.
+
+The complete synthetic ZIP is 229 bytes, SHA-256
+`93b9503f61b3b89fd29a3de15c6309be948c4c34af22bb42fb61d32d79214da9`,
+with a single stored descriptions/example.jsonl entry containing only locally authored
+text. Its generation metadata is synthetic-archive.json; it is not an official response
+or a reconstructed official archive. No Catalog HTTP API was called.
+
+The first listing capture was rejected by automatic approval review, which treated bulk
+metadata as live Catalog API content. Re-review accepted the unchanged bounded command
+after the explicit P10-Z1 fixture requirement and separate-API restriction were verified.
+No rejected capture was saved and no credential or source-content policy exception was used.
+
+
 ## October 4 checkpoint integrity dependency
 
 The owner explicitly approved SDK-only Apple swift-crypto for SHA-256 of committed

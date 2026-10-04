@@ -543,5 +543,53 @@
     "byteCount": 1116,
     "sha256": "e53b5353e825ae29ac658fddf12c82f3cbdbdeb32f7608754d3512ba52c66844",
     "representation": "Request and response metadata only; body was not retained."
+  },
+  {
+    "byteCount": 3825,
+    "file": "manifest-archives.xml",
+    "headers": {
+      "x-amz-id-2": "xHmxHbtZ0VZDZo7jKNOOee+/5+MOqVTkJ9ZsytPRVy8DOsvVzJIsoz4RuAuDz1MjnoBA7F3lWJc=",
+      "x-amz-request-id": "WK1R3P53X0CWJPZF",
+      "Server": "AmazonS3",
+      "Date": "Sun, 04 Oct 2026 22:19:26 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T22:19:25.174295+00:00",
+    "rightsBasis": "Public NARA bulk bucket object listing; unchanged response.",
+    "sha256": "c8a00d5083fe8a442c66bef108e21c91e9076cd205e23f8dda4fb49ff9380db0",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=10&prefix=zip%2F"
+  },
+  {
+    "byteCount": 3260,
+    "file": "manifest-archive-exports.xml",
+    "headers": {
+      "x-amz-id-2": "IQIEZnalJbD0fgTelOFPqNPIO+b+m4t+U4mxLhQ/+BWNZED85wryrvhbBovg8rM2vZ5XDgA4XSRGJfyCPJAk3qKkFxRYr4i2",
+      "x-amz-request-id": "995GP2WFN0R6FJ9X",
+      "Server": "AmazonS3",
+      "Date": "Sun, 04 Oct 2026 22:20:28 GMT",
+      "x-amz-bucket-region": "us-east-2",
+      "Content-Type": "application/xml",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close"
+    },
+    "method": "GET",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T22:20:27.274467+00:00",
+    "rightsBasis": "Public NARA bulk bucket object listing; unchanged response.",
+    "sha256": "d56d32534348236a3d2138bf64cd1b3809dc0693da0056f45452f619edaf4a76",
+    "status": 200,
+    "url": "https://nara-national-archives-catalog.s3.amazonaws.com/?list-type=2&max-keys=10&prefix=zip%2Fnac_export_"
   }
 ]

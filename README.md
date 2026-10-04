@@ -209,6 +209,40 @@ The empty private directory remains. If synchronization fails after publication,
 complete destination may already exist. Failed initialization may leave a private child
 for inspection and cleanup. IIIF derivative resume is not supported.
 
+## Acquire one complete archive
+
+Discover objects with the existing manifest API, then validate each selected ZIP key
+with `BulkArchiveReference`. Listings under `zip/` also contain loose JSONL objects,
+and historical export names remain present; no built-in latest-file rule is inferred.
+
+```swift
+let reference = try BulkArchiveReference(key: selectedObject.key, versionID: knownVersion)
+let limits = try BulkArchiveDownloadLimits(
+  maximumByteCount: approvedArchiveBytes, maximumWorkspaceBytes: approvedWorkingBytes)
+let receipt = try await client.downloadArchive(reference, to: newDestination, limits: limits)
+// Equivalent: client.value(for: .archive(reference), to: newDestination, limits: limits)
+// Equivalent: client.send(.archive(reference), to: newDestination, limits: limits)
+```
+
+One acquisition accepts only a complete identity-encoded HTTP 200, checks declared
+length and optional version evidence, and streams under both explicit budgets.
+The receipt keeps the archive reference, source headers and full local SHA-256 separately.
+Acquisition does not inspect entries, extract anything, fetch media or prove that multiple
+archives form one coherent release. Decoding a persisted receipt does not verify the file.
+
+For retained progress, call `beginArchiveDownload(_:in:limits:)` with the archive's
+`rangeReference(entityTag:totalByteCount:)`, then `resumeArchiveDownload(_:to:limits:)`.
+The same `.archive(_:) ` request and endpoint accept a checkpoint at execution.
+They reuse the verified bulk resume lifecycle, including explicit discard of retained state.
+A resumed archive receipt's retrieval is the final validated 206 range, not an invented
+whole-body response. Its digest covers the whole completed file.
+
+There is no implicit large-download budget. Whole acquisition counts one temporary archive;
+resume requires room for the complete archive, one clipped range fragment, and two bounded
+one-MiB sidecars during atomic replacement. Workspace limits bound logical owned file bytes,
+not physical allocation, filesystem metadata, free-space reservation, or unrelated caller files.
+Local I/O may still fail. Keep working and destination parents stable during execution.
+
 ## Example
 
 [SwiftNARACatalogBulkDemo](Examples/SwiftNARACatalogBulkDemo) is an offline command-line demonstration of two manifest pages, a streamed shard download, and seven provenance-bearing local records. It uses unchanged official fixtures and makes no live request. `bash Scripts/demo-linux.sh` builds it for Release and runs it in the Linux verification container.

@@ -15,3 +15,5 @@ example, prints its offset and full-source length, and removes the temporary fra
 It performs no live request, persistence, retry, or resume.
 
 A separately labeled synthetic resume example retains a four-byte checkpoint after a refused HTTP 200, reloads it from an older caller checkpoint, publishes eight exact bytes, and explicitly discards the owned partial and sidecar. No live request is made.
+
+A complete 229-byte ZIP fixture is locally authored, not a provider capture. The archive example verifies whole acquisition and archive resume under explicit byte/disk limits, compares complete SHA-256, and discards retained state without extracting entries.

@@ -77,6 +77,40 @@ A `304 Not Modified` leaves the destination untouched, creates no file and no te
 
 Refreshing to a destination that already exists throws before any request is sent, even when the source would answer 304. `refresh(_:condition:to:)`, `value(for:to:)`, and `send(_:to:)` agree at all three levels. An endpoint built from a raw path or a link carries no condition and is sent unconditionally.
 
+## Acquire one complete archive
+
+Discover objects with the existing manifest API, then validate each selected ZIP key
+with `BulkArchiveReference`. Listings under `zip/` also contain loose JSONL objects,
+and historical export names remain present; no built-in latest-file rule is inferred.
+
+```swift
+let reference = try BulkArchiveReference(key: selectedObject.key, versionID: knownVersion)
+let limits = try BulkArchiveDownloadLimits(
+  maximumByteCount: approvedArchiveBytes, maximumWorkspaceBytes: approvedWorkingBytes)
+let receipt = try await client.downloadArchive(reference, to: newDestination, limits: limits)
+// Equivalent: client.value(for: .archive(reference), to: newDestination, limits: limits)
+// Equivalent: client.send(.archive(reference), to: newDestination, limits: limits)
+```
+
+One acquisition accepts only a complete identity-encoded HTTP 200, checks declared
+length and optional version evidence, and streams under both explicit budgets.
+The receipt keeps the archive reference, source headers and full local SHA-256 separately.
+Acquisition does not inspect entries, extract anything, fetch media or prove that multiple
+archives form one coherent release. Decoding a persisted receipt does not verify the file.
+
+For retained progress, call `beginArchiveDownload(_:in:limits:)` with the archive's
+`rangeReference(entityTag:totalByteCount:)`, then `resumeArchiveDownload(_:to:limits:)`.
+The same `.archive(_:) ` request and endpoint accept a checkpoint at execution.
+They reuse the verified bulk resume lifecycle, including explicit discard of retained state.
+A resumed archive receipt's retrieval is the final validated 206 range, not an invented
+whole-body response. Its digest covers the whole completed file.
+
+There is no implicit large-download budget. Whole acquisition counts one temporary archive;
+resume requires room for the complete archive, one clipped range fragment, and two bounded
+one-MiB sidecars during atomic replacement. Workspace limits bound logical owned file bytes,
+not physical allocation, filesystem metadata, free-space reservation, or unrelated caller files.
+Local I/O may still fail. Keep working and destination parents stable during execution.
+
 ## Topics
 
 ### Client operations
