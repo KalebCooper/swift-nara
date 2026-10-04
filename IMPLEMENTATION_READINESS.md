@@ -18,6 +18,29 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 local media qualification
+
+The independent `SwiftNARADigitalObjects` SDK implements original-file downloads through
+everyday methods, request factories and typed endpoints. Explicit object and diagnostic
+byte limits, no-redirect transport, whole-body validation, bounded substituted-page evidence,
+cancellation cleanup and new-file publication are covered by nine SDK tests. Real HTML is
+accepted, missing media type remains nil, and observed CDN error markers are not an
+authenticity guarantee. No new provider body was captured.
+
+At the working revision based on `264ec4f`, Xcode 27 MCP passed 168 tests in 16 suites on
+iPhone 18 Pro / iOS 27; Linux default and HTTPPortable passed the same 168 tests with no
+compiler warnings. The first Apple attempt returned an incomplete result bundle and is
+not counted as executed-test evidence; its retry passed with none skipped or unrun.
+The Linux Release media demo replays exactly 65,981 JPEG bytes with no live request.
+Xcode emits three incompatible macOS/iOS sysroot linker warnings for test products.
+Source gates pass 15 checks and 55 planted self-test arms, now checking both models
+products for import boundaries and absent subjects. Four DocC catalogs convert with
+warnings treated as errors, models before each SDK. Evidence: `plans/p5d-*.log`.
+
+Android, hosted CI, Pages publication and release remain unqualified for this revision.
+Local workflow changes include the new media products and offline demo; they do not
+represent executed hosted jobs.
+
 ## October 4 local metadata qualification
 
 Six additive digital-object projections are implemented, with original fixture bytes unchanged:

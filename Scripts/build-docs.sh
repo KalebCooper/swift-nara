@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Convert only this package's two products from already-built iOS simulator modules.
+# Convert only this package's products from already-built iOS simulator modules.
 # Dependencies must compile, but their documentation is not part of this site.
 set -euo pipefail
 
 # Source-dependent validation is unavailable until both real service modules exist.
 readiness_root="${VERIFY_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 if true; then
-  for module in SwiftNARACatalogBulk SwiftNARACatalogBulkModels; do
+  for module in SwiftNARACatalogBulk SwiftNARACatalogBulkModels SwiftNARADigitalObjects SwiftNARADigitalObjectsModels; do
     if [ ! -d "$readiness_root/Sources/$module" ] || ! find "$readiness_root/Sources/$module" -name '*.swift' -type f | grep -q .; then
       echo "Not ready: $module source is not implemented; see IMPLEMENTATION_READINESS.md." >&2
       exit 1
@@ -23,28 +23,31 @@ if [[ -e "$output" ]]; then
   echo "Output already exists: $output. Supply a new directory." >&2
   exit 1
 fi
-mkdir -p "$output/models-symbols" "$output/sdk-symbols" "$output/module-cache"
-
-xcrun swift-symbolgraph-extract -module-name SwiftNARACatalogBulkModels \
-  -target "$target" -sdk "$sdk" -I "$modules" \
-  -module-cache-path "$output/module-cache" \
-  -output-dir "$output/models-symbols" -minimum-access-level public
-xcrun docc convert Sources/SwiftNARACatalogBulkModels/SwiftNARACatalogBulkModels.docc \
-  --additional-symbol-graph-dir "$output/models-symbols" \
-  --output-dir "$output/SwiftNARACatalogBulkModels.doccarchive" \
-  --enable-experimental-external-link-support --warnings-as-errors
-
-xcrun swift-symbolgraph-extract -module-name SwiftNARACatalogBulk \
-  -target "$target" -sdk "$sdk" -I "$modules" \
-  -module-cache-path "$output/module-cache" \
-  -output-dir "$output/sdk-symbols" -minimum-access-level public
-xcrun docc convert Sources/SwiftNARACatalogBulk/SwiftNARACatalogBulk.docc \
-  --additional-symbol-graph-dir "$output/sdk-symbols" \
-  --output-dir "$output/SwiftNARACatalogBulk.doccarchive" \
-  --enable-experimental-external-link-support \
-  --dependency "$output/SwiftNARACatalogBulkModels.doccarchive" --warnings-as-errors
-
-xcrun docc merge "$output/SwiftNARACatalogBulkModels.doccarchive" "$output/SwiftNARACatalogBulk.doccarchive" \
+mkdir -p "$output/module-cache"
+archives=()
+# Models precede their matching SDK so cross-product symbol references resolve.
+for service in CatalogBulk DigitalObjects; do
+  for suffix in Models ""; do
+    module="SwiftNARA$service$suffix"
+    symbols="$output/$module-symbols"
+    archive="$output/$module.doccarchive"
+    mkdir -p "$symbols"
+    xcrun swift-symbolgraph-extract -module-name "$module" \
+      -target "$target" -sdk "$sdk" -I "$modules" \
+      -module-cache-path "$output/module-cache" \
+      -output-dir "$symbols" -minimum-access-level public
+    dependency=()
+    if [[ -z "$suffix" ]]; then
+      dependency=(--dependency "$output/SwiftNARA${service}Models.doccarchive")
+    fi
+    xcrun docc convert "Sources/$module/$module.docc" \
+      --additional-symbol-graph-dir "$symbols" --output-dir "$archive" \
+      --enable-experimental-external-link-support --warnings-as-errors \
+      ${dependency[@]+"${dependency[@]}"}
+    archives+=("$archive")
+  done
+done
+xcrun docc merge "${archives[@]}" \
   --synthesized-landing-page-name swift-nara --synthesized-landing-page-kind Package \
   --output-path "$output/merged.doccarchive"
 xcrun docc process-archive transform-for-static-hosting "$output/merged.doccarchive" \

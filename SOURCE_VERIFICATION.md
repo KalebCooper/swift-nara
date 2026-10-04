@@ -50,6 +50,17 @@ Bulk `objectFileSize` is not a reliable expected length: 16 of the 36 `lz/` obje
 
 The downloaded object belongs to NAID 122178160, whose record-level access and use restrictions are both `Unrestricted`. Its digital object entry has no restriction member of its own, and the Catalog schema defines none for digital objects. The headers-only object belongs to NAID 63545805, also `Unrestricted` at record level, and is described as an image provided by Fold3; none of its bytes are stored. The other headers-only objects belong to NAIDs 1129195, 26879728, and 162246501, each `Unrestricted` for access and use at record level with no object-level restriction member; none of their bytes are stored.
 
+## Original-media implementation evidence
+
+The October 4 implementation reuses the unchanged September 27-28 captures.
+JPEG transfer tests compare all 65,981 original bytes across the three public call forms.
+Both 5,454-byte substituted pages exercise bounded error capture. Recorded HEAD headers
+for HTML and absent Content-Type are paired only with explicitly synthetic bodies and
+adjusted lengths; no HTML GET or Fold3 media fixture is claimed. HTTP failures, byte and
+encoding inconsistencies, cancellation, destination races and malformed inputs are synthetic.
+The current public API terms and use policies were rechecked; live Catalog API content
+remains excluded from persistence and all examples remain offline.
+
 ## Digital-object metadata verification
 
 On October 4, 2026, the public [v2 schema](https://catalog.archives.gov/api/v2/swagger.json)

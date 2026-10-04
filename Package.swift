@@ -7,6 +7,7 @@ let package = Package(
   products: [
     .library(name: "SwiftNARACatalogBulk", targets: ["SwiftNARACatalogBulk"]),
     .library(name: "SwiftNARACatalogBulkModels", targets: ["SwiftNARACatalogBulkModels"]),
+    .library(name: "SwiftNARADigitalObjects", targets: ["SwiftNARADigitalObjects"]),
     .library(name: "SwiftNARADigitalObjectsModels", targets: ["SwiftNARADigitalObjectsModels"]),
   ],
   traits: [
@@ -39,6 +40,19 @@ let package = Package(
     .target(
       name: "SwiftNARACatalogBulkTestSupport", resources: [.copy("Fixtures")],
       swiftSettings: swiftSettings),
+    .target(
+      name: "SwiftNARADigitalObjects",
+      dependencies: [
+        .product(name: "HTTPCore", package: "swifty-networking"),
+        .product(
+          name: "HTTPPortable", package: "swifty-networking",
+          condition: .when(traits: ["HTTPPortable"])),
+        .product(name: "HTTPTypes", package: "swift-http-types"),
+        .product(
+          name: "HTTPURLSession", package: "swifty-networking",
+          condition: .when(platforms: [.iOS, .macCatalyst, .macOS, .tvOS, .visionOS, .watchOS])),
+        "SwiftNARADigitalObjectsModels",
+      ], swiftSettings: swiftSettings),
     .target(name: "SwiftNARADigitalObjectsModels", swiftSettings: swiftSettings),
     .target(
       name: "SwiftNARADigitalObjectsTestSupport", resources: [.copy("Fixtures")],
@@ -59,6 +73,14 @@ let package = Package(
       name: "SwiftNARADigitalObjectsModelsTests",
       dependencies: ["SwiftNARADigitalObjectsModels", "SwiftNARADigitalObjectsTestSupport"],
       swiftSettings: swiftSettings),
+    .testTarget(
+      name: "SwiftNARADigitalObjectsTests",
+      dependencies: [
+        .product(name: "HTTPTesting", package: "swifty-networking"),
+        .product(name: "HTTPTypes", package: "swift-http-types"),
+        "SwiftNARADigitalObjects", "SwiftNARADigitalObjectsModels",
+        "SwiftNARADigitalObjectsTestSupport",
+      ], swiftSettings: swiftSettings),
   ],
   swiftLanguageModes: [.v6]
 )

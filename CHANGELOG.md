@@ -6,6 +6,8 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 
 ### Added
 
+- Independent digital-object client with explicit byte budgets, bounded CDN error evidence, new-file publication, four-product documentation, and an offline media demo.
+
 - Digital-object descriptions, designators, complete OCR, partner text, declared accuracy, and thumbnail link projections, preserving raw nulls and unknown fields.
 
 - Independent `SwiftNARACatalogBulkModels` and `SwiftNARACatalogBulk` products using verified swifty-networking 1.3.1 APIs.

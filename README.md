@@ -120,9 +120,32 @@ declared OCR accuracy, and thumbnail links. Accuracy preserves the provider's
 metadata. Partner text, accuracy, and thumbnails are supported by the published schema
 and synthetic tests, with no occurrence in the retained bulk captures.
 
+On-demand original media downloads use the independent `SwiftNARADigitalObjects` product:
+
+```swift
+import SwiftNARADigitalObjects
+import SwiftNARADigitalObjectsModels
+
+let media = DigitalObjectsClient(
+  configuration: try DigitalObjectsConfiguration(
+    maximumErrorBodyBytes: 4096, maximumObjectBytes: 10_000_000,
+    userAgent: "(my-archive, contact@example.com)"),
+  retrievalTime: receiptClock)
+let image = try await media.download(reference, to: newDestination)
+```
+
+Everyday `download(_:to:)`, request `value(for:to:)`, and endpoint `send(_:to:)` calls
+stream complete original bytes to new files. Real HTML is accepted. An observed CloudFront
+Error marker causes a bounded `errorPage` failure; absent markers do not prove authenticity.
+Partial transfers are removed. Item-level rights and attribution remain the caller's responsibility.
+
 ## Example
 
 [SwiftNARACatalogBulkDemo](Examples/SwiftNARACatalogBulkDemo) is an offline command-line demonstration of two manifest pages, a streamed shard download, and seven provenance-bearing local records. It uses unchanged official fixtures and makes no live request. `bash Scripts/demo-linux.sh` builds it for Release and runs it in the Linux verification container.
+
+[SwiftNARADigitalObjectsDemo](Examples/SwiftNARADigitalObjectsDemo) replays the attributed
+FDR JPEG and prints separate source and transport identities. Run it offline with
+`bash Scripts/demo-media-linux.sh`.
 
 ## Products
 
@@ -130,6 +153,7 @@ and synthetic tests, with no occurrence in the retained bulk captures.
 | --- | --- |
 | `SwiftNARACatalogBulk` | Client, lazy manifest/object sequences, downloads, and local JSONL iteration. |
 | `SwiftNARACatalogBulkModels` | Source models, pure codecs, validated query/reference values, typed endpoints and requests, and portable provenance. |
+| `SwiftNARADigitalObjects` | Bounded on-demand original-file downloads with typed failures and completion receipts. |
 | `SwiftNARADigitalObjectsModels` | Validated digital object references mapping bulk object URLs to their public transport paths. |
 
 ## Requirements
