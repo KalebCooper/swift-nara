@@ -30,7 +30,21 @@ retains raw JSON bytes and projects dimensions, limits, preferred sizes and tile
 declarations without fetching tiles, JSON-LD contexts or linked services. Unknown
 feature codes and null members remain inspectable in the original bytes.
 
+A validated `IIIFImageRequest` requires explicit information and a positive width,
+height or fit box, or the server maximum. Unsupported profiles/features, upscaling,
+and advertised limits fail before I/O. Fit bounds must be within original dimensions.
+Limit checks round fractional dimensions upward conservatively; `maximum` delegates
+to version-3 `max`. The fixed representation is full-region, unrotated default JPEG.
+`IIIFImageReceipt` preserves derivative bytes and requested transform separately
+from an original-file receipt. No request construction fetches information.
+
 ## Topics
+
+### Image derivatives
+- ``IIIFImageReceipt``
+- ``IIIFImageRequest``
+- ``IIIFImageSize``
+
 
 ### Image information
 - ``IIIFImageError``

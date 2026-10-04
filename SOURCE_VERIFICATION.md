@@ -86,6 +86,26 @@ compare original information bytes and use explicitly synthetic mutations for
 foreign identities, malformed fields, unknown codes, nulls, transport failures,
 limits and cancellation. Unknown metadata remains in the raw source bytes.
 
+## IIIF derivative implementation evidence
+
+The resized-image implementation replays the unchanged 6,031-byte FDR derivative.
+Independent local image metadata inspection confirms 200 by 253 pixels. The four
+public invocation examples, including a consumer-defined request factory, save
+identical fixture bytes while keeping requested size, information and original
+reference distinct from the derivative response. Missing MIME type, malformed
+signatures, unsupported MIME types, encoded/partial/incomplete bodies, byte overflow,
+CDN errors and cancellation are synthetic scenarios. No new media capture was needed.
+
+The [IIIF compliance table](https://iiif.io/api/image/3.0/compliance/) supplies the
+profile feature rules: width and height are required at levels 1 and 2, fit at level 2,
+and maximum at all three levels. Recognized extraFeatures can enable a scoped size
+on a lower profile. Unknown profiles remain inspectable information but do not
+authorize derivative execution. Declared width-only limits imply the same height
+limit during request validation, while raw absent maxHeight stays absent. Explicit
+resize checks conservatively round fractional output dimensions upward; fit bounds
+must themselves stay within original dimensions. Maximum uses the server's version-3
+`max` semantics without claiming original-size output.
+
 ## Digital-object metadata verification
 
 On October 4, 2026, the public [v2 schema](https://catalog.archives.gov/api/v2/swagger.json)

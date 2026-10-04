@@ -43,3 +43,12 @@ extension DigitalObjectRequest where Response == IIIFImageInformation {
     Self(endpoint: .imageInformation(reference))
   }
 }
+
+extension DigitalObjectRequest where Response == IIIFImageReceipt {
+  /// Describes a validated full-image JPEG derivative without performing I/O.
+  /// - Parameter request: Previously validated information and resize parameters.
+  /// - Returns: An independently executable derivative operation.
+  public static func image(_ request: IIIFImageRequest) -> Self {
+    Self(endpoint: .image(request))
+  }
+}

@@ -24,6 +24,8 @@ import Foundation
 public struct Endpoint<Response>: Hashable, Sendable {
   /// The IIIF reference for an information operation, otherwise nil.
   public private(set) var imageReference: IIIFImageReference? = nil
+  /// The validated derivative transform, otherwise nil.
+  public private(set) var imageRequest: IIIFImageRequest? = nil
   /// The exact encoded object path relative to ``origin``.
   public let path: String
   /// The reference when this endpoint was created by the download factory, or `nil` when it
@@ -61,6 +63,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
     path = imageReference.servicePath + "/info.json"
   }
 
+  private init(imageRequest: IIIFImageRequest) {
+    self.imageRequest = imageRequest
+    path = imageRequest.path
+  }
+
   private init(reference: DigitalObjectReference) {
     path = reference.transportPath
     self.reference = reference
@@ -88,5 +95,14 @@ extension Endpoint where Response == IIIFImageInformation {
   /// - Returns: An independently executable information endpoint.
   public static func imageInformation(_ reference: IIIFImageReference) -> Self {
     Self(imageReference: reference)
+  }
+}
+
+extension Endpoint where Response == IIIFImageReceipt {
+  /// Describes a validated full-image JPEG derivative without performing I/O.
+  /// - Parameter request: Previously validated information and resize parameters.
+  /// - Returns: An independently executable derivative operation.
+  public static func image(_ request: IIIFImageRequest) -> Self {
+    Self(imageRequest: request)
   }
 }

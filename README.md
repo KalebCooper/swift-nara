@@ -10,7 +10,7 @@ Implements paginated S3 XML manifests, streamed JSONL shard downloads, independe
 
 The bulk distribution is a periodic archival snapshot. It does not guarantee current-administration coverage, complete history, stable pagination snapshots, OCR accuracy, or unrestricted reuse of linked media. The separate Catalog HTTP API is never used. Package code is MIT-licensed; source content retains its own rights and restrictions.
 
-This package is unreleased. See [source evidence](SOURCE_VERIFICATION.md) and [verification status](IMPLEMENTATION_READINESS.md) for observed formats, exact fixture provenance, and passing hosted Apple, Android, Linux, and documentation checks.
+This package is unreleased. See [source evidence](SOURCE_VERIFICATION.md) and [verification status](IMPLEMENTATION_READINESS.md) for observed formats, exact fixture provenance, current local checks, and historical hosted qualification.
 
 ## Usage
 
@@ -147,12 +147,33 @@ metadata, open feature codes, and retrieval evidence. Identity must exactly matc
 derived service; no linked context or service is fetched. The default information
 budget is one MiB, configurable independently of object and diagnostic budgets.
 
+Full-image JPEG derivatives require explicit information and a validated size:
+
+```swift
+let information = try await media.imageInformation(
+  for: IIIFImageReference(reference: reference))
+let resize = try IIIFImageRequest(information: information, size: .width(200))
+let derivative = try await media.downloadImage(resize, to: newImageDestination)
+// Equivalent: media.value(for: .image(resize), to: newImageDestination)
+// Equivalent: media.send(.image(resize), to: newImageDestination)
+```
+
+Width, height and fit requests reject unsupported features, upscaling and exceeded
+server limits before I/O. Fit bounds must also stay within original dimensions;
+limit calculations round upward conservatively. `maximum` sends version-3 `max`,
+allowing the service's advertised limits to produce a smaller image. Only full
+region, zero rotation, default quality and JPEG are supported. No operation silently
+fetches information or falls back to an original. Derivative receipts preserve the
+information identity, requested transform and actual transfer separately.
+Declared media type must be JPEG when present; absence stays nil. A checked JPEG
+start signature is not complete image decoding or proof of output dimensions.
+
 ## Example
 
 [SwiftNARACatalogBulkDemo](Examples/SwiftNARACatalogBulkDemo) is an offline command-line demonstration of two manifest pages, a streamed shard download, and seven provenance-bearing local records. It uses unchanged official fixtures and makes no live request. `bash Scripts/demo-linux.sh` builds it for Release and runs it in the Linux verification container.
 
 [SwiftNARADigitalObjectsDemo](Examples/SwiftNARADigitalObjectsDemo) replays the attributed
-FDR JPEG and IIIF information, printing separate source and transport identities and image dimensions. Run it offline with
+FDR JPEG, IIIF information and a 200-pixel-wide derivative, printing source and transport identities, original dimensions and separate derivative byte evidence. Run it offline with
 `bash Scripts/demo-media-linux.sh`.
 
 ## Products
@@ -161,8 +182,8 @@ FDR JPEG and IIIF information, printing separate source and transport identities
 | --- | --- |
 | `SwiftNARACatalogBulk` | Client, lazy manifest/object sequences, downloads, and local JSONL iteration. |
 | `SwiftNARACatalogBulkModels` | Source models, pure codecs, validated query/reference values, typed endpoints and requests, and portable provenance. |
-| `SwiftNARADigitalObjects` | Bounded original-file downloads and IIIF information with typed failures and retrieval evidence. |
-| `SwiftNARADigitalObjectsModels` | Validated original and IIIF references, raw image information, requests, endpoints, and receipts. |
+| `SwiftNARADigitalObjects` | Bounded original and resized JPEG downloads, IIIF information, typed failures, and retrieval evidence. |
+| `SwiftNARADigitalObjectsModels` | Validated original and IIIF references, image information, resize values, requests, endpoints, and receipts. |
 
 ## Requirements
 

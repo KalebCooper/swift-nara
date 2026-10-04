@@ -18,6 +18,30 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 local IIIF derivative qualification
+
+Full-image default-quality JPEG requests now support positive width, height, fit and
+server maximum. Requests require explicit validated information, refuse unsupported
+profiles/features and exceeded dimensions/limits, and perform no implicit information
+or original fetch. A separate derivative receipt retains the original reference,
+information identity, requested size and actual HTTP/file evidence. MIME type, when
+present, must be JPEG; a chunk-aware start-signature check does not claim full decoding.
+
+At the working revision based on `ddbd1a3`, Xcode 27 MCP on macOS 27 and Linux
+default/HTTPPortable each pass 183 tests in 20 suites, with no failures, skips or unrun
+tests. Mac and Linux builds have no compiler warnings. The iOS 27 simulator build
+passes; it reports two generated-test-product incompatible-sysroot linker warnings.
+There is no completed simulator test result for this slice. Source checks pass 15
+gates and 55 planted self-test arms, including strict formatting. Four DocC catalogs
+convert with warnings as errors. The Linux Release demo replays three responses:
+65,981 original bytes, 832 information bytes and 6,031 derivative bytes.
+The captured derivative independently reports 200 by 253 pixels; response dimensions
+are not asserted by the runtime transfer receipt. Evidence: `plans/p5i2-*.log` and
+`plans/p5i2-apple-tests.txt`.
+
+Android, current hosted CI, Pages publication and release remain unqualified.
+No sibling repository or remote state was changed; the entry lockfile edit is preserved.
+
 ## October 4 local IIIF information qualification
 
 The media pair now retrieves bounded version-3 image information for both supported
@@ -113,6 +137,6 @@ Verified September 26, 2026 UTC at commit `9b0e9974888e955fe6674ed63340cf5b128c3
 
 ## Remaining work
 
-The retained CI and documentation gates are qualified. Job durations above provide the first measured green main baseline for future timeout adjustments. No release is published; tagging and releases require separate approval.
+The earlier hosted CI and documentation runs are historical evidence. Current changes require new hosted runs. Job durations above provide a measured green main baseline for future timeout adjustments. No release is published; tagging and releases require separate approval.
 
 The later full historical inventory is coordinated with GovInfo document work. Independent NARA manifest and shard slices do not depend on that inventory. This implementation does not claim all-history completeness, current-administration coverage, stable snapshots, OCR accuracy, or unrestricted rights. The separate Catalog HTTP API remains excluded from persistent ingestion. Application inclusion policy, cross-provider identity resolution, and release approval remain outside this slice.

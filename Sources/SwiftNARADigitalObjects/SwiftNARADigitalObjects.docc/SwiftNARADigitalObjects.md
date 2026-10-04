@@ -52,6 +52,19 @@ information includes unchanged JSON, source identity, received headers and injec
 retrieval time. Invalid identity, version, dimensions, or JSON fails without
 following any advertised link. Original downloads remain a separate operation.
 
+## JPEG derivatives
+
+`downloadImage(_:to:)`, `value(for:to:)` and `send(_:to:)` execute a validated
+`IIIFImageRequest`. Obtain information explicitly, then select width, height, fit
+or server maximum. Transfers use the object budget and the same new-file lifecycle.
+Each call requests only the derivative, without original fallback.
+
+When a media type is supplied it must be `image/jpeg`; absence remains nil in the
+receipt. The JPEG start signature is checked across stream chunks before publication.
+This detects HTML substitutions without a CDN marker, but is not full image decoding
+or confirmation of dimensions. The receipt preserves the original reference,
+information identity, requested transform and actual response evidence.
+
 ## Topics
 
 ### Client

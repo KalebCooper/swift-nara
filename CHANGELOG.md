@@ -6,6 +6,8 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 
 ### Added
 
+- Validated full-image IIIF JPEG resizing with width, height, fit and server-maximum sizes, separate derivative receipts, and bounded file publication.
+
 - Bounded IIIF Image API 3 information with validated source mapping, raw JSON preservation, dimensions, server limits, and retrieval evidence.
 
 - Independent digital-object client with explicit byte budgets, bounded CDN error evidence, new-file publication, four-product documentation, and an offline media demo.

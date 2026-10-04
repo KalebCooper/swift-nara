@@ -19,6 +19,8 @@ public enum DigitalObjectsError: Error {
   case information(IIIFImageError)
   /// A byte bound, caller identity, or destination URL is invalid.
   case invalidConfiguration
+  /// A derivative has a non-JPEG media type or lacks the JPEG start signature.
+  case invalidImage
   /// The response exceeds the caller's whole-object bound.
   case limitExceeded
   /// Whole-body status, encoding, content range, or byte length is inconsistent.

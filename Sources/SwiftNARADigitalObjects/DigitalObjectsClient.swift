@@ -5,8 +5,8 @@ import SwiftNARADigitalObjectsModels
 
 /// On-demand, bounded downloads of NARA public digital objects.
 ///
-/// Each call retrieves one original file with no redirects, retries, API credentials,
-/// or automatic linked requests. Successful HTML is accepted unless the observed
+/// Each operation retrieves original media or IIIF content with no redirects, retries, API credentials,
+/// or automatic linked requests. Original downloads accept HTML unless the observed
 /// CloudFront Error marker is present. That unpublished signal may change or be absent;
 /// a receipt proves transfer completion, not authenticity, reuse rights, or OCR accuracy.
 /// ```swift
@@ -92,6 +92,17 @@ public struct DigitalObjectsClient: Sendable {
   public func send(_ endpoint: Endpoint<DigitalObjectReceipt>, to destination: URL)
     async throws(DigitalObjectsError) -> DigitalObjectReceipt
   {
+    let result = try await transfer(path: endpoint.path, to: destination, validatesJPEG: false)
+    return DigitalObjectReceipt(
+      byteCount: result.byteCount, fileURL: result.fileURL, headers: result.headers,
+      reference: endpoint.reference, retrievedAt: result.retrievedAt, status: result.status,
+      transportURL: endpoint.url)
+  }
+
+  /// Streams one validated path, publishing only complete original or JPEG bytes.
+  func transfer(path: String, to destination: URL, validatesJPEG: Bool)
+    async throws(DigitalObjectsError) -> FileTransfer
+  {
     guard !Task.isCancelled else { throw .cancelled }
     guard destination.isFileURL else { throw .invalidConfiguration }
     let manager = FileManager.default
@@ -110,8 +121,10 @@ public struct DigitalObjectsClient: Sendable {
       defer { try? handle.close() }
       let response = try await http.streamResponse(
         Request(
-          headers: [.acceptEncoding: "identity"],
-          options: RequestOptions(redirectPolicy: .never, requiresAuth: false), path: endpoint.path)
+          headers: validatesJPEG
+            ? [.accept: "image/jpeg", .acceptEncoding: "identity"]
+            : [.acceptEncoding: "identity"],
+          options: RequestOptions(redirectPolicy: .never, requiresAuth: false), path: path)
       )
       let retrievedAt = retrievalTime()
       try await rejectErrorPage(response)
@@ -119,6 +132,12 @@ public struct DigitalObjectsClient: Sendable {
         response.headers[.contentEncoding] == nil
           || response.headers[.contentEncoding]?.lowercased() == "identity"
       else { throw DigitalObjectsError.sizeMismatch }
+      if validatesJPEG, let type = response.headers[.contentType] {
+        guard
+          type.split(separator: ";").first?.trimmingCharacters(in: .whitespaces).lowercased()
+            == "image/jpeg"
+        else { throw DigitalObjectsError.invalidImage }
+      }
       let declaredLength: Int64?
       if let text = response.headers[.contentLength] {
         guard !text.isEmpty, text.utf8.allSatisfy({ $0 >= 48 && $0 <= 57 }),
@@ -132,6 +151,7 @@ public struct DigitalObjectsClient: Sendable {
         throw DigitalObjectsError.limitExceeded
       }
       var count: Int64 = 0
+      var signature = Data()
       for try await chunk in response.body {
         guard !Task.isCancelled else { throw DigitalObjectsError.cancelled }
         guard Int64(chunk.count) <= configuration.maximumObjectBytes - count else {
@@ -140,6 +160,12 @@ public struct DigitalObjectsClient: Sendable {
         if let declaredLength, Int64(chunk.count) > declaredLength - count {
           throw DigitalObjectsError.sizeMismatch
         }
+        if validatesJPEG && signature.count < 3 {
+          signature.append(chunk.prefix(3 - signature.count))
+          if signature.count == 3 && signature != Data([0xFF, 0xD8, 0xFF]) {
+            throw DigitalObjectsError.invalidImage
+          }
+        }
         try handle.write(contentsOf: chunk)
         count += Int64(chunk.count)
       }
@@ -147,14 +173,16 @@ public struct DigitalObjectsClient: Sendable {
       guard declaredLength == nil || declaredLength == count else {
         throw DigitalObjectsError.sizeMismatch
       }
+      guard !validatesJPEG || signature == Data([0xFF, 0xD8, 0xFF]) else {
+        throw DigitalObjectsError.invalidImage
+      }
       try handle.close()
       try manager.moveItem(at: temporary, to: destination)
       ownedTemporary = false
-      return DigitalObjectReceipt(
+      return FileTransfer(
         byteCount: count, fileURL: destination,
         headers: response.headers.map { .init(name: $0.name.rawName, value: $0.value) },
-        reference: endpoint.reference, retrievedAt: retrievedAt, status: response.status.code,
-        transportURL: endpoint.url)
+        retrievedAt: retrievedAt, status: response.status.code)
     } catch let error as DigitalObjectsError {
       throw error
     } catch let error as TransportError {
@@ -176,5 +204,13 @@ public struct DigitalObjectsClient: Sendable {
     switch request.resolution {
     case .endpoint(let endpoint): try await send(endpoint, to: destination)
     }
+  }
+
+  struct FileTransfer {
+    let byteCount: Int64
+    let fileURL: URL
+    let headers: [DigitalObjectReceipt.Header]
+    let retrievedAt: Date
+    let status: Int
   }
 }

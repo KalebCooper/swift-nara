@@ -14,6 +14,8 @@ struct Demo {
     let bytes = try Data(contentsOf: fixtures.appendingPathComponent("msf00611_Page_01.jpg"))
     let informationBytes = try Data(
       contentsOf: fixtures.appendingPathComponent("iiif-fdr-info.json"))
+    let derivativeBytes = try Data(
+      contentsOf: fixtures.appendingPathComponent("iiif-fdr-width200.jpg"))
     let transport = MockTransport(answers: [
       .success(
         .init(
@@ -22,6 +24,9 @@ struct Demo {
         .init(
           chunks: [informationBytes],
           headers: [.contentLength: "832", .contentType: "application/json"])),
+      .success(
+        .init(
+          chunks: [derivativeBytes], headers: [.contentLength: "6031", .contentType: "image/jpeg"])),
     ])
     let client = DigitalObjectsClient(
       configuration: try DigitalObjectsConfiguration(
@@ -48,6 +53,11 @@ struct Demo {
     print(
       "IIIF information: \(information.width)x\(information.height), \(information.rawBytes.count) original JSON bytes."
     )
+    let resize = try IIIFImageRequest(information: information, size: .width(200))
+    let derivative = try await client.downloadImage(
+      resize, to: directory.appendingPathComponent("width200.jpg"))
+    print(
+      "Saved \(derivative.byteCount) derivative bytes for \(derivative.request.size.parameter).")
     print("Replayed \(transport.requests.count) recorded responses; no live request.")
   }
 }
