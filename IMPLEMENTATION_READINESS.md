@@ -37,6 +37,15 @@ No Docker work continues. Final hosted results, exact SHA and run URLs will be r
 when complete. A qualification branch and draft PR are authorized; merging, default-branch
 publication, tags and release are not authorized by that testing request.
 
+The first hosted run at `9ca952c24ca883a1b61db00f2f1b016fc2057cd7`
+passed iOS simulator tests, both Release demos, source gates, strict formatting and
+[DocC construction](https://github.com/KalebCooper/swift-nara/actions/runs/37240903117).
+Pages deployment was intentionally skipped for the pull request. Linux and Android
+[failed during test compilation](https://github.com/KalebCooper/swift-nara/actions/runs/37240903136)
+because a local `client` value shadowed the helper in the archive budget test.
+The test now uses `archiveClient`; source gates and all 59 self-test arms pass.
+Hosted verification of this correction remains pending.
+
 ## October 4 durable resume local qualification
 
 Begin/resume/discard now execute for bulk JSONL/ZIP representations and original media.

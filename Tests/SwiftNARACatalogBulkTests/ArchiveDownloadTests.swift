@@ -38,7 +38,7 @@ struct ArchiveDownloadTests {
       #expect(try FileManager.default.contentsOfDirectory(atPath: directory.path).isEmpty)
     }
     let transport = MockTransport()
-    let client = try client(transport)
+    let archiveClient = try client(transport)
     let range = try reference().rangeReference(entityTag: "\"tag\"", totalByteCount: 229)
     for limits in [
       try BulkArchiveDownloadLimits(maximumByteCount: 228, maximumWorkspaceBytes: 3_000_000),
@@ -49,7 +49,7 @@ struct ArchiveDownloadTests {
         limits.maximumByteCount == .max
         ? try reference().rangeReference(entityTag: "\"tag\"", totalByteCount: .max) : range
       #expect(throws: CatalogBulkError.self) {
-        try client.beginArchiveDownload(selected, in: directory, limits: limits)
+        try archiveClient.beginArchiveDownload(selected, in: directory, limits: limits)
       }
     }
     #expect(transport.requests.isEmpty)
