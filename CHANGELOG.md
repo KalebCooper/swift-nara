@@ -6,6 +6,8 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 
 ### Added
 
+- Digital-object descriptions, designators, complete OCR, partner text, declared accuracy, and thumbnail link projections, preserving raw nulls and unknown fields.
+
 - Independent `SwiftNARACatalogBulkModels` and `SwiftNARACatalogBulk` products using verified swifty-networking 1.3.1 APIs.
 - Portable bounded S3 XML decoding, typed manifest requests/endpoints, and lazy page/object traversal with opaque token validation and exact response receipts.
 - Streamed JSONL downloads with complete-file receipts, byte bounds, cleanup on failure, and bounded independent local line iteration.

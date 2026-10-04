@@ -75,6 +75,10 @@ struct Demo {
       print(
         "  level \(level), production date \(productionYear), ancestors \(ancestorCount), access restriction \(restrictionStatus), digital objects \(digitalObjectsState)"
       )
+      let objects = line.record.digitalObjects ?? []
+      let completeOCRCount = objects.filter { $0.completeExtractedText != nil }.count
+      let partnerOCRCount = objects.filter { $0.otherExtractedText != nil }.count
+      print("  complete OCR objects \(completeOCRCount), partner OCR objects \(partnerOCRCount)")
       let transcriptions = line.record.transcriptions ?? []
       var machineGeneratedTrue = 0
       var machineGeneratedFalse = 0

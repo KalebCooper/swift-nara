@@ -114,6 +114,12 @@ The parent directory must exist and the destination must be new. Failures remove
 
 On Apple platforms, the convenience initializer uses URLSession. With the `HTTPPortable` trait, Linux and Android consumers supply the portable transport. Models and codecs import no third-party networking library.
 
+Digital objects also expose source descriptions, designators, complete OCR, partner text,
+declared OCR accuracy, and thumbnail links. Accuracy preserves the provider's
+`extractedTextAccurracy` value without clamping it; thumbnails remain unvalidated
+metadata. Partner text, accuracy, and thumbnails are supported by the published schema
+and synthetic tests, with no occurrence in the retained bulk captures.
+
 ## Example
 
 [SwiftNARACatalogBulkDemo](Examples/SwiftNARACatalogBulkDemo) is an offline command-line demonstration of two manifest pages, a streamed shard download, and seven provenance-bearing local records. It uses unchanged official fixtures and makes no live request. `bash Scripts/demo-linux.sh` builds it for Release and runs it in the Linux verification container.

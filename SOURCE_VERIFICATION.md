@@ -50,6 +50,23 @@ Bulk `objectFileSize` is not a reliable expected length: 16 of the 36 `lz/` obje
 
 The downloaded object belongs to NAID 122178160, whose record-level access and use restrictions are both `Unrestricted`. Its digital object entry has no restriction member of its own, and the Catalog schema defines none for digital objects. The headers-only object belongs to NAID 63545805, also `Unrestricted` at record level, and is described as an image provided by Fold3; none of its bytes are stored. The other headers-only objects belong to NAIDs 1129195, 26879728, and 162246501, each `Unrestricted` for access and use at record level with no object-level restriction member; none of their bytes are stored.
 
+## Digital-object metadata verification
+
+On October 4, 2026, the public [v2 schema](https://catalog.archives.gov/api/v2/swagger.json)
+was read without credentials: 202,134 bytes, SHA-256
+`9686559b9a2a7a4e1788a7428e551d80ddcc9bc4a73af8b4e1e7e2b515d80238`.
+Its digitalObject definition retains `objectDescription`, `objectDesignator`,
+`otherExtractedText`, `thumbnailUrl`, and integer `extractedTextAccurracy`.
+The unchanged RG11 capture has 58 objects, 38 descriptions, 22 designators, and three
+complete-extracted-text values; FDR has 53 objects and four complete-extracted-text
+values. Neither capture supplies accuracy, partner text, or thumbnails, so these
+projections use explicitly synthetic schema-grounded tests. Complete OCR is evidenced
+by the bulk captures, not that schema definition. Original fixture bytes are unchanged.
+
+The bulk guide now publishes September 14, 2026 ZIP links while still describing the
+March 1 snapshot in its overview. Earlier March archive sizes, validators, and member
+observations remain historical evidence; they do not qualify the newly linked archives.
+
 ## Rights and restrictions
 
 The registry labels the dataset US Government work. [NARA's use policies](https://www.archives.gov/global-pages/privacy.html) explain that archival holdings can include third-party copyright and donor restrictions. The package's MIT license covers package code, not all linked media. Preserve record-level access/use restrictions, physical restrictions, attribution, and OCR provenance. A successful download does not establish permission to reuse a digital object.

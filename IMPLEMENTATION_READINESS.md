@@ -18,6 +18,26 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 local metadata qualification
+
+Six additive digital-object projections are implemented, with original fixture bytes unchanged:
+complete OCR, declared accuracy, description, designator, partner text, and thumbnail URL.
+The published schema backs accuracy, partner text, and thumbnails; retained bulk captures
+do not contain those three fields. Existing media references, requests and receipts also
+compile, but there is still no media SDK in this revision.
+
+The metadata change based on `9127f8a` passed all 159 tests in 15 suites through Xcode 27
+MCP on iPhone 18 Pro / iOS 27 and in both Linux default and HTTPPortable configurations
+using `swift:6.3-noble`. Source verification passes all 15 checks and 47 planted self-test
+arms; strict formatting passes. Both bulk DocC catalogs convert with warnings treated as
+errors, models first, and the Linux Release offline demo passes. Xcode reports two existing
+incompatible macOS/iOS sysroot linker warnings. Evidence is retained in ignored
+`plans/p5m-*.log` files and the execution ledger.
+
+No Swift Android SDK, adb, or emulator is installed locally. Android, hosted tests and
+Pages have not been requalified for this change. The earlier hosted results below are
+historical evidence, and no release is published. The entry lockfile change is preserved.
+
 ## Local qualification
 
 Reverified September 26, 2026 UTC on the working tree committed as the direct child of `9d594c9`, the commit that adds conditional shard refresh and records this table. Earlier qualification logs and documentation archives are retained in the ignored `plans/` directory.

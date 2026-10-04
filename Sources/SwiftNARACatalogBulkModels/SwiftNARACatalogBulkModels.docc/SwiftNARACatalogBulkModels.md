@@ -64,6 +64,28 @@ let endpoint = Endpoint.refresh(reference, condition: condition)
 let request = CatalogBulkRequest.refresh(reference, condition: condition)
 ```
 
+## Digital-object metadata
+
+`CatalogDigitalObject` preserves source labels through `objectDescription` and
+`objectDesignator`, and keeps `completeExtractedText`, `extractedText`, and
+`otherExtractedText` separate. The latter is partner text according to the published
+schema. `extractedTextAccuracy` reads the provider's `extractedTextAccurracy` integer
+without correcting its spelling or clamping its value. `thumbnailURL` preserves a
+link even when its host is unsupported for downloading. These properties perform no I/O.
+
+The retained bulk captures evidence descriptions, designators, and complete OCR.
+Accuracy, partner text, and thumbnail projections have schema and synthetic-test
+coverage only. Missing, null, and wrong-shaped values return nil; inspect `source`
+to distinguish them. Neither OCR quality nor reuse permission is inferred.
+
+```swift
+for object in record.digitalObjects ?? [] {
+  print(object.objectDesignator, object.objectDescription)
+  print(object.completeExtractedText, object.otherExtractedText)
+  print(object.extractedTextAccuracy, object.thumbnailURL)
+}
+```
+
 ## Topics
 
 ### Request values
