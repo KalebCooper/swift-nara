@@ -15,6 +15,8 @@ public struct Endpoint<Response>: Hashable, Sendable {
   public private(set) var condition: ShardCondition? = nil
   /// The exact query when this endpoint was created by the directory factory.
   public private(set) var directoryQuery: BulkDirectoryQuery? = nil
+  /// The representation selected for a resumable original download, otherwise nil.
+  public private(set) var downloadReference: BulkRangeReference? = nil
   /// The exact query when this endpoint was created by the manifest factory.
   public private(set) var manifestQuery: ManifestQuery? = nil
   /// The public bucket origin used by every endpoint.
@@ -85,6 +87,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
     directoryQuery = query
   }
 
+  private init(downloadReference: BulkRangeReference) {
+    self.downloadReference = downloadReference
+    path = downloadReference.path
+  }
+
   package init(manifestQuery query: ManifestQuery) {
     var fields = [
       "list-type=2", "max-keys=\(query.maxKeys)", "prefix=\(Self.encoded(query.prefix))",
@@ -152,6 +159,15 @@ extension Endpoint where Response == BulkDirectoryPage {
   /// - Returns: An independently executable directory endpoint.
   public static func directory(_ query: BulkDirectoryQuery) -> Self {
     Self(directoryQuery: query)
+  }
+}
+
+extension Endpoint where Response == BulkDownloadReceipt {
+  /// Describes serial validated ranges without capturing a local file or performing I/O.
+  /// - Parameter reference: The exact known original representation.
+  /// - Returns: An independently executable resumable-download endpoint.
+  public static func resumableDownload(_ reference: BulkRangeReference) -> Self {
+    Self(downloadReference: reference)
   }
 }
 

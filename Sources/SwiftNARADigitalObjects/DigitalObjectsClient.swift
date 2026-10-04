@@ -18,6 +18,8 @@ public struct DigitalObjectsClient: Sendable {
   let configuration: DigitalObjectsConfiguration
   let http: HTTPClient
   let retrievalTime: @Sendable () -> Date
+  var saveCheckpoint: @Sendable (DigitalObjectDownloadCheckpoint) throws -> Void =
+    DigitalObjectDownloadFile.persist
 
   /// Creates a client with an explicit transport and receipt clock.
   /// - Parameters:

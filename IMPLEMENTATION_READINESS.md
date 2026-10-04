@@ -18,7 +18,57 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
-## October 4 checkpoint foundation qualification
+## October 4 durable resume local qualification
+
+Begin/resume/discard now execute for bulk JSONL/ZIP representations and original media.
+The owner approved SDK-only swift-system 1.8+; resolved 1.8.1 supplies typed no-follow
+opening and descriptor identity. Serial validated ranges synchronize partial bytes
+before atomic sidecar advancement. Resume verifies SHA-256 and ownership before
+truncating crash tails, reloads newer matching sidecars, and refuses concurrent writers,
+replaced files and existing destinations. A complete local prefix can publish without
+HTTP. Publication is a no-overwrite hard link on the same filesystem. Explicit discard
+removes only the bound partial and sidecar, retaining the destination, private directory
+and unrelated files. Parent directories must remain stable and caller-controlled;
+advisory locks coordinate SDK writers, not arbitrary external mutation. Failed begin
+may leave an owned child for inspection and cleanup. A post-link directory-sync failure
+may leave a complete destination despite reporting failure.
+
+- Xcode 27 MCP, generated swift-nara-Package, My Mac macOS 27: 235/235 tests in 30 suites,
+  zero failures/skips/expected failures/unrun. Final bundle is
+  Test-swift-nara-Package-2026.10.04_17-04-09--0500.xcresult; metadata is in
+  plans/p9r2-resume-apple-evidence.json. Subsequent Mac build has zero warnings.
+- iPhone 18 Pro simulator build passes; four existing generated-test-product sysroot
+  warnings, no simulator test execution claimed.
+- Linux swift:6.3-noble, default and HTTPPortable: each 235/235 in 30 suites,
+  no compiler warnings; plans/p9r2-resume-linux-final.log. Tests cover complete fixture
+  reassembly at all call levels, corrupt/missing/replaced/symlink state, writer conflict,
+  cancellation, synthetic crash tails, injected checkpoint disk-full before and after
+  sidecar advancement, invalid responses, destination races and local-only completion.
+  No hardware power-loss test or physically-full-disk test is claimed.
+- Source gate 15 checks and self-test 59 planted arms pass; strict formatting includes
+  both demos. Logs plans/p9r2-resume-source-final.log and
+  plans/p9r2-resume-self-tests-final.log. Fresh local review checked ownership boundaries,
+  durable update order, checked offsets, bounded hashing, typed failure progress,
+  publication/discard behavior, model dependency isolation and all call forms.
+- Four DocC catalogs convert models first with warnings as errors, merge and static
+  hosting conversion pass in plans/p9r2-resume-docc-final. The first conversion failed
+  because CSystem headers were absent from symbol extraction search paths; the script
+  now uses the resolved Xcode checkout and supports an explicit header-path override.
+- Both Linux Release demos pass, including labeled synthetic retained-state recovery
+  (four bytes retained, eight published, explicit discard) alongside existing captures.
+  Logs plans/p9r2-resume-demo-bulk.log and plans/p9r2-resume-demo-media.log.
+
+Xcode temporarily disconnected; filesystem editing was used while MCP returned Transport
+closed. Reconnection produced the designated final result. Earlier 231-test and mixed
+in-flight Linux checks are superseded. A newly added cancellation test initially failed
+to compile due to erased catch type; explicit typed matching fixed it before these runs.
+No source fixture or live Catalog content was added. All 23 portable pins remain unchanged;
+only the direct-dependency manifest hash changes, while unrelated worktree pin removals
+are preserved with the newly direct swift-system pin. Android, current hosted CI/Pages,
+publication and release remain open. ZIP acquisition/reading and transient Catalog are
+not accepted by this resume qualification. Historical OFR remains owner-deferred.
+
+## October 4 checkpoint foundation qualification (historical slice)
 
 Versioned `BulkDownloadCheckpoint` and `DigitalObjectDownloadCheckpoint` values,
 validation-preserving Codable range references, and SDK-only bounded SHA-256 hashing
@@ -26,9 +76,9 @@ are implemented. Local checkpoint fixtures are synthetic. The approved swift-cry
 floor is 5.0.0, matching the existing portable pin and this package's tools 6.2 floor.
 No models target imports Crypto or depends on a third-party product.
 
-This is a foundation slice. Begin/resume/discard execution, exclusive file ownership,
-durable sidecar updates, crash recovery and final publication are not implemented or
-qualified by these tests. They await the separate swift-system dependency decision.
+At that foundation boundary, begin/resume/discard execution, exclusive file ownership,
+durable sidecar updates, crash recovery and final publication were not qualified by
+those tests. The later lifecycle evidence below supersedes that implementation status.
 ZIP acquisition/reading and transient Catalog operations remain pending.
 
 Xcode 27 MCP on macOS 27 passes 211 tests in 28 suites with zero failed, skipped,
@@ -62,8 +112,8 @@ and endpoint calls. Strong ETags, known total lengths, optional meaningful bulk 
 pins, strict Content-Range and byte-count validation, bounded temporary files and distinct
 partial receipts are implemented. Bulk ranges support JSONL and ZIP keys; media ranges
 support original objects on both observed prefixes. Existing complete downloads retain
-their whole-file contract. Resume, full archive acquisition and ZIP ingestion are still
-pending implementation.
+their whole-file contract. At this earlier range boundary, resume, full archive acquisition and ZIP ingestion
+were pending implementation.
 
 At the working revision based on `14d401d`, Xcode 27 MCP on macOS 27 and Linux
 `swift:6.3-noble` default/HTTPPortable each pass 203 tests in 24 suites, with no failures,
@@ -85,9 +135,8 @@ passing runs. Evidence: `plans/p9r1-apple-evidence.json`, `plans/p9r1-linux-seco
 and `plans/p9r1-demo-*.log`.
 
 Historical OFR disposition/codification work is owner-deferred from this repository task.
-The owner approved SDK-only swift-crypto for prefix integrity; checkpoint foundation
-implementation and qualification are in progress. Durable resume execution awaits a
-separate SDK-only swift-system file-ownership dependency decision. Archive-reader
+The owner approved SDK-only swift-crypto and swift-system; the later lifecycle evidence
+supersedes the earlier checkpoint-only status. Archive-reader
 selection and live Catalog credentials/fixture policy remain separate gates. Android,
 current hosted CI, Pages and release remain unqualified; the phase is not fully qualified
 across all required platforms. No sibling or remote change was made, and the entry

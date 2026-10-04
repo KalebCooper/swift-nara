@@ -13,3 +13,5 @@ Requires Swift 6.2 or later and macOS 26 or Linux. For live operation, supply a 
 The range example replays an attributed 32-byte interval separately from the complete-file
 example, prints its offset and full-source length, and removes the temporary fragment afterward.
 It performs no live request, persistence, retry, or resume.
+
+A separately labeled synthetic resume example retains a four-byte checkpoint after a refused HTTP 200, reloads it from an older caller checkpoint, publishes eight exact bytes, and explicitly discards the owned partial and sidecar. No live request is made.

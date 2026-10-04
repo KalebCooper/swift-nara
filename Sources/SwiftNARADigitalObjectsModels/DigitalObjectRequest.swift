@@ -20,6 +20,15 @@ public struct DigitalObjectRequest<Response>: Hashable, Sendable {
   public init(endpoint: Endpoint<Response>) { resolution = .endpoint(endpoint) }
 }
 
+extension DigitalObjectRequest where Response == DigitalObjectDownloadReceipt {
+  /// Describes a resumable original download; the checkpoint is supplied only at execution.
+  /// - Parameter reference: The exact known representation.
+  /// - Returns: A reusable request with no file or network I/O at construction.
+  public static func resumableDownload(_ reference: DigitalObjectRangeReference) -> Self {
+    Self(endpoint: .resumableDownload(reference))
+  }
+}
+
 extension DigitalObjectRequest where Response == DigitalObjectRangeReceipt {
   /// Describes one validated partial-original operation without I/O.
   /// - Parameters:

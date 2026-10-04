@@ -6,7 +6,9 @@ All notable changes are documented here, following Keep a Changelog and Semantic
 
 ### Added
 
-- Versioned bulk and original-media checkpoint models with validated decoding, Codable range references, and bounded SDK-only SHA-256 prefix hashing. Download lifecycle execution remains pending.
+- Explicit durable bulk and original-media downloads with begin/resume/discard, bounded ranges, SHA-256 prefix checks, typed progress failures, no-follow file ownership, and no-overwrite completion. SDK-only swift-system supports portable file identity and locking.
+
+- Versioned bulk and original-media checkpoint models with validated decoding, Codable range references, and bounded SDK-only SHA-256 prefix hashing.
 
 - Bounded original-media and bulk byte ranges with strong validators, optional bulk version pins, strict partial-response validation, and distinct fragment receipts.
 

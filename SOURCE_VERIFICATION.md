@@ -18,12 +18,23 @@ a digest. Checkpoint unit data is synthetic local state, not captured Catalog co
 No new provider requests or retained source fixtures were needed for this foundation.
 
 Direct native open/fstat prototypes emitted strict-memory-safety diagnostics and were
-removed. A separate owner decision is pending for SDK-only
-[swift-system 1.8.0](https://github.com/apple/swift-system/tree/1.8.0), whose typed open
-and descriptor metadata APIs would support no-follow and file-identity checks.
-No direct swift-system dependency or unsafe exception has been added. Qualification
-of the final file-ownership and recovery executor remains separate from checkpoint
-value decoding and prefix hashing.
+removed. The owner subsequently approved SDK-only
+[swift-system 1.8+](https://github.com/apple/swift-system/tree/1.8.1). The resolved release
+is 1.8.1, revision `869129b7bf4ecc57b97d0193ad29690ca2134750`, already present in the
+portable dependency superset. Its typed `FileDescriptor.open`, no-follow options and
+`Stat` descriptor metadata are used for regular-file/device/inode checks. Scalar
+`flock` and `fsync` calls compile without strict-memory-safety diagnostics; no exemption
+or model dependency was added. Apple and both Linux configurations qualify these calls.
+Android remains unqualified.
+
+The lifecycle uses advisory writer locking, bounded prefix reads, private child
+permissions, synchronized data before atomic sidecar advancement, and new hard-link
+publication on the same filesystem. This contract requires caller-controlled stable
+parent directories; it does not claim immunity to arbitrary external same-user mutation.
+Tests synthesize crash tails and inject checkpoint disk-full errors. They do not simulate
+hardware power loss or a physically full disk. Whole-fixture reassembly uses existing
+attributed FDR bytes with explicitly synthetic range responses. No new provider body,
+credential, or live Catalog content was retained for this slice.
 
 The National Archives Catalog dataset was accessed on September 24, 2026 UTC from the [NARA-managed AWS registry](https://registry.opendata.aws/nara-national-archives-catalog/). Five original response bodies and their exact URLs, retrieval instants, HTTP status, headers, byte counts, and SHA-256 hashes are in [fixture attribution](Sources/SwiftNARACatalogBulkTestSupport/Fixtures/attribution.json). No Catalog HTTP API response is used. Five authority-record bodies, five directory listings, and two conditional responses were added on September 26, 2026 UTC from the same bulk origin with the same attribution fields; the conditional entries also record the request method and headers.
 

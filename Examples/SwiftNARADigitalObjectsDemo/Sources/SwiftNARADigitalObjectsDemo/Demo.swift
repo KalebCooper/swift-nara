@@ -60,6 +60,7 @@ struct Demo {
       "Saved \(derivative.byteCount) derivative bytes for \(derivative.request.size.parameter).")
     try await demonstrateRange(
       client: client, directory: directory, fixtures: fixtures, transport: transport)
+    try await demonstrateResume(in: directory)
     print("Replayed \(transport.requests.count) recorded responses; no live request.")
   }
 }

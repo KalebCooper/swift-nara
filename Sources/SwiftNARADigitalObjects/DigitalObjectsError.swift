@@ -8,12 +8,14 @@ import SwiftNARADigitalObjectsModels
 public enum DigitalObjectsError: Error {
   /// The requesting task was cancelled; no complete file was published.
   case cancelled
+  /// The retained download's local state does not permit safe continuation.
+  case downloadState(DigitalObjectDownloadStateError)
   /// A successful status carried the observed CloudFront Error marker.
   ///
   /// Bytes are bounded by the caller's diagnostic limit. A true truncation flag means
   /// additional bytes were observed but omitted. Marker absence does not establish authenticity.
   case errorPage(body: Data, code: Int, headers: HTTPFields, isTruncated: Bool)
-  /// Local file access failed; only an owned temporary is removed.
+  /// Local file access failed; complete publication is not confirmed.
   case file(any Error)
   /// A IIIF information document or requested transform is invalid.
   case information(IIIFImageError)

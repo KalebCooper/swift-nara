@@ -7,7 +7,7 @@ Describe NARA bulk requests and preserve source metadata without a networking de
 `BulkDownloadCheckpoint` is a versioned persistence value for source identity,
 committed byte count, file identity, and a SHA-256 prefix digest. Decoding repeats
 source and checkpoint validation without reading any file. This model does not
-verify ownership or content by itself. The download lifecycle executor is pending.
+verify ownership or content by itself. The SDK verifies ownership and bytes when executing the explicit resume lifecycle.
 
 `ManifestQuery`, `Endpoint`, and `CatalogBulkRequest` are immutable values. `ManifestCodec` reads the public S3 listing as bounded UTF-8 XML with a portable source-specific parser. It does not rely on Codable to parse XML, perform external entity resolution, or import FoundationXML.
 
@@ -155,3 +155,10 @@ quoted ETag and positive known total length to a validated source.
 `BulkRangeReceipt` describes only the saved interval; it is never a complete-file receipt.
 Bulk references accept JSONL shard keys or ZIP keys and can pin a meaningful S3 version.
 A partial JSONL interval may split a UTF-8 character or record and cannot be read as a shard.
+
+
+`BulkDownloadReceipt` describes only complete published bytes, with the complete
+checkpoint and destination. `.resumableDownload(_:)` request and endpoint factories
+contain the known source representation; checkpoint and destination are supplied at
+execution. Models perform no file or network I/O and depend on no hashing or file-system
+library. A decoded checkpoint remains untrusted until the SDK verifies its owned file.

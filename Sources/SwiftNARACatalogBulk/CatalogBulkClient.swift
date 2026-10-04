@@ -20,6 +20,7 @@ public struct CatalogBulkClient: Sendable {
   let configuration: CatalogBulkConfiguration
   let http: HTTPClient
   let retrievalTime: @Sendable () -> Date
+  var saveCheckpoint: @Sendable (BulkDownloadCheckpoint) throws -> Void = BulkDownloadFile.persist
 
   /// Creates a client with explicit source identity and retrieval time.
   /// - Parameters:

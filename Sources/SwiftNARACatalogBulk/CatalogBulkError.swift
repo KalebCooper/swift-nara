@@ -8,6 +8,8 @@ public enum CatalogBulkError: Error {
   case cancelled
   /// A bounded source document could not be decoded.
   case decoding(CatalogDecodingError)
+  /// The retained download's local state does not permit safe continuation.
+  case downloadState(BulkDownloadStateError)
   /// Local file access failed; no complete download is published.
   case file(any Error)
   /// A caller supplied an invalid size bound or non-file destination.

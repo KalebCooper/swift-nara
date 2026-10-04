@@ -92,3 +92,36 @@ owned temporary. The default per-range bound is four MiB, separate from complete
 Caller-supplied transports must preserve response representation metadata, honor identity
 encoding, refuse redirects, and avoid unbounded buffering. A transport that silently rewrites
 both bytes and metadata cannot supply verifiable range evidence.
+
+## Retain validated progress across interruptions
+
+```swift
+let checkpoint = try client.beginDownload(knownOriginal, in: privateWorkspace)
+let completed = try await client.resumeDownload(checkpoint, to: newDestination)
+try client.discardDownload(completed.checkpoint)
+```
+
+Begin performs only local I/O. The reference's known total length is the explicit
+whole-download budget; the configured range bound limits each serial request.
+`value(for:checkpoint:to:)` and `send(_:checkpoint:to:)` execute the same
+`.resumableDownload(_:)` request and endpoint. Requests never store file handles or do I/O.
+A `DigitalObjectDownloadFailure` carries the last verified durable checkpoint, or nil when
+verification did not finish. Retain the initial checkpoint too: the matching sidecar
+can contain newer progress after a crash or interrupted checkpoint write.
+
+Resume checks file identity and the committed prefix SHA-256, discards an uncommitted
+tail, and only appends validated 206 ranges. Bytes synchronize before each atomic sidecar
+advance. A 200 requires a caller-selected fresh start; 412/416 and changed or unverifiable
+representations fail without retry. A fully verified complete partial can publish locally
+without a further request. No partial receipt promises a complete representation.
+
+Keep the workspace and destination parent stable and private. No-follow opening, inode
+and device checks, and advisory locking coordinate SDK writers, but cannot prevent an
+external process from mutating files. SHA-256 verifies local continuity, not authenticity.
+Publication creates a new same-filesystem hard link without replacement. Owned state
+remains until discard; discard removes only the bound partial and sidecar, leaving the
+complete destination, private directory, and unrelated files intact. Do not mutate the
+published bytes before discarding their retained hard link. A directory-sync failure after
+linking can report failure with a complete destination already present. Failed begin may
+leave a private child directory for inspection and cleanup. Ordinary downloads retain
+their cleanup-on-failure behavior. IIIF derivative resume is not supported.

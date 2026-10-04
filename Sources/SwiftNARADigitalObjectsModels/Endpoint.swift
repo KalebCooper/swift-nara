@@ -22,6 +22,8 @@ import Foundation
 /// // https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The representation selected for a resumable original download, otherwise nil.
+  public private(set) var downloadReference: DigitalObjectRangeReference? = nil
   /// The IIIF reference for an information operation, otherwise nil.
   public private(set) var imageReference: IIIFImageReference? = nil
   /// The validated derivative transform, otherwise nil.
@@ -62,6 +64,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
     self.path = path
   }
 
+  private init(downloadReference: DigitalObjectRangeReference) {
+    self.downloadReference = downloadReference
+    path = downloadReference.object.transportPath
+  }
+
   package init(imageReference: IIIFImageReference) {
     self.imageReference = imageReference
     path = imageReference.servicePath + "/info.json"
@@ -81,6 +88,15 @@ public struct Endpoint<Response>: Hashable, Sendable {
   private init(reference: DigitalObjectReference) {
     path = reference.transportPath
     self.reference = reference
+  }
+}
+
+extension Endpoint where Response == DigitalObjectDownloadReceipt {
+  /// Describes serial validated ranges without capturing a local file or performing I/O.
+  /// - Parameter reference: The exact known original representation.
+  /// - Returns: An independently executable resumable-download endpoint.
+  public static func resumableDownload(_ reference: DigitalObjectRangeReference) -> Self {
+    Self(downloadReference: reference)
   }
 }
 

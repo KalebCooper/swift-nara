@@ -10,7 +10,7 @@ Implements paginated S3 XML manifests, streamed JSONL shard downloads, independe
 
 The bulk distribution is a periodic archival snapshot. It does not guarantee current-administration coverage, complete history, stable pagination snapshots, OCR accuracy, or unrestricted reuse of linked media. The separate Catalog HTTP API is never used. Package code is MIT-licensed; source content retains its own rights and restrictions.
 
-Versioned bulk and original-media checkpoint models validate stored source identity, committed offsets, local-file identity fields, and SHA-256 syntax without performing I/O. The SDKs include bounded prefix hashing through swift-crypto. Durable begin/resume/discard execution is still under implementation; decoding a checkpoint alone does not verify a file or make it safe to resume.
+Bulk and original-media downloads support explicit begin, resume, and discard operations with versioned checkpoints, validated source identity, bounded SHA-256 prefix verification, exclusive file ownership, and durable sidecar progress. Decoding a checkpoint alone does not verify its file; resume performs that verification before requesting more bytes.
 
 This package is unreleased. See [source evidence](SOURCE_VERIFICATION.md) and [verification status](IMPLEMENTATION_READINESS.md) for observed formats, exact fixture provenance, current local checks, and historical hosted qualification.
 
@@ -178,6 +178,36 @@ and total length. A response must be 206 with the exact interval, total, validat
 identity encoding. The four-MiB default range bound is independent of whole-file bounds.
 Partial receipts cannot be used as complete JSONL or media receipts, and this operation
 does not retain checkpoints or retry interrupted downloads.
+
+For retained progress, use the opt-in lifecycle with a known strong ETag and total length:
+
+```swift
+let checkpoint = try client.beginDownload(knownBulkSource, in: privateWorkspace)
+let completed = try await client.resumeDownload(checkpoint, to: newDestination)
+// Equivalent network operation:
+// client.value(for: .resumableDownload(knownBulkSource), checkpoint: checkpoint, to: newDestination)
+// client.send(.resumableDownload(knownBulkSource), checkpoint: checkpoint, to: newDestination)
+try client.discardDownload(completed.checkpoint)
+```
+
+The media client exposes the same lifecycle with `DigitalObjectRangeReference`.
+Begin creates a private child directory and sends no request. The known total is the
+explicit whole-download budget; `maximumRangeBytes` bounds each serial request.
+A failure carries the last verified durable checkpoint, or nil if verification did not
+finish. An older caller checkpoint can reload newer matching sidecar progress. Resume
+hashes the committed prefix, removes uncommitted tail bytes, and accepts only validated
+206 ranges. HTTP 200 requires an explicit fresh start; 412/416 and invalid representation
+metadata fail without retry. Already-complete verified bytes can publish without HTTP.
+
+The workspace and destination parent must remain stable and caller-controlled. No-follow
+opens, device/inode checks and advisory locking refuse replaced files and concurrent SDK
+writers; locks cannot prevent arbitrary external modification. SHA-256 detects changed
+local bytes, not source authenticity. Completion creates a new same-filesystem hard link
+without replacing an existing destination. The partial and sidecar remain until explicit
+discard, which removes only those two files and preserves the destination and other files.
+The empty private directory remains. If synchronization fails after publication, the
+complete destination may already exist. Failed initialization may leave a private child
+for inspection and cleanup. IIIF derivative resume is not supported.
 
 ## Example
 

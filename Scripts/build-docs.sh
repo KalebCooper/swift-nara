@@ -18,6 +18,12 @@ modules="${1:?Usage: bash Scripts/build-docs.sh MODULES_DIRECTORY OUTPUT_DIRECTO
 output="${2:?Supply a new output directory}"
 sdk="$(xcrun --sdk iphonesimulator --show-sdk-path)"
 target="${3:-$(uname -m)-apple-ios26.0-simulator}"
+# Xcode stores the C module map in its resolved dependency checkout, not Products.
+system_headers="${SWIFT_NARA_SYSTEM_HEADERS:-$modules/../../../SourcePackages/checkouts/swift-system/Sources/CSystem/include}"
+if [[ ! -f "$system_headers/module.modulemap" ]]; then
+  echo "Missing swift-system C module headers: $system_headers. Set SWIFT_NARA_SYSTEM_HEADERS for a custom checkout." >&2
+  exit 1
+fi
 
 if [[ -e "$output" ]]; then
   echo "Output already exists: $output. Supply a new directory." >&2
@@ -33,7 +39,7 @@ for service in CatalogBulk DigitalObjects; do
     archive="$output/$module.doccarchive"
     mkdir -p "$symbols"
     xcrun swift-symbolgraph-extract -module-name "$module" \
-      -target "$target" -sdk "$sdk" -I "$modules" \
+      -target "$target" -sdk "$sdk" -I "$modules" -I "$system_headers" \
       -module-cache-path "$output/module-cache" \
       -output-dir "$symbols" -minimum-access-level public
     dependency=()

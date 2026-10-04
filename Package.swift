@@ -18,6 +18,7 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-crypto.git", from: "5.0.0"),
     // HTTPCore exposes these header types without re-exporting their module.
     .package(url: "https://github.com/apple/swift-http-types.git", from: "1.6.0"),
+    .package(url: "https://github.com/apple/swift-system.git", from: "1.8.0"),
     // 1.3.1 supplies custom page decoding and streamed status/header receipts.
     .package(
       url: "https://github.com/KalebCooper/swifty-networking.git", from: "1.3.1",
@@ -37,6 +38,7 @@ let package = Package(
           name: "HTTPURLSession", package: "swifty-networking",
           condition: .when(platforms: [.iOS, .macCatalyst, .macOS, .tvOS, .visionOS, .watchOS])),
         "SwiftNARACatalogBulkModels",
+        .product(name: "SystemPackage", package: "swift-system"),
       ], swiftSettings: swiftSettings),
     .target(name: "SwiftNARACatalogBulkModels", swiftSettings: swiftSettings),
     .target(
@@ -55,6 +57,7 @@ let package = Package(
           name: "HTTPURLSession", package: "swifty-networking",
           condition: .when(platforms: [.iOS, .macCatalyst, .macOS, .tvOS, .visionOS, .watchOS])),
         "SwiftNARADigitalObjectsModels",
+        .product(name: "SystemPackage", package: "swift-system"),
       ], swiftSettings: swiftSettings),
     .target(name: "SwiftNARADigitalObjectsModels", swiftSettings: swiftSettings),
     .target(

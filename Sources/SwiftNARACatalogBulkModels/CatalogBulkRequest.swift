@@ -37,6 +37,15 @@ extension CatalogBulkRequest where Response == BulkDirectoryPage {
   }
 }
 
+extension CatalogBulkRequest where Response == BulkDownloadReceipt {
+  /// Describes a resumable original download; the checkpoint is supplied only at execution.
+  /// - Parameter reference: The exact known representation.
+  /// - Returns: A reusable request with no file or network I/O at construction.
+  public static func resumableDownload(_ reference: BulkRangeReference) -> Self {
+    Self(endpoint: .resumableDownload(reference))
+  }
+}
+
 extension CatalogBulkRequest where Response == BulkManifest {
   /// Describes a manifest lookup or independent lazy traversal.
   /// - Parameter query: The initial query.

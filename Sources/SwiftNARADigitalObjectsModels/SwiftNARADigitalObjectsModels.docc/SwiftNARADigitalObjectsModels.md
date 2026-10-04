@@ -7,7 +7,7 @@ Describe on-demand original-file and image-information requests without performi
 `DigitalObjectDownloadCheckpoint` is a versioned persistence value for source identity,
 committed byte count, file identity, and a SHA-256 prefix digest. Decoding repeats
 source and checkpoint validation without reading any file. This model does not
-verify ownership or content by itself. The download lifecycle executor is pending.
+verify ownership or content by itself. The SDK verifies ownership and bytes when executing the explicit resume lifecycle.
 
 `DigitalObjectReference` retains the source URL, NAID and object ID separately from
 its narrowly validated public transport URL. Only the two evidenced NARA storage
@@ -74,3 +74,10 @@ quoted ETag and positive known total length to a validated source.
 `DigitalObjectRangeReceipt` describes only the saved interval; it is never a complete-file receipt.
 Original archival identifiers and both supported media path mappings are preserved.
 IIIF derivatives are excluded from this range operation.
+
+
+`DigitalObjectDownloadReceipt` describes only complete published bytes, with the complete
+checkpoint and destination. `.resumableDownload(_:)` request and endpoint factories
+contain the known source representation; checkpoint and destination are supplied at
+execution. Models perform no file or network I/O and depend on no hashing or file-system
+library. A decoded checkpoint remains untrusted until the SDK verifies its owned file.
