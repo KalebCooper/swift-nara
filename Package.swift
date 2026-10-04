@@ -15,6 +15,7 @@ let package = Package(
     .trait(name: "HTTPPortable", description: "Enable the portable Linux and Android transport."),
   ],
   dependencies: [
+    .package(url: "https://github.com/apple/swift-crypto.git", from: "5.0.0"),
     // HTTPCore exposes these header types without re-exporting their module.
     .package(url: "https://github.com/apple/swift-http-types.git", from: "1.6.0"),
     // 1.3.1 supplies custom page decoding and streamed status/header receipts.
@@ -26,6 +27,7 @@ let package = Package(
     .target(
       name: "SwiftNARACatalogBulk",
       dependencies: [
+        .product(name: "Crypto", package: "swift-crypto"),
         .product(name: "HTTPCore", package: "swifty-networking"),
         .product(
           name: "HTTPPortable", package: "swifty-networking",
@@ -43,6 +45,7 @@ let package = Package(
     .target(
       name: "SwiftNARADigitalObjects",
       dependencies: [
+        .product(name: "Crypto", package: "swift-crypto"),
         .product(name: "HTTPCore", package: "swifty-networking"),
         .product(
           name: "HTTPPortable", package: "swifty-networking",

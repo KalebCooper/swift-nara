@@ -4,6 +4,11 @@ Describe on-demand original-file and image-information requests without performi
 
 ## Overview
 
+`DigitalObjectDownloadCheckpoint` is a versioned persistence value for source identity,
+committed byte count, file identity, and a SHA-256 prefix digest. Decoding repeats
+source and checkpoint validation without reading any file. This model does not
+verify ownership or content by itself. The download lifecycle executor is pending.
+
 `DigitalObjectReference` retains the source URL, NAID and object ID separately from
 its narrowly validated public transport URL. Only the two evidenced NARA storage
 prefixes and their public media equivalents are supported. Availability and rights

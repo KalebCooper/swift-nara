@@ -4,6 +4,11 @@ Describe NARA bulk requests and preserve source metadata without a networking de
 
 ## Overview
 
+`BulkDownloadCheckpoint` is a versioned persistence value for source identity,
+committed byte count, file identity, and a SHA-256 prefix digest. Decoding repeats
+source and checkpoint validation without reading any file. This model does not
+verify ownership or content by itself. The download lifecycle executor is pending.
+
 `ManifestQuery`, `Endpoint`, and `CatalogBulkRequest` are immutable values. `ManifestCodec` reads the public S3 listing as bounded UTF-8 XML with a portable source-specific parser. It does not rely on Codable to parse XML, perform external entity resolution, or import FoundationXML.
 
 `CatalogRecord` keeps the entire open JSON envelope and exposes NAIDs, ancestor metadata, digital-object metadata, restrictions, and original OCR. Unknown members and explicit null values remain in `JSONValue`; inspect `CatalogRecord.fields` when a convenience projection is absent. An explicit empty digital-object array differs from a missing member or null. Metadata-only descriptions remain valid records.

@@ -3,7 +3,7 @@
 /// The original reference preserves archival identifiers and URL mapping. ETags are
 /// validators, not local digests. IIIF derivatives and literal null S3 versions are not
 /// treated as immutable original identities.
-public struct DigitalObjectRangeReference: Hashable, Sendable {
+public struct DigitalObjectRangeReference: Codable, Hashable, Sendable {
   /// Exact strong quoted entity tag used unchanged in If-Match.
   public let entityTag: String
   /// Original archival identity and validated media transport path.
@@ -28,6 +28,23 @@ public struct DigitalObjectRangeReference: Hashable, Sendable {
     self.entityTag = entityTag
     self.object = object
     self.totalByteCount = totalByteCount
+  }
+
+  /// Decodes source identity while repeating all constructor validation.
+  /// - Parameter decoder: The stored representation to read.
+  /// - Throws: A decoding error or the reference validation error.
+  public init(from decoder: any Decoder) throws {
+    let c = try decoder.container(keyedBy: CodingKeys.self)
+    try self.init(
+      entityTag: try c.decode(String.self, forKey: .entityTag),
+      object: try c.decode(DigitalObjectReference.self, forKey: .object),
+      totalByteCount: try c.decode(Int64.self, forKey: .totalByteCount))
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case entityTag
+    case object
+    case totalByteCount
   }
 
   package func receivedRange(

@@ -18,6 +18,43 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 checkpoint foundation qualification
+
+Versioned `BulkDownloadCheckpoint` and `DigitalObjectDownloadCheckpoint` values,
+validation-preserving Codable range references, and SDK-only bounded SHA-256 hashing
+are implemented. Local checkpoint fixtures are synthetic. The approved swift-crypto
+floor is 5.0.0, matching the existing portable pin and this package's tools 6.2 floor.
+No models target imports Crypto or depends on a third-party product.
+
+This is a foundation slice. Begin/resume/discard execution, exclusive file ownership,
+durable sidecar updates, crash recovery and final publication are not implemented or
+qualified by these tests. They await the separate swift-system dependency decision.
+ZIP acquisition/reading and transient Catalog operations remain pending.
+
+Xcode 27 MCP on macOS 27 passes 211 tests in 28 suites with zero failed, skipped,
+expected-failure or unrun tests. The designated generated scheme is swift-nara-Package;
+the final result is `Test-swift-nara-Package-2026.10.04_16-13-26--0500.xcresult`, recorded
+in `plans/p9r2-checkpoint-apple-evidence.json`. Linux default and HTTPPortable pass all
+211 tests; both modes additionally pass the four final checkpoint URL-validation tests.
+The final simulator build passes with four existing generated-test-product sysroot
+linker warnings; it is not simulator test execution. Source checks pass 15 gates and
+59 planted arms, including new Crypto/SystemPackage model-boundary cases. The final
+Mac build has zero warnings. Four DocC catalogs convert with warnings as errors,
+models first, in `plans/p9r2-checkpoint-docc-final`; the conversion exited successfully.
+Both Linux Release demos pass with unchanged recorded responses, including their 32-byte
+range examples. Their logs are `plans/p9r2-checkpoint-demo-bulk.log` and
+`plans/p9r2-checkpoint-demo-media.log`. The verified portable lockfile keeps all 23
+existing pins; only its manifest hash changes in the commit. The owner's separate
+worktree pin removals are retained, adjusted only for the approved Crypto/ASN1 graph.
+
+The first Apple build after dependency resolution needed a retry because its project
+model changed. Two later test attempts returned incomplete bundles and are excluded;
+a fresh workspace connection and explicit generated-scheme check produced the designated
+211-test pass. Trial 4.5.2 results are superseded by 5.0.0 qualification. Exact Linux logs:
+`plans/p9r2-checkpoint-linux-final.log` and
+`plans/p9r2-checkpoint-linux-path-final.log`. Android and current hosted/Pages/release
+qualification remain open. No remote delivery or sibling edit was performed.
+
 ## October 4 local byte-range qualification
 
 Both service pairs now expose a single explicit closed range through everyday, request
@@ -48,7 +85,9 @@ passing runs. Evidence: `plans/p9r1-apple-evidence.json`, `plans/p9r1-linux-seco
 and `plans/p9r1-demo-*.log`.
 
 Historical OFR disposition/codification work is owner-deferred from this repository task.
-Resumable downloads await approval of an SDK-only integrity dependency. Archive-reader
+The owner approved SDK-only swift-crypto for prefix integrity; checkpoint foundation
+implementation and qualification are in progress. Durable resume execution awaits a
+separate SDK-only swift-system file-ownership dependency decision. Archive-reader
 selection and live Catalog credentials/fixture policy remain separate gates. Android,
 current hosted CI, Pages and release remain unqualified; the phase is not fully qualified
 across all required platforms. No sibling or remote change was made, and the entry

@@ -1,5 +1,30 @@
 # Source verification
 
+## October 4 checkpoint integrity dependency
+
+The owner explicitly approved SDK-only Apple swift-crypto for SHA-256 of committed
+local prefixes. The selected [5.0.0 manifest](https://github.com/apple/swift-crypto/blob/5.0.0/Package.swift)
+requires Swift tools 6.2, matching this package, and exposes the Crypto product.
+Its revision is `a9d1d5ab8951ada40cafff8c8e2b551dfde4f390`, already present in the
+entry portable dependency superset. Apple uses CryptoKit; non-Apple platforms build
+the vendored implementation. The package is Apache-2.0 licensed and its graph resolves
+swift-asn1; the NARA models targets have no dependency on either product. An initial
+4.x trial resolved 4.5.2 and passed local tests, but the final floor avoids downgrading
+the existing portable crypto pin.
+
+SHA-256 here detects changed local prefix bytes, including equal-length corruption.
+It does not authenticate source content, establish reuse rights, or treat an ETag as
+a digest. Checkpoint unit data is synthetic local state, not captured Catalog content.
+No new provider requests or retained source fixtures were needed for this foundation.
+
+Direct native open/fstat prototypes emitted strict-memory-safety diagnostics and were
+removed. A separate owner decision is pending for SDK-only
+[swift-system 1.8.0](https://github.com/apple/swift-system/tree/1.8.0), whose typed open
+and descriptor metadata APIs would support no-follow and file-identity checks.
+No direct swift-system dependency or unsafe exception has been added. Qualification
+of the final file-ownership and recovery executor remains separate from checkpoint
+value decoding and prefix hashing.
+
 The National Archives Catalog dataset was accessed on September 24, 2026 UTC from the [NARA-managed AWS registry](https://registry.opendata.aws/nara-national-archives-catalog/). Five original response bodies and their exact URLs, retrieval instants, HTTP status, headers, byte counts, and SHA-256 hashes are in [fixture attribution](Sources/SwiftNARACatalogBulkTestSupport/Fixtures/attribution.json). No Catalog HTTP API response is used. Five authority-record bodies, five directory listings, and two conditional responses were added on September 26, 2026 UTC from the same bulk origin with the same attribution fields; the conditional entries also record the request method and headers.
 
 ## Verified bulk contract

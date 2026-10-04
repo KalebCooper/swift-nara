@@ -93,7 +93,7 @@ check_models_import_boundary() {
     if [ -z "$subject" ]; then fail "$name ($module has lost its subject)"; return; fi
     files="$files $subject"
   done
-  hits=$(code_lines $files | grep -E ':[0-9]+:[[:space:]]*(@[A-Za-z_]+(\([^)]*\))?[[:space:]]+)*((public|package|internal|fileprivate|private)[[:space:]]+)?import[[:space:]]+((typealias|struct|class|enum|protocol|let|var|func)[[:space:]]+)?(AsyncHTTPClient|FoundationNetworking|HTTPCore|HTTPPortable|HTTPTesting|HTTPTypes|HTTPTypesFoundation|HTTPURLSession|_?NIO[A-Za-z0-9_]*|SwiftNARACatalogBulk|SwiftNARADigitalObjects)\b|\bURLSession' || true)
+  hits=$(code_lines $files | grep -E ':[0-9]+:[[:space:]]*(@[A-Za-z_]+(\([^)]*\))?[[:space:]]+)*((public|package|internal|fileprivate|private)[[:space:]]+)?import[[:space:]]+((typealias|struct|class|enum|protocol|let|var|func)[[:space:]]+)?(AsyncHTTPClient|Crypto|FoundationNetworking|HTTPCore|HTTPPortable|HTTPTesting|HTTPTypes|HTTPTypesFoundation|HTTPURLSession|SystemPackage|_?NIO[A-Za-z0-9_]*|SwiftNARACatalogBulk|SwiftNARADigitalObjects)\b|\bURLSession' || true)
   if [ -z "$hits" ]; then pass "$name"; else fail "$name"; printf '%s\n' "$hits"; fi
 }
 
@@ -678,6 +678,17 @@ self_test() {
       got=$(outcome_of "$planted" "$check")
       arms=$((arms + 1))
       if [ "$got" = FAIL ]; then pass "self-test: $check rejects absent $module"; else fail "self-test: $check MISSED absent $module"; fi
+    done
+  done
+  # Models must not import hashing or filesystem packages.
+  for module in SwiftNARACatalogBulkModels SwiftNARADigitalObjectsModels; do
+    for violation in Crypto SystemPackage; do
+      planted="$scratch/model-$module-$violation"
+      write_clean_tree "$planted"
+      printf 'import %s\n' "$violation" > "$planted/Sources/$module/Leak.swift"
+      got=$(outcome_of "$planted" check_models_import_boundary)
+      arms=$((arms + 1))
+      if [ "$got" = FAIL ]; then pass "self-test: models reject $violation in $module"; else fail "self-test: models MISSED $violation in $module"; fi
     done
   done
   printf '%d self-test arms\n' "$arms"

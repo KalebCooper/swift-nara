@@ -8,7 +8,7 @@ import Foundation
 ///
 /// Supports JSONL shards and published ZIP keys. It describes opaque partial bytes,
 /// not a complete shard or archive. An ETag is a validator, not a local content digest.
-public struct BulkRangeReference: Hashable, Sendable {
+public struct BulkRangeReference: Codable, Hashable, Sendable {
   /// The exact quoted strong entity tag, used unchanged in If-Match.
   public let entityTag: String
   /// The original unencoded S3 key.
@@ -64,6 +64,25 @@ public struct BulkRangeReference: Hashable, Sendable {
     self.key = key
     self.totalByteCount = totalByteCount
     self.versionID = versionID
+  }
+
+  /// Decodes source identity while repeating all constructor validation.
+  /// - Parameter decoder: The stored representation to read.
+  /// - Throws: A decoding error or the reference validation error.
+  public init(from decoder: any Decoder) throws {
+    let c = try decoder.container(keyedBy: CodingKeys.self)
+    try self.init(
+      entityTag: try c.decode(String.self, forKey: .entityTag),
+      key: try c.decode(String.self, forKey: .key),
+      totalByteCount: try c.decode(Int64.self, forKey: .totalByteCount),
+      versionID: try c.decodeIfPresent(String.self, forKey: .versionID))
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case entityTag
+    case key
+    case totalByteCount
+    case versionID
   }
 
   package func receivedRange(
