@@ -1,6 +1,6 @@
 # ``SwiftNARADigitalObjectsModels``
 
-Describe one on-demand original-file request without performing network or file I/O.
+Describe on-demand original-file and image-information requests without performing I/O.
 
 ## Overview
 
@@ -23,7 +23,20 @@ An endpoint constructed from a public media link has no source identity.
 destination and injected retrieval instant. Missing Content-Type stays nil;
 ETags are opaque validators. The package license does not grant rights to media.
 
+IIIF information has a separate validated service identity. `IIIFImageReference`
+derives the observed NARA version-3 mapping from either supported source prefix,
+encoding the source key once as one identifier segment. `IIIFImageInformation`
+retains raw JSON bytes and projects dimensions, limits, preferred sizes and tile
+declarations without fetching tiles, JSON-LD contexts or linked services. Unknown
+feature codes and null members remain inspectable in the original bytes.
+
 ## Topics
+
+### Image information
+- ``IIIFImageError``
+- ``IIIFImageInformation``
+- ``IIIFImageReference``
+
 
 ### Requests
 - ``DigitalObjectReference``

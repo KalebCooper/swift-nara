@@ -331,5 +331,99 @@
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "status": 200,
     "url": "https://catalog.archives.gov/medialz/dc-metro/rg-011/299798/RIT_March_2020/162246501/162246501-004_ma.tif"
+  },
+  {
+    "byteCount": 832,
+    "file": "iiif-fdr-info.json",
+    "headers": {
+      "Content-Type": "application/ld+json;charset=UTF-8;profile=\"http://iiif.io/api/image/3/context.json\"",
+      "Content-Length": "832",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 698d8d562800b85574a23b6e1fbeb998.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "q0J3JeUcE4TW55UM0EVQz1lrWh6mCFSesX5y9xUN-3u9NiHrS_CEcw=="
+    },
+    "method": "GET",
+    "naId": "122178160",
+    "objectId": "122178162",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:42.998005+00:00",
+    "sha256": "b35bf951a8e19aa5c5cbbe73e9b07b4d9986374580e529acaf6e4b3c162dc989",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/info.json",
+    "rightsBasis": "IIIF service metadata only; no media bytes retained."
+  },
+  {
+    "byteCount": 864,
+    "file": "iiif-medialive-info.json",
+    "headers": {
+      "Content-Type": "application/ld+json;charset=UTF-8;profile=\"http://iiif.io/api/image/3/context.json\"",
+      "Content-Length": "864",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 9e558bd4808c765ba06f3acd7caad6a2.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "TQE78EuvgvWfbU7o4320ZR8v1xndiUWfdirlQRYxKuS6yycsSgehqw=="
+    },
+    "method": "GET",
+    "naId": "63545805",
+    "objectId": "63545806",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:43.380514+00:00",
+    "sha256": "ca40d16b802843d429b3ed312c104cc1909234c63fecb673f7357bf3a1bd8f04",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/opastorage%2Flive%2F5%2F5458%2F63545805%2Fcontent%2FTB149%2FM1518%2FM1518_0007%2Fimages%2F0065.jpg/info.json",
+    "rightsBasis": "IIIF service metadata only; no media bytes retained."
+  },
+  {
+    "byteCount": 6031,
+    "file": "iiif-fdr-width200.jpg",
+    "headers": {
+      "Content-Type": "image/jpeg",
+      "Content-Length": "6031",
+      "Connection": "close",
+      "Date": "Sun, 04 Oct 2026 17:23:43 GMT",
+      "Server": "Jetty(9.4.34.v20201102)",
+      "X-Powered-By": "Cantaloupe/5.0.5",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "max-age=2592000, public, no-transform",
+      "Link": "<https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/full/200,253/0/default.jpg>;rel=\"canonical\"",
+      "Vary": "Accept-Encoding",
+      "X-Cache": "Miss from cloudfront",
+      "Via": "1.1 8205a00c3afca74afbf1bd92b37714e8.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop": "IAH50-P3",
+      "X-Amz-Cf-Id": "EVZAXTsbF5MvwSfySE3QvYC_5eqiWmCRjekQnQxKZhYtECtUjvyIWg=="
+    },
+    "method": "GET",
+    "naId": "122178160",
+    "objectId": "122178162",
+    "requestHeaders": {
+      "Accept-Encoding": "identity",
+      "User-Agent": "(swift-nara, https://github.com/KalebCooper/swift-nara)"
+    },
+    "retrievedAt": "2026-10-04T17:23:43.700572+00:00",
+    "sha256": "4c3e5d0e37054573b3960affddfd301c702a68e6e4b50960b0d32243c115e9af",
+    "status": 200,
+    "url": "https://catalog.archives.gov/iiif/3/lz%2Fpresidential-libraries%2Froosevelt%2F577534%2Fmsf00611_Page_01.jpg/full/200,/0/default.jpg",
+    "rightsBasis": "Derivative of the already reviewed FDR object 122178162; bulk record 122178160 access/use Unrestricted, no object-level restriction. Package license does not grant content reuse rights."
   }
 ]

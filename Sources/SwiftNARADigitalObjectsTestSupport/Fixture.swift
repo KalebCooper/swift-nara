@@ -15,6 +15,12 @@ package enum Fixture: String, CaseIterable {
   /// /medialz/electronic-records/rg-341/ALOREPMACAL/AL1.6809.ARLAY.html on catalog.archives.gov,
   /// with no query, on September 28, 2026 UTC; an archival HTML object.
   case htmlObjectMedialz = "html-object-medialz.headers.json"
+  /// Unchanged IIIF information for the reviewed FDR JPEG.
+  case iiifFDRInformation = "iiif-fdr-info.json"
+  /// Unchanged 200-pixel-wide JPEG derivative of the reviewed FDR object.
+  case iiifFDRWidth200 = "iiif-fdr-width200.jpg"
+  /// Unchanged IIIF service metadata for the medialive object; no media bytes.
+  case iiifMedialiveInformation = "iiif-medialive-info.json"
   /// Response headers of the 200 to a HEAD of
   /// /medialive/5/5458/63545805/content/TB149/M1518/M1518_0007/images/0065.jpg on
   /// catalog.archives.gov, with no query; the response had no body and no Content-Type.

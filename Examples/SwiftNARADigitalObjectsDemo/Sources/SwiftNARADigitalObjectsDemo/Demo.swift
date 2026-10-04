@@ -12,10 +12,16 @@ struct Demo {
     }
     let fixtures = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
     let bytes = try Data(contentsOf: fixtures.appendingPathComponent("msf00611_Page_01.jpg"))
+    let informationBytes = try Data(
+      contentsOf: fixtures.appendingPathComponent("iiif-fdr-info.json"))
     let transport = MockTransport(answers: [
       .success(
         .init(
-          chunks: [bytes], headers: [.contentLength: "65981", .contentType: "image/jpeg"]))
+          chunks: [bytes], headers: [.contentLength: "65981", .contentType: "image/jpeg"])),
+      .success(
+        .init(
+          chunks: [informationBytes],
+          headers: [.contentLength: "832", .contentType: "application/json"])),
     ])
     let client = DigitalObjectsClient(
       configuration: try DigitalObjectsConfiguration(
@@ -37,6 +43,11 @@ struct Demo {
       "Saved \(receipt.byteCount) original bytes; media type \(receipt.mediaType ?? "undeclared").")
     print("Source: \(reference.url)")
     print("Transport: \(receipt.transportURL)")
-    print("Replayed \(transport.requests.count) recorded response; no live request.")
+    let information = try await client.imageInformation(
+      for: IIIFImageReference(reference: reference))
+    print(
+      "IIIF information: \(information.width)x\(information.height), \(information.rawBytes.count) original JSON bytes."
+    )
+    print("Replayed \(transport.requests.count) recorded responses; no live request.")
   }
 }

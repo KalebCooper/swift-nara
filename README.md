@@ -139,12 +139,20 @@ stream complete original bytes to new files. Real HTML is accepted. An observed 
 Error marker causes a bounded `errorPage` failure; absent markers do not prove authenticity.
 Partial transfers are removed. Item-level rights and attribution remain the caller's responsibility.
 
+IIIF Image API 3 information is available on demand through `imageInformation(for:)`,
+`value(for: .imageInformation(...))`, and `send(.imageInformation(...))`. Construct
+`IIIFImageReference(reference: reference)` from the same validated original source.
+Information preserves original JSON bytes, dimensions, limits, preferred sizes, tile
+metadata, open feature codes, and retrieval evidence. Identity must exactly match the
+derived service; no linked context or service is fetched. The default information
+budget is one MiB, configurable independently of object and diagnostic budgets.
+
 ## Example
 
 [SwiftNARACatalogBulkDemo](Examples/SwiftNARACatalogBulkDemo) is an offline command-line demonstration of two manifest pages, a streamed shard download, and seven provenance-bearing local records. It uses unchanged official fixtures and makes no live request. `bash Scripts/demo-linux.sh` builds it for Release and runs it in the Linux verification container.
 
 [SwiftNARADigitalObjectsDemo](Examples/SwiftNARADigitalObjectsDemo) replays the attributed
-FDR JPEG and prints separate source and transport identities. Run it offline with
+FDR JPEG and IIIF information, printing separate source and transport identities and image dimensions. Run it offline with
 `bash Scripts/demo-media-linux.sh`.
 
 ## Products
@@ -153,8 +161,8 @@ FDR JPEG and prints separate source and transport identities. Run it offline wit
 | --- | --- |
 | `SwiftNARACatalogBulk` | Client, lazy manifest/object sequences, downloads, and local JSONL iteration. |
 | `SwiftNARACatalogBulkModels` | Source models, pure codecs, validated query/reference values, typed endpoints and requests, and portable provenance. |
-| `SwiftNARADigitalObjects` | Bounded on-demand original-file downloads with typed failures and completion receipts. |
-| `SwiftNARADigitalObjectsModels` | Validated digital object references mapping bulk object URLs to their public transport paths. |
+| `SwiftNARADigitalObjects` | Bounded original-file downloads and IIIF information with typed failures and retrieval evidence. |
+| `SwiftNARADigitalObjectsModels` | Validated original and IIIF references, raw image information, requests, endpoints, and receipts. |
 
 ## Requirements
 

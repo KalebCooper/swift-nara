@@ -52,6 +52,37 @@ public struct DigitalObjectsClient: Sendable {
     try await value(for: .download(reference), to: destination)
   }
 
+  /// Refuses the observed substituted-page marker, retaining only bounded diagnostic bytes.
+  func rejectErrorPage(_ response: StreamedResponse) async throws(DigitalObjectsError) {
+    do {
+      if response.headers.contains(where: {
+        $0.name.rawName.lowercased() == "x-cache"
+          && $0.value.trimmingCharacters(in: .whitespaces).lowercased() == "error from cloudfront"
+      }) {
+        var bytes = Data()
+        var truncated = false
+        for try await chunk in response.body {
+          guard !Task.isCancelled else { throw DigitalObjectsError.cancelled }
+          let remaining = configuration.maximumErrorBodyBytes - bytes.count
+          bytes.append(chunk.prefix(remaining))
+          if chunk.count > remaining {
+            truncated = true
+            break
+          }
+        }
+        throw DigitalObjectsError.errorPage(
+          body: bytes, code: response.status.code, headers: response.headers, isTruncated: truncated
+        )
+      }
+    } catch let error as DigitalObjectsError {
+      throw error
+    } catch {
+      if Task.isCancelled { throw .cancelled }
+      if let failure = error as? TransportError { throw .transport(failure) }
+      throw .transport(.transport(kind: .other, underlying: error))
+    }
+  }
+
   /// Executes a download endpoint, preserving identity when its factory supplied one.
   /// - Parameters:
   ///   - endpoint: A reference-based or independently validated public media endpoint.
@@ -83,25 +114,7 @@ public struct DigitalObjectsClient: Sendable {
           options: RequestOptions(redirectPolicy: .never, requiresAuth: false), path: endpoint.path)
       )
       let retrievedAt = retrievalTime()
-      if response.headers.contains(where: {
-        $0.name.rawName.lowercased() == "x-cache"
-          && $0.value.trimmingCharacters(in: .whitespaces).lowercased() == "error from cloudfront"
-      }) {
-        var bytes = Data()
-        var truncated = false
-        for try await chunk in response.body {
-          guard !Task.isCancelled else { throw DigitalObjectsError.cancelled }
-          let remaining = configuration.maximumErrorBodyBytes - bytes.count
-          bytes.append(chunk.prefix(remaining))
-          if chunk.count > remaining {
-            truncated = true
-            break
-          }
-        }
-        throw DigitalObjectsError.errorPage(
-          body: bytes, code: response.status.code, headers: response.headers, isTruncated: truncated
-        )
-      }
+      try await rejectErrorPage(response)
       guard response.status.code == 200, response.headers[.contentRange] == nil,
         response.headers[.contentEncoding] == nil
           || response.headers[.contentEncoding]?.lowercased() == "identity"

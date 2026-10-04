@@ -18,6 +18,28 @@ The initial NARA bulk slice is implemented locally in `SwiftNARACatalogBulkModel
 
 The public swifty-networking 1.3.1 tag was verified before setting the dependency floor. Its custom page decoder and streamed response receipt are used directly. XML support is source-specific and does not assume networking-package XML parsing. The trait-on lockfile records the portable dependency superset.
 
+## October 4 local IIIF information qualification
+
+The media pair now retrieves bounded version-3 image information for both supported
+source prefixes. It validates service identity, type, protocol and dimensions, retains
+raw JSON and HTTP evidence, and never fetches linked contexts or services. The offline
+media demo now replays the original JPEG and its information document.
+
+At the working revision based on `5cdce43`, all 175 tests in 18 suites pass through
+Xcode 27 MCP on My Mac and in Linux default and HTTPPortable configurations.
+The iOS simulator attempt timed out after 300 seconds with an incomplete result
+bundle; it supplies no executed-test evidence. Reopening only this package workspace
+and using My Mac produced the complete passing result. No test failed, skipped or
+remained unrun in that completed run. Linux has no compiler warnings. The earlier
+simulator build passed with four generated-test-product sysroot linker warnings.
+Source validation passes 15 checks and 55 planted self-test arms; strict formatting,
+four DocC conversions with warnings as errors, and the Linux Release media demo pass.
+Evidence: `plans/p5i1-*.log` and `plans/p5i1-apple-tests.txt`.
+
+The three newly attributed captures are two information documents and one small FDR
+JPEG derivative reserved for download validation. No Fold3 media or live Catalog API
+content was saved. Android, current hosted CI, Pages and release remain unqualified.
+
 ## October 4 local media qualification
 
 The independent `SwiftNARADigitalObjects` SDK implements original-file downloads through

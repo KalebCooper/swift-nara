@@ -6,10 +6,10 @@ import Foundation
 
 /// One validated digital object operation on the public NARA Catalog origin.
 ///
-/// Endpoints contain only values and send nothing at construction. Every endpoint path is a
-/// `/medialz/` or `/medialive/` object path on ``origin``, validated by the same rules as
-/// ``DigitalObjectReference``. Creating an endpoint does not show that the object exists, is
-/// retrievable, or may be reused.
+/// Endpoints contain only values and send nothing at construction. Original downloads use
+/// validated `/medialz/` or `/medialive/` paths; IIIF factories derive an operation beneath
+/// `/iiif/3/` from a validated source reference. Every path stays on ``origin``.
+/// Creating an endpoint does not show that the object exists, is retrievable, or may be reused.
 ///
 /// The bulk models module declares its own `Endpoint`; qualify the type by module, as in
 /// `SwiftNARADigitalObjectsModels.Endpoint`, in a file that imports both.
@@ -22,6 +22,8 @@ import Foundation
 /// // https://catalog.archives.gov/medialz/presidential-libraries/roosevelt/577534/msf00611_Page_01.jpg
 /// ```
 public struct Endpoint<Response>: Hashable, Sendable {
+  /// The IIIF reference for an information operation, otherwise nil.
+  public private(set) var imageReference: IIIFImageReference? = nil
   /// The exact encoded object path relative to ``origin``.
   public let path: String
   /// The reference when this endpoint was created by the download factory, or `nil` when it
@@ -54,6 +56,11 @@ public struct Endpoint<Response>: Hashable, Sendable {
     self.path = path
   }
 
+  package init(imageReference: IIIFImageReference) {
+    self.imageReference = imageReference
+    path = imageReference.servicePath + "/info.json"
+  }
+
   private init(reference: DigitalObjectReference) {
     path = reference.transportPath
     self.reference = reference
@@ -72,5 +79,14 @@ extension Endpoint where Response == DigitalObjectReceipt {
   /// - Returns: An independently executable download endpoint.
   public static func download(_ reference: DigitalObjectReference) -> Self {
     Self(reference: reference)
+  }
+}
+
+extension Endpoint where Response == IIIFImageInformation {
+  /// Describes one IIIF information request without performing I/O.
+  /// - Parameter reference: The validated image service reference.
+  /// - Returns: An independently executable information endpoint.
+  public static func imageInformation(_ reference: IIIFImageReference) -> Self {
+    Self(imageReference: reference)
   }
 }

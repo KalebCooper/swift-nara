@@ -34,3 +34,12 @@ extension DigitalObjectRequest where Response == DigitalObjectReceipt {
     Self(endpoint: .download(reference))
   }
 }
+
+extension DigitalObjectRequest where Response == IIIFImageInformation {
+  /// Describes one bounded image-information operation.
+  /// - Parameter reference: The expected service identity.
+  /// - Returns: A reusable value request with no construction I/O.
+  public static func imageInformation(_ reference: IIIFImageReference) -> Self {
+    Self(endpoint: .imageInformation(reference))
+  }
+}

@@ -2,6 +2,7 @@ import Foundation
 // Public initializers and failures name Transport and TransportError.
 @_exported import HTTPCore
 import HTTPTypes
+import SwiftNARADigitalObjectsModels
 
 /// A typed digital-object retrieval or local publication failure.
 public enum DigitalObjectsError: Error {
@@ -14,6 +15,8 @@ public enum DigitalObjectsError: Error {
   case errorPage(body: Data, code: Int, headers: HTTPFields, isTruncated: Bool)
   /// Local file access failed; only an owned temporary is removed.
   case file(any Error)
+  /// A IIIF information document or requested transform is invalid.
+  case information(IIIFImageError)
   /// A byte bound, caller identity, or destination URL is invalid.
   case invalidConfiguration
   /// The response exceeds the caller's whole-object bound.

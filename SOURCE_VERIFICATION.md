@@ -61,6 +61,31 @@ encoding inconsistencies, cancellation, destination races and malformed inputs a
 The current public API terms and use policies were rechecked; live Catalog API content
 remains excluded from persistence and all examples remain offline.
 
+## IIIF information evidence
+
+On October 4, 2026, bounded unsigned GETs captured version-3 `info.json` for
+the same FDR and RG11 objects. The observed mapping is `/iiif/3/` followed by
+one percent-encoded source key: `lz/...` or `opastorage/live/...`.
+FDR information is 832 bytes, reports 1184 by 1498 pixels and maxArea 1773632;
+RG11 information is 864 bytes, reports 2704 by 3775 pixels and maxArea 10000000.
+Both identify ImageService3, level2, preferred sizes and tile metadata. The latter
+full dimensions exceed its declared output area limit. Limits must therefore be
+respected independently of original dimensions.
+
+The FDR `full/200,/0/default.jpg` derivative is also captured for subsequent
+image-download validation: 6031 bytes, JPEG dimensions 200 by 253. Its source record
+has the previously reviewed Unrestricted access/use labels. RG11 retains information
+metadata only, not Fold3 media bytes. Exact URLs, request and response headers,
+retrieval instants, lengths, checksums and rights basis are recorded in the
+[digital object attribution](Sources/SwiftNARADigitalObjectsTestSupport/Fixtures/attribution.json).
+No redirect or linked context was followed, and no live Catalog API content was saved.
+
+The [IIIF Image API 3 specification](https://iiif.io/api/image/3.0/) defines service
+identity, dimensions, preferred sizes, profiles, features and output limits. Tests
+compare original information bytes and use explicitly synthetic mutations for
+foreign identities, malformed fields, unknown codes, nulls, transport failures,
+limits and cancellation. Unknown metadata remains in the raw source bytes.
+
 ## Digital-object metadata verification
 
 On October 4, 2026, the public [v2 schema](https://catalog.archives.gov/api/v2/swagger.json)

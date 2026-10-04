@@ -6,7 +6,7 @@ Retrieve one original NARA media object with explicit byte budgets and completio
 
 `DigitalObjectsClient` executes the models product's everyday, request, and endpoint
 call forms through one streamed executor. It sends no API credentials, follows no
-redirects and retries nothing. Each call requires a new destination under an existing
+redirects and retries nothing. Each file download requires a new destination under an existing
 parent directory. Failed transfers remove only their owned sibling temporary file.
 
 ```swift
@@ -42,6 +42,15 @@ Their diagnostic bytes are bounded independently of the object budget. A receipt
 returned only after complete bytes have been moved to a new destination. Downloading
 does not grant permission to reuse the object; consumers retain item-level attribution
 and restrictions from their metadata source.
+
+## Image information
+
+`imageInformation(for:)`, `value(for:)` and `send(_:)` retrieve validated IIIF
+Image API 3 information with a separate configurable byte budget. Use an
+`IIIFImageReference` derived from a validated original reference. Successful
+information includes unchanged JSON, source identity, received headers and injected
+retrieval time. Invalid identity, version, dimensions, or JSON fails without
+following any advertised link. Original downloads remain a separate operation.
 
 ## Topics
 
